@@ -1,0 +1,28 @@
+{
+  "name": "whalevocal",
+  "version": "1.0.0",
+  "description": "Octobug's blog.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Octobug/blog.git"
+  },
+  "keywords": [
+    "Octobug"
+  ],
+  "author": "Octobug",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/Octobug/blog/issues"
+  },
+  "homepage": "https://github.com/Octobug/blog#readme",
+  "devDependencies": {
+    "vitepress": "^1.0.0-rc.15"
+  }
+}

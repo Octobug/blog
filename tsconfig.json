@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "nodenext",
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/",
+    "**/cache/",
+    "**/dist/",
+  ]
+}

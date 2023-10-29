@@ -4,6 +4,8 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "🐳 WhaleVocal",
   description: "Octobug's blog.",
+  cleanUrls: true,
+  srcDir: "posts",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

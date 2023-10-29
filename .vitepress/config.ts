@@ -22,6 +22,9 @@ export default defineConfig({
       },
     ],
   ],
+  ignoreDeadLinks: [
+    "./LICENSE",
+  ],
   themeConfig: {
     outline: "deep",
     editLink: {

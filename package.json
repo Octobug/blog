@@ -12,6 +12,10 @@
     "preview": "vitepress preview",
     "prepare": "husky install"
   },
+  "lint-staged": {
+    "*.md": "markdownlint",
+    "*.{ts,vue}": "eslint"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Octobug/blog.git"
@@ -33,6 +37,7 @@
     "eslint-config-xo-typescript": "^1.0.1",
     "eslint-plugin-vue": "^9.17.0",
     "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "markdownlint-cli": "^0.37.0",
     "typescript": "^5.2.2",
     "vitepress": "^1.0.0-rc.15"

@@ -19,6 +19,7 @@
     ],
     "overrides": [
         {
+            "parser": "vue-eslint-parser",
             "extends": [
                 "xo-typescript"
             ],
@@ -45,7 +46,11 @@
                 ]
             },
             "parserOptions": {
-                "project": "./tsconfig.eslint.json"
+                "parser": "@typescript-eslint/parser",
+                "project": "./tsconfig.eslint.json",
+                "extraFileExtensions": [
+                    ".vue"
+                ]
             }
         }
     ]

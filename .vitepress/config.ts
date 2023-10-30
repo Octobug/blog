@@ -31,7 +31,8 @@ export default defineConfig({
       pattern: "https://github.com/Octobug/blog/edit/main/:path",
     },
     footer: {
-      copyright: '© <a href="https://github.com/Octobug">Octobug</a>. <a href="https://github.com/Octobug/blog/blob/main/LICENSE">CC-BY-SA-4.0 LICENSE</a>.',
+      message: 'All published under the <a href="https://github.com/Octobug/blog/blob/main/LICENSE">CC-BY-SA-4.0</a> license.',
+      copyright: '© 2019-present <a href="https://github.com/Octobug">Octobug</a>',
     },
     lastUpdated: {
       formatOptions: {
@@ -41,16 +42,16 @@ export default defineConfig({
     },
     nav: [
       {
-        text: "Home",
-        link: "/",
+        text: "POSTS",
+        link: "/pages/posts",
       },
       {
-        text: "Tags",
-        link: "/tags",
+        text: "TAGS",
+        link: "/pages/tags",
       },
       {
-        text: "Archives",
-        link: "/archives",
+        text: "REPO",
+        link: "https://github.com/Octobug/blog",
       },
     ],
     search: {

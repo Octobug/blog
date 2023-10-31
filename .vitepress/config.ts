@@ -1,6 +1,10 @@
-import { defineConfig } from "vitepress";
+import { defineConfigWithTheme } from "vitepress";
+import type { ThemeConfig } from "./theme-config";
+import { getPostList } from "./theme/loader";
 
-export default defineConfig({
+const year = new Date().getFullYear();
+
+export default defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
   description: "Octobug's blog.",
   cleanUrls: true,
@@ -11,7 +15,7 @@ export default defineConfig({
       {
         rel: "icon",
         type: "image/png",
-        href: "/favicon.png",
+        href: "/avatar.png",
       },
     ],
     [
@@ -27,12 +31,16 @@ export default defineConfig({
   ],
   themeConfig: {
     outline: "deep",
+    docFooter: {
+      prev: "Previous",
+      next: "Next",
+    },
     editLink: {
       pattern: "https://github.com/Octobug/blog/edit/main/:path",
     },
     footer: {
       message: 'All published under the <a href="https://github.com/Octobug/blog/blob/main/LICENSE">CC-BY-SA-4.0</a> license.',
-      copyright: '© 2019-present <a href="https://github.com/Octobug">Octobug</a>',
+      copyright: `Copyright © 2019-${year} <a href="https://github.com/Octobug">Octobug</a>`,
     },
     lastUpdated: {
       formatOptions: {
@@ -45,9 +53,17 @@ export default defineConfig({
         text: "POSTS",
         link: "/pages/posts",
       },
+      // {
+      //   text: "VISIONS",
+      //   link: "/pages/visions",
+      // },
       {
         text: "TAGS",
         link: "/pages/tags",
+      },
+      {
+        text: "SORTS",
+        link: "/pages/sorts",
       },
       {
         text: "REPO",
@@ -66,5 +82,15 @@ export default defineConfig({
         link: "mailto:whalevocal@gmail.com",
       },
     ],
+    // Extended configs
+    avatar: "/avatar.png",
+    nickname: "Octobug",
+    bio: "Thoughts on everything.",
+    location: "Shenzhen, China",
+    timezone: "Aisa/Shanghai",
+    pageSize: 10,
+    postList: await getPostList([
+      "./posts",
+    ]),
   },
 });

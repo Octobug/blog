@@ -1,8 +1,8 @@
 ---
-# layout: home
 date: 2023-10-29
-title: Octobug's Blog
+layout: home
 sidebar: false
+title: Octobug's Blog
 ---
 
-👷 🚧
+<Home/>

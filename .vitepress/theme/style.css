@@ -134,10 +134,22 @@
 }
 
 /* 
- * Customization
- */
-.title {
+ * Custom CSS
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-avatar-border: #ffffff;
+  --vp-avatar-large: 10rem;
+  --vp-avatar-medium: 8rem;
+  --vp-avatar-small: 6rem;
+}
+
+header a.title {
   font-family: Georgia, sans-serif;
   font-size: 1.3rem !important;
   font-weight: 100 !important;
+}
+
+footer a {
+  color: var(--vp-c-neutral);
 }

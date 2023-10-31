@@ -87,7 +87,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     nickname: "Octobug",
     bio: "Thoughts on everything.",
     location: "Shenzhen, China",
-    timezone: "Aisa/Shanghai",
+    timezone: "Asia/Shanghai",
     pageSize: 10,
     postList: await getPostList([
       "./posts",

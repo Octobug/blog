@@ -8,7 +8,8 @@ Thoughts on everything.
 
 ## The Theme
 
-This blog is powered by [VitePress](https://vitepress.dev/). Its theme highly utilizes these two projects:
+This blog is powered by [VitePress](https://vitepress.dev/) and hosted on
+GitHub Pages. Its theme highly utilized these two projects:
 
 - [airene/vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure)
 - [clark-cui/vitepress-blog-zaun](https://github.com/clark-cui/vitepress-blog-zaun)

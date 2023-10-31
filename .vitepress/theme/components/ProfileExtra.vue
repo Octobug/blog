@@ -17,7 +17,7 @@
         />
       </svg>
       <span>
-        {{ `${nowWithTZ.format("HH:mm")} (${nowWithTZ.format("Z")})` }}
+        {{ `${nowWithTZ.format("HH:mm")} (${nowWithTZ.format("UTC Z")})` }}
       </span>
     </li>
   </ul>

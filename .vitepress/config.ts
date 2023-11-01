@@ -27,7 +27,9 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
   ],
   ignoreDeadLinks: [
+    "./.github/**",
     "./LICENSE",
+    "./README.md",
   ],
   themeConfig: {
     outline: "deep",

@@ -2,9 +2,7 @@
 
 [![Badge: GitHub](https://github.com/Octobug/blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/Octobug/blog/actions)
 
-[blog.octobug.site](https://blog.octobug.site/)
-
-Thoughts on everything.
+Thoughts on everything: [blog.octobug.site](https://blog.octobug.site/).
 
 ## The Theme
 
@@ -15,8 +13,10 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 
 ## Contribution
 
-This project is not going to be made an out-of-the-box blog generator for now. But any helps and advice are welcome. Here's the [Contributing Guide](./.github/contributing.md), feel free to customize it based on your own ideas.
+This project is not going to be made an out-of-the-box blog generator, thus it's a very personal project. But any helps and advice are welcome.
+
+Here's the [Contributing Guide](./.github/contributing.md), feel free to customize it based on your own ideas.
 
 ## License
 
-[CC-BY-SA-4.0](./LICENSE)
+[CC-BY-SA-4.0](./LICENSE).

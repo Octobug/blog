@@ -59,12 +59,12 @@ export default defineConfigWithTheme<ThemeConfig>({
       //   link: "/pages/visions",
       // },
       {
-        text: "TAGS",
-        link: "/pages/tags",
-      },
-      {
         text: "SORTS",
         link: "/pages/sorts",
+      },
+      {
+        text: "TAGS",
+        link: "/pages/tags",
       },
       {
         text: "REPO",

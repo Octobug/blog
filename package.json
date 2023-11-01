@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
+    "preview": "vitepress preview",
     "eslint": "eslint .",
     "mdlint": "markdownlint .",
-    "preview": "vitepress preview",
     "prepare": "husky install"
   },
   "lint-staged": {

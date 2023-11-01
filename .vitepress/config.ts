@@ -26,9 +26,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       },
     ],
   ],
-  ignoreDeadLinks: [
-    "./.github/**",
-    "./LICENSE",
+  srcExclude: [
+    "./.github/",
     "./README.md",
   ],
   themeConfig: {

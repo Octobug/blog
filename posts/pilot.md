@@ -44,9 +44,13 @@ tags:
 
 以前不知道想要写什么，现在知道想要写什么，但是很多问题我并不知道答案。已经知道答案的，我便把它们写在这里。
 
-## References
+::: details Pilot?
 
-> “Pilot”经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
+“Pilot”经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
+
+:::
+
+## References
 
 1. [Television pilot [Wikipedia]][1]
 2. [List of television episodes titled Pilot [Wikipedia]][2]

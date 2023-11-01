@@ -13,7 +13,7 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 
 ## Contribution
 
-This project is not going to be made an out-of-the-box blog generator, thus it's a very personal project. But any helps and advice are welcome.
+This project is not going to be made an out-of-the-box blog theme, thus it's a very personal project. But any helps and advice are welcome.
 
 Here's the [Contributing Guide](./.github/contributing.md), feel free to customize it based on your own ideas.
 

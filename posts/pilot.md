@@ -14,7 +14,7 @@ tags:
 
 2016 年还在上大学的时候有过一个博客 [Octobug/old.octobug.github.io](https://github.com/Octobug/old.octobug.github.io)，当时主要在上面写一些信息安全竞赛的题解。后来没从事信息安全相关的岗位，刚毕业那会儿也不知道再写点什么好。所以这个博客在 2017 年后就基本没更新，直到完全弃用。
 
-2019 年又产生了写博客的想法，邀请了朋友 [`@Shady`](https://github.com/shady-robot) 一起开始开发 [okvk/Jane](https://github.com/okvk/Jane)。那个时候思路过于宏大，想做一个大而全的系统。除了传统的博客功能，还包含其他的比如和 [roadmap.sh](https://roadmap.sh) 类似的功能。但后来我们工作都太忙，很多原来的设想自己也不再认同，所以这个项目也烂头了。
+2019 年又产生了写博客的想法，邀请了朋友 [`@Shady`](https://github.com/shady-robot) 一起开始开发 [okvk/Jane](https://github.com/okvk/Jane)。那个时候思路过于宏大，想做一个大而全的系统，除了传统的博客功能，还包含其他的比如和 [roadmap.sh](https://roadmap.sh) 类似的功能。但后来我们工作都太忙，很多原来的设想自己也不再认同，所以这个项目也烂头了。
 
 ## 笔记
 
@@ -32,7 +32,7 @@ tags:
 
 ## VitePress
 
-选择基于 [VitePress](https://vitepress.dev/) 开发博客主题的原因是，在二月份准备做 [english.highlight.ink](https://english.highlight.ink/)（一个英语自学指引）时简单调研了一些静态网站生成器，最后因为 VitePress 的简洁轻巧且支持自定义主题而选择了它。
+选择基于 [VitePress](https://vitepress.dev/) 开发博客主题的原因是，在二月份准备做 [english.highlight.ink](https://english.highlight.ink/)（一个英语自学指引）时简单调研了一些静态网站生成器，最后因为 VitePress 简洁轻巧且支持自定义主题而选择了它。
 
 ## WhaleVocal
 

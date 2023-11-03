@@ -39,10 +39,8 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "markdownlint-cli": "^0.37.0",
+    "moment-timezone": "^0.5.43",
     "typescript": "^5.2.2",
-    "vitepress": "^1.0.0-rc.15"
-  },
-  "dependencies": {
-    "moment-timezone": "^0.5.43"
+    "vitepress": "^1.0.0-rc.24"
   }
 }

@@ -17,29 +17,29 @@ import Profile from "../components/Profile.vue";
 <style module>
 .column {
   justify-content: center;
-}
 
-.sidebar {
-  padding: 2rem 4rem;
-}
+  .sidebar {
+    padding: 2rem 4rem;
+  }
 
-.homefeed {
-  padding: 0 4rem;
+  .homefeed {
+    padding: 0 4rem;
+  }
 }
 
 @media (min-width: 960px) {
   .column {
     padding: 0rem 4rem;
     display: flex;
-  }
 
-  .sidebar {
-    padding: 3rem 1rem 3rem 3rem;
-  }
+    .sidebar {
+      padding: 3rem 1rem 3rem 3rem;
+    }
 
-  .homefeed {
-    min-width: 40rem;
-    padding: 3rem 3rem 3rem 1rem;
+    .homefeed {
+      min-width: 40rem;
+      padding: 3rem 3rem 3rem 1rem;
+    }
   }
 }
 
@@ -47,15 +47,15 @@ import Profile from "../components/Profile.vue";
   .column {
     padding: 0rem 8rem;
     display: flex;
-  }
 
-  .sidebar {
-    padding: 4rem 2rem 4rem 4rem;
-  }
+    .sidebar {
+      padding: 4rem 2rem 4rem 4rem;
+    }
 
-  .homefeed {
-    min-width: 60rem;
-    padding: 4rem 4rem 4rem 2rem;
+    .homefeed {
+      min-width: 60rem;
+      padding: 4rem 4rem 4rem 2rem;
+    }
   }
 }
 </style>

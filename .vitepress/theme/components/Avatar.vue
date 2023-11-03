@@ -25,4 +25,10 @@ const { theme } = useData();
   border: 2px solid var(--vp-avatar-border);
   height: var(--vp-avatar-medium);
 }
+
+@media (max-width: 768px) {
+  .avatar {
+    height: var(--vp-avatar-small);
+  }
+}
 </style>

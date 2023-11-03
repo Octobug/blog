@@ -1,7 +1,7 @@
 <template>
   <Avatar />
   <div :class="$style.profile">
-    <h1 :class="$style.title">
+    <h1 :class="$style.nickname">
       <span>{{ nickname }}</span>
     </h1>
     <p :class="$style.bio">
@@ -28,7 +28,7 @@ import ProfileExtra from "./ProfileExtra.vue";
   padding: 0 15px;
   text-align: center;
 
-  .title {
+  .nickname {
     display: flex;
     align-items: center;
     font-size: 2em;
@@ -45,6 +45,14 @@ import ProfileExtra from "./ProfileExtra.vue";
       font-size: x-small;
       margin: 0 6px;
       vertical-align: bottom;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .profile {
+    .nickname {
+      font-size: 1.7em;
     }
   }
 }

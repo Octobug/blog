@@ -1,5 +1,5 @@
 import { DefaultTheme } from "vitepress";
-import type { Post } from "./theme/post";
+import type { Post } from "./post";
 
 export interface ThemeConfig extends DefaultTheme.Config {
   avatar: string,

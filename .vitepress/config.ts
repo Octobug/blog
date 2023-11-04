@@ -1,6 +1,7 @@
 import { defineConfigWithTheme } from "vitepress";
-import type { ThemeConfig } from "./theme-config";
 import { getPostList } from "./theme/loader";
+import { tokenize } from "./theme/search";
+import type { ThemeConfig } from "./theme/theme-config";
 
 const year = new Date().getFullYear();
 
@@ -73,6 +74,24 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
     search: {
       provider: "local",
+      options: {
+        detailedView: true,
+        miniSearch: {
+          // https://lucaong.github.io/minisearch/modules/MiniSearch.html
+          options: {
+            tokenize
+          },
+          searchOptions: {
+            fuzzy: 0.1,
+            prefix: true,
+            boost: {
+              title: 4,
+              text: 2,
+            },
+            combineWith: "AND"
+          }
+        },
+      },
     },
     socialLinks: [
       { icon: "github", link: "https://github.com/Octobug" },

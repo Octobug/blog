@@ -12,7 +12,7 @@ import { useData } from "vitepress";
 const { theme } = useData();
 </script>
 
-<style module>
+<style scoped module>
 .frame {
   display: flex;
   align-items: center;

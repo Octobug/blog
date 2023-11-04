@@ -20,40 +20,38 @@ import Avatar from "./Avatar.vue";
 import ProfileExtra from "./ProfileExtra.vue";
 </script>
 
-<style module>
+<style scoped module>
 .profile {
   align-items: center;
   display: flex;
   flex-direction: column;
   padding: 0 15px;
   text-align: center;
+}
 
-  .nickname {
-    display: flex;
-    align-items: center;
-    font-size: 2em;
-    font-weight: 500;
-  }
+.nickname {
+  display: flex;
+  align-items: center;
+  font-size: 2em;
+  font-weight: 500;
+}
 
-  .bio {
-    margin: 1em 0;
-    color: var(--vp-c-neutral);
-    white-space: nowrap;
+.bio {
+  margin: 1em 0;
+  color: var(--vp-c-neutral);
+  white-space: nowrap;
+}
 
-    .dot {
-      color: var(--vp-c-text-3);
-      font-size: x-small;
-      margin: 0 6px;
-      vertical-align: bottom;
-    }
-  }
+.dot {
+  color: var(--vp-c-text-3);
+  font-size: x-small;
+  margin: 0 6px;
+  vertical-align: bottom;
 }
 
 @media (max-width: 768px) {
-  .profile {
-    .nickname {
-      font-size: 1.7em;
-    }
+  .nickname {
+    font-size: 1.7em;
   }
 }
 </style>

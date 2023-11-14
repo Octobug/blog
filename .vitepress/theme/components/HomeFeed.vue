@@ -110,8 +110,7 @@ function turnTo(n: number) {
   font-size: 0.9em;
 }
 
-button {
-  position: relative;
+.pagination button {
   color: var(--vp-c-text-1);
   cursor: pointer;
   font-size: 1em;
@@ -120,7 +119,7 @@ button {
   font-style: italic;
 }
 
-button:hover {
+.pagination button:hover {
   border-bottom: 3px solid var(--vp-c-text-1);
 }
 

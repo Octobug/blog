@@ -1,5 +1,4 @@
 import { DefaultTheme } from "vitepress";
-import type { Post } from "./post";
 
 export interface ThemeConfig extends DefaultTheme.Config {
   avatar: string,
@@ -8,5 +7,5 @@ export interface ThemeConfig extends DefaultTheme.Config {
   location: string,
   timezone: string,
   pageSize: number,
-  postList: Array<Post>,
+  mdfilePatterns: Array<string>
 }

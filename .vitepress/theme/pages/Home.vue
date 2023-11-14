@@ -4,14 +4,14 @@
       <Profile />
     </div>
     <div :class="$style.homefeed">
-      <!-- <HomeFeed /> -->
+      <HomeFeed />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import Profile from "../components/Profile.vue";
-// import HomeFeed from "../components/HomeFeed.vue";
+import HomeFeed from "../components/HomeFeed.vue";
 </script>
 
 <style scoped module>
@@ -20,27 +20,37 @@ import Profile from "../components/Profile.vue";
 }
 
 .aside {
-  padding: 2rem 4rem;
+  padding: 2rem 3rem;
 }
 
 .homefeed {
   padding: 0 4rem;
 }
 
+@media (min-width: 768px) {
+  .aside {
+    padding: 3rem;
+  }
+
+  .homefeed {
+    padding: 0 6rem;
+  }
+}
+
 @media (min-width: 960px) {
   .column {
     padding: 0rem 4rem;
     display: flex;
-
   }
 
   .aside {
-    padding: 3rem 1rem 3rem 3rem;
+    padding: 3rem;
   }
 
   .homefeed {
-    min-width: 40rem;
-    padding: 3rem 3rem 3rem 1rem;
+    max-width: 38rem;
+    min-width: 38rem;
+    padding: 3rem 3rem 0;
   }
 }
 
@@ -48,16 +58,16 @@ import Profile from "../components/Profile.vue";
   .column {
     padding: 0rem 8rem;
     display: flex;
-
   }
 
   .aside {
-    padding: 4rem 2rem 4rem 4rem;
+    padding: 4rem;
   }
 
   .homefeed {
-    min-width: 60rem;
-    padding: 4rem 4rem 4rem 2rem;
+    max-width: 48rem;
+    min-width: 48rem;
+    padding: 4rem 4rem 0;
   }
 }
 </style>

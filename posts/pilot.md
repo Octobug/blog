@@ -1,12 +1,11 @@
 ---
+title: Pilot
 date: 2019-06-02
-location: 深圳，西乡街道
+location: 西乡街道，深圳
 sort: Miscellaneous
 tags:
   - Small Talk
 ---
-
-# Pilot
 
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 

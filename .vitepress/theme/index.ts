@@ -3,8 +3,8 @@ import Theme from "vitepress/theme";
 import "./style.css";
 // import Archives from "./components/Archives.vue";
 // import Tags from "./components/Tags.vue";
-import Layout from "./Layout.vue";
 import Home from "./pages/Home.vue";
+import Layout from "./pages/Layout.vue";
 
 export default {
   extends: Theme,

@@ -137,11 +137,16 @@
  * Custom CSS
  * -------------------------------------------------------------------------- */
 
-:root {
-  --vp-avatar-border: #ffffff;
-  --vp-avatar-large: 10rem;
-  --vp-avatar-medium: 8rem;
-  --vp-avatar-small: 6rem;
+ :root {
+  /* Custom vars */
+  /* Profile */
+  --ct-avatar-border: #ffffff;
+  --ct-avatar-large: 10rem;
+  --ct-avatar-medium: 8rem;
+  --ct-avatar-small: 6rem;
+
+  /* Post list */
+  --ct-post-list-gap: 1.2rem 0;
 }
 
 header a.title {

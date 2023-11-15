@@ -5,7 +5,7 @@
       {{ nickname }}
     </h1>
     <p :class="$style.bio">
-      <span :class="$style.dot">•</span>
+      <Dot />
       <span>{{ bio }}</span>
     </p>
     <ClientOnly>
@@ -19,6 +19,7 @@ import { useData } from "vitepress";
 const { theme } = useData();
 const { nickname, bio } = theme.value;
 import Avatar from "./Avatar.vue";
+import Dot from "./Dot.vue";
 import ProfileExtra from "./ProfileExtra.vue";
 </script>
 
@@ -34,21 +35,15 @@ import ProfileExtra from "./ProfileExtra.vue";
 .nickname {
   display: flex;
   align-items: center;
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 500;
 }
 
 .bio {
   margin: 1em 0;
+  margin-left: -0.5rem;
   color: var(--vp-c-neutral);
   white-space: nowrap;
-}
-
-.dot {
-  color: var(--vp-c-text-3);
-  font-size: x-small;
-  margin: 0 6px;
-  vertical-align: bottom;
 }
 
 @media (max-width: 768px) {

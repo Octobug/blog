@@ -1,7 +1,7 @@
 ---
 title: Pilot
 date: 2019-06-02
-location: 西乡街道，深圳
+location: 深圳，西乡街道
 sort: Miscellaneous
 tags:
   - Small Talk

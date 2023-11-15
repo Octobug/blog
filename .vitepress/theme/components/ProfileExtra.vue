@@ -35,7 +35,7 @@ const now = {
 
 <style scoped module>
 .extra {
-  padding-left: 20px;
+  padding-left: 1.2rem;
   text-align: left;
   color: var(--vp-c-text-2);
 }

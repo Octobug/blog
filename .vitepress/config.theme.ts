@@ -5,7 +5,7 @@ import emailSVGString from "./theme/svgs/email";
 export default {
   outline: "deep",
   docFooter: {
-    prev: "Previous",
+    prev: "Prev",
     next: "Next",
   },
   editLink: {

@@ -2,7 +2,7 @@
   <Avatar />
   <div :class="$style.profile">
     <h1 :class="$style.nickname">
-      <span>{{ nickname }}</span>
+      {{ nickname }}
     </h1>
     <p :class="$style.bio">
       <span :class="$style.dot">•</span>

@@ -78,9 +78,9 @@ function turnTo(n: number) {
   display: block;
   color: var(--vp-c-neutral);
   font-weight: 500;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .title:hover {

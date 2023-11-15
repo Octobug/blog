@@ -17,7 +17,7 @@
   <div :class="$style.pagination">
     <button
       v-if="page.cursor.value > 1"
-      :class="$style.previous"
+      :class="[$style.pageButton, $style.previous]"
       @click="turnTo(page.cursor.value - 1)"
     >
       PREV
@@ -30,7 +30,7 @@
     </div>
     <button
       v-if="page.cursor.value < page.total"
-      :class="$style.next"
+      :class="[$style.pageButton, $style.next]"
       @click="turnTo(page.cursor.value + 1)"
     >
       NEXT
@@ -78,6 +78,7 @@ function turnTo(n: number) {
   display: block;
   color: var(--vp-c-neutral);
   font-weight: 500;
+  font-size: 1.05em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -92,7 +93,7 @@ function turnTo(n: number) {
   float: right;
   position: relative;
   bottom: 1.6em;
-  font-size: 0.8em;
+  font-size: 0.85em;
   color: var(--vp-c-text-3);
 }
 
@@ -110,7 +111,7 @@ function turnTo(n: number) {
   font-size: 0.9em;
 }
 
-.pagination button {
+.pageButton {
   color: var(--vp-c-text-1);
   cursor: pointer;
   font-size: 1em;
@@ -119,7 +120,7 @@ function turnTo(n: number) {
   font-style: italic;
 }
 
-.pagination button:hover {
+.pageButton:hover {
   border-bottom: 3px solid var(--vp-c-text-1);
 }
 

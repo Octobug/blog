@@ -58,6 +58,6 @@ const now = {
 .timezone svg {
   width: 10.8px;
   margin-top: 6.2px;
-  margin-left: -17.5px;
+  margin-left: -17.2px;
 }
 </style>

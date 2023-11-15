@@ -4,18 +4,20 @@
       {{ post.title }}
     </h1>
     <div :class="$style.elementList">
-      <Dot />
       <span :class="$style.elementItem">
         {{ moment(post.date).format("LL") }}
       </span>
-      <Dot v-if="post.location" />
+      <Dot
+        v-if="post.location"
+        :class="$style.dot"
+      />
       <span
         v-if="post.location"
         :class="$style.elementItem"
       >
         {{ post.location }}
       </span>
-      <Dot />
+      <Dot :class="$style.dot" />
       <span :class="$style.elementItem">
         {{ post.readingTime }}
       </span>
@@ -25,24 +27,33 @@
 
 <script lang="ts" setup>
 import moment from "moment-timezone";
-import { useData } from "vitepress";
+import { useData, onContentUpdated } from "vitepress";
+import { ref } from "vue";
 import Dot from "./Dot.vue";
 import { data as allPosts } from "../posts.data";
 
 const { frontmatter } = useData();
-const post = allPosts.find(
-  p => p.frontmatter.title === frontmatter.value.title
-)?.frontmatter || frontmatter.value;
+let post = ref(getCurrentPost());
+
+function getCurrentPost() {
+  return allPosts.find(
+    p => p.frontmatter.title === frontmatter.value.title
+  )?.frontmatter || frontmatter.value;
+}
+
+onContentUpdated(() => {
+  post.value = getCurrentPost();
+});
 </script>
 
 <style module scoped>
 .postHeader {
-  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .title {
   padding-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.3em;
   font-size: 1.8em;
   font-weight: 600;
@@ -50,11 +61,15 @@ const post = allPosts.find(
 }
 
 .elementList {
-  color: var(--vp-c-text-3);
   font-size: 0.88rem;
 }
 
 .elementItem {
-  margin-right: 1rem;
+  color: var(--vp-c-text-3);
+}
+
+.dot {
+  color: var(--vp-c-text-2);
+  margin: 0.5rem;
 }
 </style>

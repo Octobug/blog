@@ -16,9 +16,7 @@
           fill="var(--vp-c-text-2)"
         />
       </svg>
-      <ClientOnly>
-        {{ `${now.HHmm} (${now.UTCZ})` }}
-      </ClientOnly>
+      {{ `${now.HHmm} (${now.UTCZ})` }}
     </li>
   </ul>
 </template>

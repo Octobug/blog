@@ -8,7 +8,9 @@
       <span :class="$style.dot">•</span>
       <span>{{ bio }}</span>
     </p>
-    <ProfileExtra />
+    <ClientOnly>
+      <ProfileExtra />
+    </ClientOnly>
   </div>
 </template>
 

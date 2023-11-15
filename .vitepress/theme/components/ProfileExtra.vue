@@ -7,18 +7,18 @@
           fill="var(--vp-c-text-2)"
         />
       </svg>
-      <span>{{ location }}</span>
+      {{ location }}
     </li>
-    <li :class="$style.extraitem">
+    <li :class="[$style.extraitem, $style.timezone]">
       <svg viewBox="0 0 16 16">
         <path
           d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5a.75.75 0 0 1 1.5 0Z"
           fill="var(--vp-c-text-2)"
         />
       </svg>
-      <span>
-        {{ `${nowWithTZ.format("HH:mm")} (${nowWithTZ.format("UTC Z")})` }}
-      </span>
+      <ClientOnly>
+        {{ `${now.HHmm} (${now.UTCZ})` }}
+      </ClientOnly>
     </li>
   </ul>
 </template>
@@ -29,6 +29,10 @@ import { useData } from "vitepress";
 const { theme } = useData();
 const { location, timezone } = theme.value;
 const nowWithTZ = moment().tz(timezone);
+const now = {
+  HHmm: nowWithTZ.format("HH:mm"),
+  UTCZ: nowWithTZ.format("UTC Z")
+};
 </script>
 
 <style scoped module>
@@ -47,5 +51,15 @@ const nowWithTZ = moment().tz(timezone);
   width: 12px;
   margin-top: 5px;
   margin-left: -20px;
+}
+
+.timezone {
+  font-size: 12.8px;
+}
+
+.timezone svg {
+  width: 11px;
+  margin-left: -19.6px;
+  margin-top: 6px;
 }
 </style>

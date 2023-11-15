@@ -47,8 +47,8 @@ const now = {
 .extraitem svg {
   float: left;
   width: 12px;
-  margin-top: 5px;
-  margin-left: -20px;
+  margin-top: 5.2px;
+  margin-left: -18px;
 }
 
 .timezone {
@@ -56,8 +56,8 @@ const now = {
 }
 
 .timezone svg {
-  width: 11px;
-  margin-left: -19.4px;
-  margin-top: 6px;
+  width: 10.8px;
+  margin-top: 6.2px;
+  margin-left: -17.5px;
 }
 </style>

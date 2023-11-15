@@ -8,16 +8,16 @@
       <span :class="$style.elementItem">
         {{ moment(post.date).format("LL") }}
       </span>
-      <Dot />
-      <span :class="$style.elementItem">
-        {{ post.readingTime }}
-      </span>
       <Dot v-if="post.location" />
       <span
         v-if="post.location"
         :class="$style.elementItem"
       >
         {{ post.location }}
+      </span>
+      <Dot />
+      <span :class="$style.elementItem">
+        {{ post.readingTime }}
       </span>
     </div>
   </div>

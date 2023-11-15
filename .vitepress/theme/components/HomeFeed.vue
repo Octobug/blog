@@ -2,7 +2,7 @@
   <div :class="$style.postList">
     <div
       v-for="post in postList"
-      :key="post.src"
+      :key="post.url"
       :class="$style.postItem"
     >
       <a :href="post.url">

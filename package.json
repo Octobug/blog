@@ -41,5 +41,8 @@
     "moment-timezone": "^0.5.43",
     "typescript": "^5.2.2",
     "vitepress": "^1.0.0-rc.25"
+  },
+  "dependencies": {
+    "reading-time": "^1.5.0"
   }
 }

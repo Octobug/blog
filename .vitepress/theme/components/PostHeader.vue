@@ -1,16 +1,23 @@
 <template>
   <div :class="$style.postHeader">
     <h1 :class="$style.title">
-      {{ frontmatter.title }}
+      {{ post.title }}
     </h1>
     <div :class="$style.elementList">
       <Dot />
       <span :class="$style.elementItem">
-        {{ moment(frontmatter.date).format("LL") }}
+        {{ moment(post.date).format("LL") }}
       </span>
-      <Dot v-if="frontmatter.location" />
+      <Dot />
       <span :class="$style.elementItem">
-        {{ frontmatter.location }}
+        {{ post.readingTime }}
+      </span>
+      <Dot v-if="post.location" />
+      <span
+        v-if="post.location"
+        :class="$style.elementItem"
+      >
+        {{ post.location }}
       </span>
     </div>
   </div>
@@ -20,17 +27,22 @@
 import moment from "moment-timezone";
 import { useData } from "vitepress";
 import Dot from "./Dot.vue";
+import { data as allPosts } from "../posts.data";
 
 const { frontmatter } = useData();
+const post = allPosts.find(
+  p => p.frontmatter.title === frontmatter.value.title
+)?.frontmatter || frontmatter.value;
 </script>
 
 <style module scoped>
 .postHeader {
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
 }
 
 .title {
   padding-bottom: 1rem;
+  margin-top: 1rem;
   margin-bottom: 0.3em;
   font-size: 1.8em;
   font-weight: 600;
@@ -39,7 +51,7 @@ const { frontmatter } = useData();
 
 .elementList {
   color: var(--vp-c-text-3);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .elementItem {

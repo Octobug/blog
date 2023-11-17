@@ -137,8 +137,10 @@
  * Custom CSS
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   /* Custom vars */
+  --ct-c-shadow: #d7d7d7;
+
   /* Profile */
   --ct-avatar-border: #ffffff;
   --ct-avatar-large: 10rem;
@@ -156,5 +158,17 @@ header a.title {
 }
 
 footer a {
-  color: var(--vp-c-neutral);
+  color: var(--vp-c-text-1);
+}
+
+/* CSS for a Post */
+.main img {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
+  margin-bottom: 2rem;
+}
+
+.dark .main img {
+  border: 0.1rem solid var(--vp-c-neutral);
+  box-shadow: none;
 }

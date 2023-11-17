@@ -12,6 +12,7 @@ export default createContentLoader(extendedConfig.mdfilePatterns, {
     return rawData.map(p => {
       p.frontmatter.datetime = new Date(p.frontmatter.date);
       p.frontmatter.readingTime = readingTime(p.src || "").text;
+      p.url = p.url.replace("/README", "");
       return p;
     }).sort((a, b) => {
       return b.frontmatter.datetime - a.frontmatter.datetime;

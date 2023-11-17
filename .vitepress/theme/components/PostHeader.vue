@@ -17,7 +17,10 @@
       >
         {{ post.location }}
       </span>
-      <Dot :class="$style.dot" />
+      <Dot
+        v-if="post.readingTime"
+        :class="$style.dot"
+      />
       <span :class="$style.elementItem">
         {{ post.readingTime }}
       </span>

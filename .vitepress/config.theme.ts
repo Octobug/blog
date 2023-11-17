@@ -22,22 +22,22 @@ export default {
     },
   },
   nav: [
-    {
-      text: "POSTS",
-      link: "/pages/posts",
-    },
+    // {
+    //   text: "POSTS",
+    //   link: "/pages/posts",
+    // },
     // {
     //   text: "VISIONS",
     //   link: "/pages/visions",
     // },
-    {
-      text: "TAGS",
-      link: "/pages/tags",
-    },
-    {
-      text: "SORTS",
-      link: "/pages/sorts",
-    },
+    // {
+    //   text: "TAGS",
+    //   link: "/pages/tags",
+    // },
+    // {
+    //   text: "SORTS",
+    //   link: "/pages/sorts",
+    // },
     {
       text: "REPO",
       link: "https://github.com/Octobug/blog",
@@ -80,5 +80,5 @@ export default {
   location: "Shenzhen, China",
   timezone: "Asia/Shanghai",
   pageSize: 13,
-  mdfilePatterns: ["posts/*.md"]
+  mdfilePatterns: ["posts/**/*.md"]
 } satisfies ThemeConfig;

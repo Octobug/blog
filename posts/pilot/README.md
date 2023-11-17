@@ -7,6 +7,8 @@ tags:
   - Small Talk
 ---
 
+![Pilot Whale](./pilot-whale.jpg)
+
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 
 ## 旧博客
@@ -45,7 +47,8 @@ tags:
 
 ::: details Pilot?
 
-“Pilot”经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
+- "Pilot" 经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
+- 题图中的鲸鱼是领航鲸 (Pilot Whale) [[3]]，图片来源 [[4]]。
 
 :::
 
@@ -53,6 +56,10 @@ tags:
 
 1. [Television pilot [Wikipedia]][1]
 2. [List of television episodes titled Pilot [Wikipedia]][2]
+3. [Pilot whale [Wikipedia]][3]
+4. [Days Like Today Are Why I Want to Live Forever! [SDM adventures]][4]
 
 [1]: <https://en.wikipedia.org/wiki/Television_pilot>
 [2]: <https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot>
+[3]: <https://en.wikipedia.org/wiki/Pilot_whale>
+[4]: <https://sdmdiving.com/wildlife-travel-blog/tag/pilot+whale+diving>

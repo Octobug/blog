@@ -4,7 +4,7 @@
 
 ### Node.js
 
-The version number is stored in this file: [.nvmrc](../.nvmrc).
+The version number is stored in this file: [`.nvmrc`](../.nvmrc).
 
 After the corresponding [Node.js](https://nodejs.org/) is installed, run:
 
@@ -21,7 +21,7 @@ There are several other npm script commands in the `scripts` part of [`package.j
 
 ### Visual Studio Code
 
-If you're using [Visual Studio Code](https://code.visualstudio.com/), there are a few extensions that are really helpful to development for you:
+If you're using [Visual Studio Code](https://code.visualstudio.com/), the extensions below are really helpful for you to set up the development environment:
 
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)

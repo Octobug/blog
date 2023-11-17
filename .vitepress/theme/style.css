@@ -142,7 +142,7 @@
   --ct-c-shadow: #d7d7d7;
 
   /* Profile */
-  --ct-avatar-border: #ffffff;
+  --ct-avatar-border: white;
   --ct-avatar-large: 10rem;
   --ct-avatar-medium: 8rem;
   --ct-avatar-small: 6rem;

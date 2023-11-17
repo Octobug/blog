@@ -23,11 +23,13 @@ const { theme } = useData();
 .avatar {
   border-radius: 50%;
   border: 2px solid var(--ct-avatar-border);
+  width: var(--ct-avatar-medium);
   height: var(--ct-avatar-medium);
 }
 
 @media (max-width: 768px) {
   .avatar {
+    width: var(--ct-avatar-small);
     height: var(--ct-avatar-small);
   }
 }

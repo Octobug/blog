@@ -53,13 +53,13 @@ export default {
           tokenize
         },
         searchOptions: {
+          combineWith: "AND",
           fuzzy: 0.1,
           prefix: true,
           boost: {
             title: 4,
             text: 2,
           },
-          combineWith: "AND"
         }
       },
     },

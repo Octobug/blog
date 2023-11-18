@@ -1,11 +1,12 @@
 ---
-title: Pilot
 date: 2019-06-02
 location: 深圳，西乡街道
 sort: Miscellaneous
 tags:
   - Small Talk
 ---
+
+# Pilot
 
 ![Pilot Whale](./pilot-whale.jpg)
 
@@ -19,9 +20,9 @@ tags:
 
 ## 笔记
 
-一上大学就丢失了记笔记的习惯，之后我发现如果不记笔记，有些书很容易看了等于没看。
+一上大学就丢失了记笔记的习惯，纸质书里的勾勾划划随着大部分学习资料电子化而离去。
 
-大约在 2016 年我开始使用[为知笔记](https://www.wiz.cn/)。
+阅读知识密度高的书如果不记笔记很容易看了等于没看，所以大约在 2016 年（大三）我开始使用[为知笔记](https://www.wiz.cn/)。
 
 2019 年买了 MacBook Pro 13 (2018)，日常使用的操作系统变成 macOS，而那个时候的为知笔记 macOS 客户端很不好用，所以我把全部笔记迁移到了[有道云笔记](https://note.youdao.com/)。
 
@@ -29,7 +30,7 @@ tags:
 
 值得一提的是，在 VS Code 里写笔记的体验很好，和写代码差不多。并且由于使用了 Git，所以事后回溯非常方便。
 
-今年整理工作笔记时觉得有一些内容值得整理成篇，所以又萌发写博客的想法……
+直到今年，我在整理工作笔记时觉得有一些内容值得整理成篇，所以又萌发写博客的想法……
 
 ## VitePress
 
@@ -43,12 +44,12 @@ tags:
 
 我依然比较喜欢这个 ID，所以博客沿用了这个名字。
 
-以前不知道想要写什么，现在知道想要写什么，但是很多问题我并没有答案。已经知道答案的，我便把它们写在这里。
+以前不知道想要写什么，现在知道想要写什么，但是很多问题我并没有答案。已经知道答案的，我便把它们记录在这里。
 
 ::: details Pilot?
 
 - "Pilot" 经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
-- 题图中的鲸鱼是领航鲸 (Pilot Whale) [[3]]，图片来源 [[4]]。
+- 题图 [[3]] 中的鲸鱼是领航鲸 (Pilot Whale) [[4]]。
 
 :::
 
@@ -56,10 +57,10 @@ tags:
 
 1. [Television pilot [Wikipedia]][1]
 2. [List of television episodes titled Pilot [Wikipedia]][2]
-3. [Pilot whale [Wikipedia]][3]
-4. [Days Like Today Are Why I Want to Live Forever! [SDM adventures]][4]
+3. [Days Like Today Are Why I Want to Live Forever! [SDM adventures]][3]
+4. [Pilot whale [Wikipedia]][4]
 
 [1]: <https://en.wikipedia.org/wiki/Television_pilot>
 [2]: <https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot>
-[3]: <https://en.wikipedia.org/wiki/Pilot_whale>
-[4]: <https://sdmdiving.com/wildlife-travel-blog/tag/pilot+whale+diving>
+[3]: <https://sdmdiving.com/wildlife-travel-blog/tag/pilot+whale+diving>
+[4]: <https://en.wikipedia.org/wiki/Pilot_whale>

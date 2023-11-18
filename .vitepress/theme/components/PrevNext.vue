@@ -39,16 +39,14 @@
 import { useData, onContentUpdated } from "vitepress";
 import { ref } from "vue";
 import { data as allPosts } from "../posts.data";
+import { findPostIndex } from "../utils";
 import type { PageControl } from "../types/page-control";
 
-const { frontmatter, theme } = useData();
+const { page, theme } = useData();
 let control = ref<PageControl>({});
 
 onContentUpdated(() => {
-  const index = allPosts.findIndex(
-    p => p.frontmatter.title === frontmatter.value.title
-  ) || 0;
-
+  const index = findPostIndex(allPosts, page.value);
   const prevPost = allPosts[index - 1];
   const nextPost = allPosts[index + 1];
   const prev = prevPost && {

@@ -9,6 +9,8 @@ export function tokenize(text: string): Array<string> {
   // @ts-ignore: seems like Intl.Segmenter is not supported by the lang server
   const segmenter = new Intl.Segmenter("cn", { granularity: "word" });
   // @ts-ignore
-  const words = Array.from(segmenter.segment(text)).map((item) => item.segment);
-  return words.filter(w => w !== " ");
+  const segs = Array.from(segmenter.segment(text)).map(item => item.segment);
+  const uniqueSegs = Array.from(new Set(segs));
+  const result = uniqueSegs.filter(w => !(/^\s+$/).test(w));
+  return result;
 }

@@ -162,6 +162,11 @@ footer a {
 }
 
 /* CSS for a Post */
+/* PostElements Workaround */
+.main h1 {
+  margin-bottom: 5rem;
+}
+
 .main img {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);

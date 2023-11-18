@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template #doc-before>
-      <PostHeader />
+      <PostElements />
     </template>
     <template #doc-after>
       <!-- <Comments /> -->
@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import DefaultTheme from "vitepress/theme";
-import PostHeader from "../components/PostHeader.vue";
+import PostElements from "../components/PostElements.vue";
 import PrevNext from "../components/PrevNext.vue";
 
 const { Layout } = DefaultTheme;

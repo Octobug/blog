@@ -2,6 +2,7 @@
 import { createContentLoader, ContentData } from "vitepress";
 import readingTime from "reading-time";
 import extendedConfig from "../config.theme";
+import { withBaseURL } from "../config.utils";
 
 declare const data: ContentData[];
 export { data };
@@ -20,7 +21,7 @@ export default createContentLoader(extendedConfig.mdfilePatterns, {
       p.frontmatter.title = extractTile(p.src || "");
       p.frontmatter.datetime = new Date(p.frontmatter.date);
       p.frontmatter.readingTime = readingTime(p.src || "").text;
-      p.url = p.url.replace("/README", "");
+      p.url = withBaseURL(p.url.replace("/README", ""));
       return p;
     }).sort((a, b) => {
       return b.frontmatter.datetime - a.frontmatter.datetime;

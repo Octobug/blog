@@ -1,6 +1,7 @@
 import type { ThemeConfig } from "./theme/types/theme-config";
 import { tokenize } from "./theme/search";
 import emailSVGString from "./theme/svgs/email";
+import { withBaseURL } from "./config.utils";
 
 export default {
   outline: "deep",
@@ -74,7 +75,7 @@ export default {
     },
   ],
   // Extended configs
-  avatar: "/avatar.png",
+  avatar: withBaseURL("/avatar.png"),
   nickname: "Octobug",
   bio: "Thoughts on everything.",
   location: "Shenzhen, China",

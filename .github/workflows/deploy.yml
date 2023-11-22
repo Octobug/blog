@@ -1,10 +1,13 @@
-name: GitHub Pages
+name: Staging
 
 on:
   push:
-    branches: [main]
+    branches: [staging]
 
   workflow_dispatch:
+
+env:
+  BASE_URL: ${{ vars.BASE_URL }}
 
 permissions:
   contents: read
@@ -18,6 +21,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Staging
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,7 +48,7 @@ jobs:
 
   deploy:
     environment:
-      name: production
+      name: Staging
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest

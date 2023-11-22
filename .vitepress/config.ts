@@ -1,10 +1,12 @@
 import { defineConfigWithTheme } from "vitepress";
 import type { ThemeConfig } from "./theme/types/theme-config";
 import themeConfig from "./config.theme";
+import { BASE_URL, withBaseURL } from "./config.utils";
 
 export default defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
   description: "Octobug's blog.",
+  base: BASE_URL,
   cleanUrls: true,
   lastUpdated: true,
   head: [
@@ -13,7 +15,7 @@ export default defineConfigWithTheme<ThemeConfig>({
       {
         rel: "icon",
         type: "image/png",
-        href: "/avatar.png",
+        href: withBaseURL("/avatar.png")
       },
     ],
     [

@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.elementList">
     <span :class="$style.elementItem">
-      {{ moment(post.date).format("LL") }}
+      {{ moment(post.datetime).format("LL") }}
     </span>
     <Dot
       v-if="post.location"
@@ -35,7 +35,7 @@ const { frontmatter, page } = useData();
 let post = ref(getPostData());
 
 function getPostData() {
-  return findPost(allPosts, page.value).frontmatter || frontmatter.value;
+  return findPost(allPosts, page.value)?.frontmatter || frontmatter.value;
 }
 
 onContentUpdated(() => {

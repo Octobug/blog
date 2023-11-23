@@ -1,7 +1,7 @@
 import type { ThemeConfig } from "./theme/types/theme-config";
 import { tokenize } from "./theme/search";
 import emailSVGString from "./theme/svgs/email";
-import { withBaseURL } from "./config.utils";
+import { giscus, withBaseURL } from "./config.utils";
 
 export default {
   outline: "deep",
@@ -81,5 +81,6 @@ export default {
   location: "Shenzhen, China",
   timezone: "Asia/Shanghai",
   pageSize: 13,
-  mdfilePatterns: ["posts/**/*.md"]
+  mdfilePatterns: ["posts/**/*.md"],
+  giscus
 } satisfies ThemeConfig;

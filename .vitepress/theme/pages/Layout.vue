@@ -4,8 +4,8 @@
       <PostElements />
     </template>
     <template #doc-after>
-      <!-- <Comments /> -->
       <PrevNext />
+      <Comments />
     </template>
   </Layout>
 </template>
@@ -14,6 +14,7 @@
 import DefaultTheme from "vitepress/theme";
 import PostElements from "../components/PostElements.vue";
 import PrevNext from "../components/PrevNext.vue";
+import Comments from "../components/Comments.vue";
 
 const { Layout } = DefaultTheme;
 </script>

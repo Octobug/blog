@@ -9,10 +9,16 @@ The version number is stored in this file: [`.nvmrc`](../.nvmrc).
 After the corresponding [Node.js](https://nodejs.org/) is installed, run:
 
 ```sh
+# setup .env
+mv .env.tmpl .env
+# then fill out the .env
+
 # install dependencies
 npm install
+
 # start the development server
 npm run dev
+
 # build static files for deployment
 npm run build
 ```

@@ -43,7 +43,7 @@ import { findPostIndex } from "../utils";
 import type { PageControl } from "../types/page-control";
 
 const { page, theme } = useData();
-let control = ref<PageControl>({});
+const control = ref<PageControl>({});
 
 onContentUpdated(() => {
   const index = findPostIndex(allPosts, page.value);
@@ -64,7 +64,7 @@ onContentUpdated(() => {
 <style module scoped>
 .prevNext {
   border-top: 1px solid var(--vp-c-divider);
-  padding-top: 24px;
+  padding-top: 1.5rem;
   display: grid;
   grid-row-gap: 8px;
 }

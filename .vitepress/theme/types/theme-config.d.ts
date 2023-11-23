@@ -8,4 +8,8 @@ export interface ThemeConfig extends DefaultTheme.Config {
   timezone: string,
   pageSize: number,
   mdfilePatterns: Array<string>
+  giscus: {
+    repo_id: string,
+    category_id: string
+  }
 }

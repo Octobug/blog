@@ -22,13 +22,13 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
   - [x] Location
   - [x] Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
-  - [ ] Comments with Giscus
+  - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
 - [ ] Posts (Archives)
 - [ ] Tags
 - [ ] Sorts (Categories)
 - [ ] Others
   - [ ] Visions (for special pages)
-  - [ ] Google Analytics
+  - [x] [Google Analytics](https://analytics.google.com/)
 
 ## Contribution
 

@@ -8,6 +8,8 @@ on:
 
 env:
   BASE_URL: ${{ vars.BASE_URL }}
+  GISCUS_REPO_ID: ${{ vars.GISCUS_REPO_ID }}
+  GISCUS_CATEGORY_ID: ${{ vars.GISCUS_CATEGORY_ID }}
 
 permissions:
   contents: read
@@ -52,7 +54,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

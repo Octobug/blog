@@ -9,6 +9,8 @@ export const giscus = {
   category_id: env.GISCUS_CATEGORY_ID || "",
 };
 
+export const gMeasurementID = env.G_MEASUREMENT_ID || "";
+
 export function withBaseURL(urlPath: string) {
   return path.join(BASE_URL || "/", urlPath);
 }

@@ -17,13 +17,13 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 - [x] Home
   - [x] Profile Card
   - [x] Paged Post List
-- [ ] Single Post
+- [x] Single Post
   - [x] Publication Date
   - [x] Location
   - [x] Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
   - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
-- [ ] Posts (Archives)
+- [x] Posts (Archives)
 - [ ] Tags
 - [ ] Sorts (Categories)
 - [ ] Others

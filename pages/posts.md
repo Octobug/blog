@@ -1,10 +1,7 @@
 ---
-aside: false
-description: All Posts
-page: true
 title: Posts
+description: All Posts
+layout: page
 ---
 
 👷 🚧
-
-<!-- <PostList/> -->

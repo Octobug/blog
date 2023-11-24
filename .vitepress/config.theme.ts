@@ -23,10 +23,10 @@ export default {
     },
   },
   nav: [
-    // {
-    //   text: "POSTS",
-    //   link: "/pages/posts",
-    // },
+    {
+      text: "POSTS",
+      link: "/posts",
+    },
     // {
     //   text: "VISIONS",
     //   link: "/pages/visions",

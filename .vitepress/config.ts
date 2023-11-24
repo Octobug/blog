@@ -30,6 +30,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   ],
   rewrites: {
     ":postsdir/:title/README.md": ":postsdir/:title.md",
+    ":pagesdir/:title.md": ":title.md",
   },
   srcExclude: [
     "./.github/",

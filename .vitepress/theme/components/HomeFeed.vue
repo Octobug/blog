@@ -1,18 +1,8 @@
 <template>
-  <div :class="$style.postList">
-    <div
-      v-for="post in postList"
-      :key="post.url"
-      :class="$style.postItem"
-    >
-      <a :href="post.url">
-        <span :class="$style.title">{{ post.frontmatter.title }}</span>
-      </a>
-      <span :class="$style.date">
-        {{ moment(post.frontmatter.datetime).format('ll') }}
-      </span>
-    </div>
-  </div>
+  <PostList
+    date-format="ll"
+    :post-list="postList"
+  />
 
   <div :class="$style.pagination">
     <button
@@ -40,10 +30,10 @@
 
 <script lang="ts" setup>
 import type { ContentData } from "vitepress";
-import moment from "moment-timezone";
 import { useData } from "vitepress";
 import { ref } from "vue";
 import { data as allPosts } from "../posts.data";
+import PostList from "./PostList.vue";
 
 const { theme } = useData();
 const allPostsLength = allPosts.length;
@@ -64,39 +54,6 @@ function turnTo(n: number) {
 </script>
 
 <style module scope>
-.postList {
-  margin-bottom: 2rem;
-}
-
-.postItem {
-  margin: var(--ct-post-list-gap);
-  padding-bottom: 1px;
-  border-bottom: 1px dashed var(--vp-c-default-3);
-}
-
-.title {
-  display: block;
-  color: var(--vp-c-neutral);
-  font-weight: 500;
-  font-size: 1.05em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.title:hover {
-  font-weight: bold;
-  font-style: italic;
-}
-
-.date {
-  float: right;
-  position: relative;
-  bottom: 1.6em;
-  font-size: 0.85em;
-  color: var(--vp-c-text-3);
-}
-
 .pagination {
   padding-top: 2rem;
   display: flex;

@@ -1,0 +1,67 @@
+<template>
+  <div :class="$style.postList">
+    <div
+      v-for="post in postList"
+      :key="post.url"
+      :class="$style.postItem"
+    >
+      <a :href="post.url">
+        <span :class="$style.title">{{ post.frontmatter.title }}</span>
+      </a>
+      <span :class="$style.date">
+        {{ moment(post.frontmatter.datetime).format(dateFormat) }}
+      </span>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import moment from "moment-timezone";
+import Post from "../types/post";
+
+defineProps({
+  postList: {
+    type: Array<Post>,
+    default: []
+  },
+  dateFormat: {
+    type: String,
+    default: "ll"
+  }
+});
+</script>
+
+<style module scoped>
+.postList {
+  margin-bottom: 2rem;
+}
+
+.postItem {
+  margin: var(--ct-post-list-gap);
+  padding-bottom: 1px;
+  border-bottom: 1px dashed var(--vp-c-default-3);
+}
+
+.title {
+  display: block;
+  color: var(--vp-c-neutral);
+  font-weight: 500;
+  font-size: 1.05em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title:hover {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.date {
+  float: right;
+  position: relative;
+  bottom: 1.6em;
+  font-size: 0.85em;
+  color: var(--vp-c-text-3);
+}
+</style>

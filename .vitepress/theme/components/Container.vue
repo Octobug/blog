@@ -7,7 +7,13 @@
 <style module scoped>
 .container {
   justify-content: center;
-  padding: 1rem 4rem 0;
+  padding: 1rem 2.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 3rem 4rem 0;
+  }
 }
 
 @media (min-width: 768px) {

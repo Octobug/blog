@@ -12,5 +12,8 @@ export const giscus = {
 export const gMeasurementID = env.G_MEASUREMENT_ID || "";
 
 export function withBaseURL(urlPath: string) {
+  if (BASE_URL && urlPath.includes(BASE_URL)) {
+    return urlPath;
+  }
   return path.join(BASE_URL || "/", urlPath);
 }

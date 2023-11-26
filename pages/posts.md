@@ -4,4 +4,4 @@ description: All Posts
 layout: page
 ---
 
-👷 🚧
+<Posts />

@@ -1,5 +1,8 @@
 <template>
   <div :class="$style.postList">
+    <span :class="[$style.date, $style.hack]">
+      {{ moment(new Date()).format(dateFormat) }}
+    </span>
     <div
       v-for="post in postList"
       :key="post.url"
@@ -63,5 +66,9 @@ defineProps({
   bottom: 1.6em;
   font-size: 0.85em;
   color: var(--vp-c-text-3);
+}
+
+.hack {
+  visibility: hidden;
 }
 </style>

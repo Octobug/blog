@@ -1,5 +1,9 @@
 <template>
-  <div :class="$style.elementList">
+  <div
+    name="post-elements"
+    :class="$style.elementList"
+    hidden
+  >
     <span :class="$style.elementItem">
       {{ moment(post.datetime).format("LL") }}
     </span>
@@ -38,8 +42,24 @@ function getPostData() {
   return findPost(allPosts, page.value)?.frontmatter || frontmatter.value;
 }
 
+function adjustPosition() {
+  const elements = document.getElementsByName("post-elements");
+  if (elements.length > 1) {
+    return;
+  }
+  const block = elements[0];
+  const title = document.querySelector(".main h1");
+  const parent = title?.parentElement;
+  if (block && title && parent) {
+    const newBlock = block.cloneNode(true);
+    (<Element>newBlock).removeAttribute("hidden");
+    parent.insertBefore(newBlock, title.nextSibling);
+  }
+}
+
 onContentUpdated(() => {
   post.value = getPostData();
+  setTimeout(adjustPosition, 0);
 });
 </script>
 
@@ -47,8 +67,8 @@ onContentUpdated(() => {
 .elementList {
   border-top: 1px dashed var(--vp-c-divider);
   padding-top: 0.5rem;
-  margin-top: 3rem;
-  margin-bottom: -5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
   font-size: 0.88rem;
 }
 

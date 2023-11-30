@@ -12,6 +12,13 @@ export default defineConfigWithTheme<ThemeConfig>({
   lastUpdated: true,
   head: [
     [
+      "meta",
+      {
+        name: "author",
+        content: "Octobug",
+      },
+    ],
+    [
       "link",
       {
         rel: "icon",
@@ -20,11 +27,12 @@ export default defineConfigWithTheme<ThemeConfig>({
       },
     ],
     [
-      "meta",
+      "link",
       {
-        name: "author",
-        content: "Octobug",
-      },
+        name: "mastodon",
+        rel: "me",
+        href: "https://mastodon.online/@cyberwarmth",
+      }
     ],
     ...gaConfig
   ],

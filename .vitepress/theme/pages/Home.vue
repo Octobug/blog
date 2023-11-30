@@ -17,7 +17,7 @@ import HomeFeed from "../components/HomeFeed.vue";
 
 <style scoped module>
 .aside {
-  padding: 2rem;
+  padding: 1.5rem;
   padding-top: 0;
 }
 

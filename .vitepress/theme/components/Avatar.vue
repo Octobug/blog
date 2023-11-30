@@ -34,7 +34,7 @@ const { theme } = useData();
   }
 
   .frame {
-    padding: 1.5rem 0;
+    padding: 0 0 1.5rem;
   }
 }
 </style>

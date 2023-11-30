@@ -43,11 +43,15 @@ export default {
       text: "MORE",
       items: [
         // {
-        //   text: "RSS",
+        //   text: "Best Blogs",
+        //   link: "/bests",
+        // },
+        // {
+        //   text: "RSS Feed",
         //   link: "https://blog.octobug.site/feed.xml",
         // },
         {
-          text: "REPOSITORY",
+          text: "Repository",
           link: "https://github.com/Octobug/blog",
         }
       ]
@@ -76,6 +80,7 @@ export default {
   },
   socialLinks: [
     { icon: "github", link: "https://github.com/Octobug" },
+    { icon: "mastodon", link: "https://mastodon.online/@cyberwarmth" },
     {
       icon: {
         svg: emailSVGString,

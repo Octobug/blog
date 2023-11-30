@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import type { ContentData } from "vitepress";
-import { useData } from "vitepress";
+import { onContentUpdated, useData } from "vitepress";
 import { ref } from "vue";
 import { data as allPosts } from "../posts.data";
 import PostList from "./PostList.vue";
@@ -53,15 +53,28 @@ function turnTo(n: number) {
   const start = (n - 1) * page.size;
   postList.value = allPosts.slice(start, start + page.size);
 }
+
+function setPostListMinHeight() {
+  const root = document.querySelector(":root");
+  const h = theme.value.pageSize * 2.9;
+  (<HTMLElement>root).style.setProperty("--post-list-min-height", `${h}rem`);
+}
+
+onContentUpdated(() => {
+  setPostListMinHeight();
+});
 </script>
 
 <style module scope>
+:root {
+  --post-list-min-height: 29rem;
+}
+
 .postListBox {
-  min-height: 29rem;
+  min-height: var(--post-list-min-height);
 }
 
 .pagination {
-  padding-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

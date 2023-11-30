@@ -32,5 +32,9 @@ const { theme } = useData();
     width: var(--ct-avatar-small);
     height: var(--ct-avatar-small);
   }
+
+  .frame {
+    padding: 1.5rem 0;
+  }
 }
 </style>

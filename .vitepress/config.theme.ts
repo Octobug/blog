@@ -28,21 +28,30 @@ export default {
       link: "/posts",
     },
     // {
-    //   text: "VISIONS",
-    //   link: "/pages/visions",
-    // },
-    // {
     //   text: "TAGS",
     //   link: "/pages/tags",
     // },
     // {
     //   text: "SORTS",
-    //   link: "/pages/sorts",
+    //   link: "/sorts",
+    // },
+    // {
+    //   text: "VISIONS",
+    //   link: "/pages/visions",
     // },
     {
-      text: "REPO",
-      link: "https://github.com/Octobug/blog",
-    },
+      text: "MORE",
+      items: [
+        // {
+        //   text: "RSS",
+        //   link: "https://blog.octobug.site/feed.xml",
+        // },
+        {
+          text: "REPOSITORY",
+          link: "https://github.com/Octobug/blog",
+        }
+      ]
+    }
   ],
   search: {
     provider: "local",
@@ -80,7 +89,7 @@ export default {
   bio: "Thoughts on everything.",
   location: "Shenzhen, China",
   timezone: "Asia/Shanghai",
-  pageSize: 13,
+  pageSize: 10,
   mdfilePatterns: ["posts/**/*.md"],
   giscus
 } satisfies ThemeConfig;

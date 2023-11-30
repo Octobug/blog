@@ -151,6 +151,10 @@
   --ct-post-list-gap: 1.2rem 0;
 }
 
+.VPHome {
+  padding-bottom: 4rem !important;
+}
+
 header a.title {
   font-family: Georgia, sans-serif;
   font-size: 1.3rem !important;

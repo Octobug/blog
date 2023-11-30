@@ -14,21 +14,23 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 
 ### Features
 
-- [x] Home
-  - [x] Profile Card
-  - [x] Paged Post List
 - [x] Single Post
   - [x] Publication Date
   - [x] Location
   - [x] Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
   - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
+- [x] Home
+  - [x] Profile Card
+  - [x] Paged Post List
 - [x] Posts (Archives)
 - [ ] Tags
 - [ ] Sorts (Categories)
+- [ ] RSS
 - [ ] Others
-  - [ ] Visions (for special pages)
+  - [x] Local Search (supports Chinese)
   - [x] [Google Analytics](https://analytics.google.com/)
+  - [ ] Visions (for special pages)
 
 ## Contribution
 

@@ -1,8 +1,10 @@
 <template>
-  <PostList
-    date-format="ll"
-    :post-list="postList"
-  />
+  <div :class="$style.postListBox">
+    <PostList
+      date-format="ll"
+      :post-list="postList"
+    />
+  </div>
 
   <div :class="$style.pagination">
     <button
@@ -54,8 +56,12 @@ function turnTo(n: number) {
 </script>
 
 <style module scope>
+.postListBox {
+  min-height: 29rem;
+}
+
 .pagination {
-  padding-top: 2rem;
+  padding-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

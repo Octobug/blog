@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.postList">
     <span :class="[$style.date, $style.hack]">
-      {{ moment(new Date()).format(dateFormat) }}
+      {{ moment(new Date("1970-04-22")).format(dateFormat) }}
     </span>
     <div
       v-for="post in postList"
@@ -49,7 +49,6 @@ defineProps({
   display: block;
   color: var(--vp-c-neutral);
   font-weight: 500;
-  font-size: 1.05em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -63,8 +62,9 @@ defineProps({
 .date {
   float: right;
   position: relative;
-  bottom: 1.6em;
-  font-size: 0.85em;
+  bottom: 1.3rem;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
   color: var(--vp-c-text-3);
 }
 

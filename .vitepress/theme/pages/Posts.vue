@@ -75,10 +75,9 @@ const years = Object.keys(postsByYear).sort().reverse();
 
 .year {
   color: var(--vp-c-neutral);
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-style: italic;
-  padding-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 2rem;
 }
 
 .yearPosts {

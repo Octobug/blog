@@ -1,6 +1,6 @@
 ---
 date: 2019-06-02
-location: 深圳，西乡街道
+location: 深圳，西乡街道渔业社区
 sort: Miscellaneous
 tags:
   - Small Talk

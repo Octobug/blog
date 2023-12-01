@@ -4,7 +4,12 @@
       <div :class="$style.amountBox">
         <div :class="$style.amountBadge">
           All Posts
-          <span :class="$style.number">{{ allPosts.length }}</span>
+          <div
+            class="digit"
+            :class="$style.number"
+          >
+            {{ allPosts.length }}
+          </div>
         </div>
       </div>
       <div
@@ -54,23 +59,25 @@ const years = Object.keys(postsByYear).sort().reverse();
 }
 
 .amountBox {
-  color: var(--vp-c-default-1);
+  color: var(--ct-c-default-0);
   text-align: right;
 }
 
 .amountBadge {
+  display: inline-block;
+  font-size: 15px;
   background-color: var(--vp-c-default-soft);
   border-radius: 4px;
-  padding: 0 0 0 7px;
-  display: inline-block;
+  padding-left: 7px;
 }
 
 .number {
+  display: inline-block;
   color: var(--vp-c-text-3);
   background-color: var(--vp-c-default-soft);
-  padding: 2px 7px 2px 6px;
   margin-left: 1px;
   border-radius: 0 4px 4px 0;
+  padding: 1px 7px 1px 6px;
 }
 
 .year {

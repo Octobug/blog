@@ -140,15 +140,13 @@
 :root {
   /* Custom vars */
   --ct-c-shadow: #d7d7d7;
+  --ct-c-default-0: #bbbbbb;
 
   /* Profile */
   --ct-avatar-border: white;
   --ct-avatar-large: 10rem;
   --ct-avatar-medium: 8rem;
   --ct-avatar-small: 6rem;
-
-  /* Post list */
-  --ct-post-list-gap: 1.2rem 0;
 }
 
 .VPHome {
@@ -165,7 +163,12 @@ footer a {
   color: var(--vp-c-text-1);
 }
 
-/* CSS for a Post */
+/* Font Styles */
+.digit {
+  font-family: monospace;
+}
+
+/* Post Item */
 .vp-doc h1 {
   font-size: 25px;
 }

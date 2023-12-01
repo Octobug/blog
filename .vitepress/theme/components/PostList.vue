@@ -40,7 +40,7 @@ defineProps({
 }
 
 .postItem {
-  margin: var(--ct-post-list-gap);
+  margin: 1.2rem 0;
   padding-bottom: 1px;
   border-bottom: 1px dashed var(--vp-c-default-3);
 }

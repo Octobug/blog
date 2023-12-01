@@ -16,6 +16,7 @@
     </button>
     <div
       v-if="page.total > 1"
+      class="digit"
       :class="$style.pageNumber"
     >
       {{ `${page.cursor.value}/${page.total}` }}

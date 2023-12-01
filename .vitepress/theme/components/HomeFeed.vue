@@ -38,10 +38,9 @@ import { data as allPosts } from "../posts.data";
 import PostList from "./PostList.vue";
 
 const { theme } = useData();
-const allPostsLength = allPosts.length;
 const page = {
   size: theme.value.pageSize,
-  total: Math.ceil(allPostsLength / theme.value.pageSize),
+  total: Math.ceil(allPosts.length / theme.value.pageSize),
   cursor: ref(1)
 };
 
@@ -56,7 +55,7 @@ function turnTo(n: number) {
 
 function setPostListMinHeight() {
   const root = document.querySelector(":root");
-  const h = theme.value.pageSize * 2.9;
+  const h = Math.min(allPosts.length, theme.value.pageSize) * 2.9;
   (<HTMLElement>root).style.setProperty("--post-list-min-height", `${h}rem`);
 }
 

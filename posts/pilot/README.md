@@ -1,6 +1,6 @@
 ---
 date: 2019-06-02
-location: 深圳，西乡街道渔业社区
+location: 深圳 西乡街道渔业社区
 sort: Miscellaneous
 tags:
   - Small Talk
@@ -14,13 +14,13 @@ tags:
 
 ## 旧博客
 
-2016 年还在上大学的时候有过一个博客 [Octobug/old.octobug.github.io](https://github.com/Octobug/old.octobug.github.io)，当时主要在上面写一些信息安全竞赛的题解。后来没从事信息安全相关的岗位，刚毕业那会儿也不知道再写点什么好。所以这个博客在 2017 年后就基本没更新，直到完全弃用。
+2016 年还在上大学的时候有过一个博客 [Octobug/old.octobug.github.io](https://github.com/Octobug/old.octobug.github.io)，当时主要在上面写一些信息安全竞赛的题解。后来没从事信息安全相关的工作，刚毕业那会儿也不知道再写点什么好。所以这个博客在 2017 年后就基本没更新，直到完全弃用。
 
 2019 年又产生了写博客的想法，邀请了朋友 [`@Shady`](https://github.com/shady-robot) 一起开始开发 [okvk/Jane](https://github.com/okvk/Jane)。那个时候思路过于宏大，想做一个大而全的系统，除了传统的博客功能，还包含其他的比如和 [roadmap.sh](https://roadmap.sh) 类似的功能。但后来我们工作都太忙，很多原来的设想自己也不再认同，所以这个项目也烂头了。
 
 ## 笔记
 
-一上大学就丢失了记笔记的习惯，纸质书里的勾勾划划随着大部分学习资料电子化而离去。
+一上大学就丢失了记笔记的习惯，纸质书里的勾勾划划随着大部分学习资料电子化而远去。
 
 阅读知识密度高的书如果不记笔记很容易看了等于没看，所以大约在 2016 年（大三）我开始使用[为知笔记](https://www.wiz.cn/)。
 
@@ -28,7 +28,7 @@ tags:
 
 2021 年，由于我希望所有的编辑活动都在 VS Code 里进行，所以弃用了有道云笔记（连 PyCharm Community 也弃用了），并把所有见得光的笔记记录在 [Octobug/notes](https://github.com/Octobug/notes)。
 
-值得一提的是，在 VS Code 里写笔记的体验很好，和写代码差不多。并且由于使用了 Git，所以事后回溯非常方便。
+值得一提的是，在 VS Code 里写笔记的体验很好，和写代码差不多。并且因为使用了 Git，所以事后回溯非常方便。
 
 直到今年，我在整理工作笔记时觉得有一些内容值得整理成篇，所以又萌发写博客的想法……
 

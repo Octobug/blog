@@ -62,7 +62,7 @@ defineProps({
 .date {
   float: right;
   position: relative;
-  bottom: 1.3rem;
+  bottom: 1.4rem;
   font-size: 0.85rem;
   margin-left: 0.5rem;
   color: var(--vp-c-text-3);

@@ -21,7 +21,7 @@
       v-if="post.readingTime"
       :class="$style.dot"
     />
-    <span :class="$style.elementItem">
+    <span :class="[$style.elementItem, $style.readingTime]">
       {{ post.readingTime }}
     </span>
   </div>
@@ -74,6 +74,10 @@ onContentUpdated(() => {
 
 .elementItem {
   color: var(--vp-c-text-3);
+}
+
+.readingTime {
+  white-space: nowrap;
 }
 
 .dot {

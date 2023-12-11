@@ -15,18 +15,25 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 ### Features
 
 - [x] Single Post
-  - [x] Publication Date
-  - [x] Location
-  - [x] Reading Time
+  - [x] Elements
+    - Publication Date
+    - Location
+    - Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
   - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
+  - [ ] Sort (Category)
+  - [ ] Tags
 - [x] Home
   - [x] Profile Card
+    - Avatar
+    - Bio
+    - Location
+    - Timezone
   - [x] Paged Post List
 - [x] Posts (Archives)
+- [x] Sorts (Categories)
 - [ ] Tags
-- [ ] Sorts (Categories)
-- [ ] RSS
+- [ ] Atom Feed
 - [ ] Others
   - [x] Local Search (supports Chinese)
   - [x] [Google Analytics](https://analytics.google.com/)

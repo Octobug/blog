@@ -1,9 +1,10 @@
 ---
 date: 2019-12-18
-location: 深圳，粤海街道大冲社区
+location: 深圳 粤海街道大冲社区
 sort: Computer Science
 tags:
   - Network
+  - curl
   - HTTPS
   - OpenSSL
 ---

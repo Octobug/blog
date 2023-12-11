@@ -140,13 +140,17 @@
 :root {
   /* Custom vars */
   --ct-c-shadow: #d7d7d7;
-  --ct-c-default-0: #bbbbbb;
+  --ct-c-default-0: #aaaaaa;
 
   /* Profile */
   --ct-avatar-border: white;
   --ct-avatar-large: 10rem;
   --ct-avatar-medium: 8rem;
   --ct-avatar-small: 6rem;
+}
+
+.dark {
+  --ct-c-default-0: #777777;
 }
 
 .VPHome {
@@ -161,6 +165,11 @@ header.VPNav a.title {
 
 footer a {
   color: var(--vp-c-text-1);
+}
+
+a.VPSocialLink[aria-label="mastodon"]>svg {
+  width: 19.4px;
+  height: 19.4px;
 }
 
 /* Font Styles */

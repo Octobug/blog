@@ -7,3 +7,7 @@ export function findPostIndex(postList: ContentData[], page: PageData) {
 export function findPost(postList: ContentData[], page: PageData) {
   return postList[findPostIndex(postList, page)];
 }
+
+export function toDashedHash(words: string) {
+  return words.split(" ").join("-").toLowerCase();
+}

@@ -4,7 +4,7 @@ import "./style.css";
 import Home from "./pages/Home.vue";
 import Layout from "./pages/Layout.vue";
 import Posts from "./pages/Posts.vue";
-// import Tags from "./components/Tags.vue";
+import Sorts from "./pages/Sorts.vue";
 
 export default {
   extends: Theme,
@@ -12,5 +12,6 @@ export default {
   enhanceApp({ app }) {
     app.component("Home", Home);
     app.component("Posts", Posts);
+    app.component("Sorts", Sorts);
   },
 };

@@ -6,7 +6,7 @@ import { giscus, withBaseURL } from "./config.utils";
 export default {
   outline: "deep",
   docFooter: {
-    prev: "Prev",
+    prev: "Previous",
     next: "Next",
   },
   editLink: {
@@ -27,13 +27,13 @@ export default {
       text: "POSTS",
       link: "/posts",
     },
+    {
+      text: "SORTS",
+      link: "/sorts",
+    },
     // {
     //   text: "TAGS",
     //   link: "/pages/tags",
-    // },
-    // {
-    //   text: "SORTS",
-    //   link: "/sorts",
     // },
     // {
     //   text: "VISIONS",
@@ -43,12 +43,12 @@ export default {
       text: "MORE",
       items: [
         // {
-        //   text: "Best Blogs",
+        //   text: "Blog Collection",
         //   link: "/bests",
         // },
         // {
-        //   text: "RSS Feed",
-        //   link: "https://blog.octobug.site/feed.xml",
+        //   text: "Atom Feed",
+        //   link: "/atom.xml",
         // },
         {
           text: "Repository",
@@ -90,7 +90,7 @@ export default {
   ],
   // Extended configs
   avatar: withBaseURL("/avatar.png"),
-  nickname: "Octobug",
+  nickname: "Orca",
   bio: "Thoughts on everything.",
   location: "Shenzhen, China",
   timezone: "Asia/Shanghai",

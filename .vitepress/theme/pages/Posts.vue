@@ -59,6 +59,9 @@ const years = Object.keys(postsByYear).sort().reverse();
 
 .badgeBox {
   text-align: right;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  margin-bottom: 2rem;
 }
 
 .year {

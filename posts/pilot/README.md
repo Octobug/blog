@@ -4,6 +4,8 @@ location: 深圳 西乡街道渔业社区
 sort: Miscellaneous
 tags:
   - Small Talk
+  - Blog
+  - VitePress
 ---
 
 # Pilot

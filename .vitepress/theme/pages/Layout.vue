@@ -3,6 +3,9 @@
     <template #doc-before>
       <PostElements />
     </template>
+    <template #doc-footer-before>
+      <Annotations />
+    </template>
     <template #doc-after>
       <PrevNext />
       <Comments />
@@ -13,6 +16,7 @@
 <script lang="ts" setup>
 import DefaultTheme from "vitepress/theme";
 import PostElements from "../components/PostElements.vue";
+import Annotations from "../components/Annotations.vue";
 import PrevNext from "../components/PrevNext.vue";
 import Comments from "../components/Comments.vue";
 

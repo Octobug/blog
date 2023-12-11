@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { data as allPosts } from "../posts.data";
 import { toDashedHash } from "../utils";
 import Badge from "../components/Badge.vue";
@@ -54,15 +54,20 @@ Object.keys(postsBySort).forEach(sort => {
   hashToSort[toDashedHash(sort)] = sort;
 });
 
-const defaultHash = window.location.hash?.slice(1);
-const selectedSort = ref(hashToSort[defaultHash] || ALL);
-
-selectSort(selectedSort.value);
+const selectedSort = ref();
 
 function selectSort(sort: string) {
   window.location.hash = `#${toDashedHash(sort)}`;
   selectedSort.value = sort;
 }
+
+onMounted(() => {
+  const defaultHash = window.location.hash?.slice(1);
+  selectedSort.value = hashToSort[defaultHash] || ALL;
+
+  selectSort(selectedSort.value);
+});
+
 </script>
 
 <style module scoped>

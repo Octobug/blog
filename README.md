@@ -21,11 +21,12 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
     - Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
   - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
-  - [ ] Sort (Category)
+  - [x] Sort (Category)
   - [ ] Tags
 - [x] Home
   - [x] Profile Card
     - Avatar
+    - Nickname
     - Bio
     - Location
     - Timezone

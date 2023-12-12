@@ -21,7 +21,7 @@
       v-if="post.readingTime"
       :class="$style.dot"
     />
-    <span :class="[$style.elementItem, $style.readingTime]">
+    <span :class="$style.elementItem">
       {{ post.readingTime }}
     </span>
   </div>
@@ -59,7 +59,7 @@ function adjustPosition() {
 
 onContentUpdated(() => {
   post.value = getPostData();
-  setTimeout(adjustPosition, 0);
+  setTimeout(adjustPosition, 1);
 });
 </script>
 
@@ -70,14 +70,22 @@ onContentUpdated(() => {
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   font-size: 0.88rem;
+  white-space: nowrap;
+  overflow-x: scroll;
+
+  /* Internet Explorer 10+ */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.elementList::-webkit-scrollbar {
+  /* Safari and Chrome */
+  display: none;
 }
 
 .elementItem {
   color: var(--vp-c-text-3);
-}
-
-.readingTime {
-  white-space: nowrap;
 }
 
 .dot {

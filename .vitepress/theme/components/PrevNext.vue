@@ -45,7 +45,7 @@ import type { PageControl } from "../types/page-control";
 const { page, theme } = useData();
 const control = ref<PageControl>({});
 
-onContentUpdated(() => {
+function renderPrevNext() {
   const index = findPostIndex(allPosts, page.value);
   const prevPost = allPosts[index - 1];
   const nextPost = allPosts[index + 1];
@@ -58,6 +58,10 @@ onContentUpdated(() => {
     link: nextPost.url
   };
   control.value = { prev, next };
+}
+
+onContentUpdated(() => {
+  renderPrevNext();
 });
 </script>
 

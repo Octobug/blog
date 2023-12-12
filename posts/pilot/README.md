@@ -57,10 +57,10 @@ tags:
 
 ## References
 
-1. [Television pilot [Wikipedia]][1]
-2. [List of television episodes titled Pilot [Wikipedia]][2]
-3. [Days Like Today Are Why I Want to Live Forever! [SDM adventures]][3]
-4. [Pilot whale [Wikipedia]][4]
+1. [Television pilot][1]. *wikipedia.org*.
+2. [List of television episodes titled Pilot][2]. *wikipedia.org*.
+3. [Days Like Today Are Why I Want to Live Forever!][3]. *sdmdiving.com*.
+4. [Pilot whale][4]. *wikipedia.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Television_pilot>
 [2]: <https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot>

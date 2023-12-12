@@ -4,12 +4,12 @@ location: 深圳 粤海街道大冲社区
 sort: Computer Science
 tags:
   - Network
+  - HTTPS
   - curl
   - OpenSSL
-  - HTTPS
 ---
 
-# 一次 ADAS 设备上的 HTTPS 排障过程
+# [WIP] 一次 ADAS 设备上的 HTTPS 排障过程
 
 ![Spinner Dolphin](./long-snouted-spinner-dolphin-spin-cycle.jpg)
 
@@ -54,7 +54,7 @@ exit status 60
 
 ### curl 的报错
 
-curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 校验错误 [[3]]，结合设备所处网络环境，可能导致这个错误的因素非常多。比如：
+curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 认证错误 [[3]]，结合设备所处网络环境，可能导致这个错误的因素非常多。比如：
 
 - **设备端**
   - 设备时钟
@@ -78,7 +78,9 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 校验错误 [[3]]，结�
 
 ### 排除设备因素
 
-这些设备以往有过成功的软件升级记录，
+>>>>> progress
+
+这些设备在几天前有过成功的软件升级记录，
 
 ## References
 
@@ -89,7 +91,7 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 校验错误 [[3]]，结�
 5. [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats? - Answered by @sysadmin1138][5]. *serverfault.com*.
 6. [搜狗百科 - 部标一体机][6]. *baike.sogou.com*.
 7. [Configuring HTTPS servers][7]. *nginx.org*.
-8. [Ocean Wildlife: Spinner Dolphins (Wildlife Photography Galleries by Richard Barrett) [Wild and Wonderful]][3]
+8. [Wild and Wonderful - Ocean Wildlife: Spinner Dolphins][8]. *wildandwonderful.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Advanced_driver-assistance_system>
 [2]: <https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate>
@@ -98,4 +100,4 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 校验错误 [[3]]，结�
 [5]: <https://serverfault.com/a/9717/553550>
 [6]: <https://baike.sogou.com/v63216644.htm>
 [7]: <https://nginx.org/en/docs/http/configuring_https_servers.html>
-<!-- [100]: <https://www.wildandwonderful.org/spinner-dolphins> -->
+[8]: <https://www.wildandwonderful.org/spinner-dolphins>

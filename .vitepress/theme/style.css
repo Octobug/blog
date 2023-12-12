@@ -188,10 +188,12 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
 
 .vp-doc h3 {
   font-size: 20px;
+  margin-bottom: 14px;
 }
 
 .vp-doc h4 {
   font-size: 18px;
+  margin-bottom: 12px;
 }
 
 .main img {

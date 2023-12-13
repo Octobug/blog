@@ -43,9 +43,12 @@ const miscPosts = postsBySort[MISC];
 delete postsBySort[MISC];
 
 const sorts = Object.keys(postsBySort).sort((a, b) => {
+  if (postsBySort[a].length == postsBySort[b].length) {
+    return a.localeCompare(b);
+  }
   return postsBySort[b].length - postsBySort[a].length;
 });
-// set MISC at the end of sorts
+// set MISC as the last sort
 sorts.push(MISC);
 postsBySort[MISC] = miscPosts;
 
@@ -67,7 +70,6 @@ onMounted(() => {
 
   selectSort(selectedSort.value);
 });
-
 </script>
 
 <style module scoped>

@@ -10,11 +10,9 @@ tags:
 
 # Pilot
 
-:::info
-I'm requesting permission to use the cover photo.
-:::
+<!-- @include: ../../.vitepress/mdblocks/permission.md -->
 
-![Pilot Whale](../../temp/pilot-whale.jpg "Used with permission from *[sdmdiving.com](https://sdmdiving.com)*.")
+<!-- ![Pilot Whale](../../temp/pilot-whale.jpg "Used with permission from *[sdmdiving.com](https://sdmdiving.com)*.") -->
 
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 

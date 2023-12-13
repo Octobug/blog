@@ -60,6 +60,8 @@ function renderPrevNext() {
   control.value = { prev, next };
 }
 
+renderPrevNext();
+
 onContentUpdated(() => {
   renderPrevNext();
 });

@@ -47,4 +47,4 @@ Feel free to customize it based on your own ideas. Please check out the [Contrib
 
 ## License
 
-[CC-BY-SA-4.0](./LICENSE).
+[CC BY-SA 4.0](./LICENSE).

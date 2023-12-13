@@ -1,6 +1,6 @@
 ---
 date: 2019-12-18
-location: 深圳 粤海街道大冲社区
+location: 深圳 创维半导体设计大厦西座
 sort: Computer Science
 tags:
   - Network
@@ -9,11 +9,12 @@ tags:
   - OpenSSL
 ---
 
-# 一次 ADAS 设备上的 HTTPS 排障过程
+# [WIP] 一次 ADAS 设备上的 HTTPS 排障过程
 
-<!-- ![Spinner Dolphin](./long-snouted-spinner-dolphin-spin-cycle.jpg) -->
+<!-- ![Spinner Dolphin](../../temp/long-snouted-spinner-dolphin-spin-cycle.jpg "Used with permission from *[wildandwonderful.org]([wildandwonderful.org](https://www.wildandwonderful.org/))*.") -->
+
 :::info
-I'm requesting permission to use the photo.
+I'm requesting permission to use the cover photo.
 :::
 
 > 有一批设备总是软件升级失败，你看一下是怎么回事？
@@ -73,7 +74,7 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 验证错误 [[3]]，结�
 
 这些设备的操作系统是 Linux，只能通过命令行操作。并且因为是嵌入式设备，能用的命令行工具比较有限。好在错误能稳定复现，而且出错的设备是同一批，软件、网络条件一致，所以有足够的环境来逐步试验排除无关因素。
 
-**设备到服务器的网络链路**属于难以触及的环境，所以我把排查优先级放得比较低。
+**设备到服务器的网络链路**属于难以触及的环境，我把它的排查优先级放得比较低。
 
 ### 排除设备因素
 

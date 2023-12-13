@@ -1,6 +1,6 @@
 ---
 date: 2019-06-02
-location: 深圳 西乡街道渔业社区
+location: 深圳 西乡街道财富港大厦
 sort: Miscellaneous
 tags:
   - Small Talk
@@ -10,10 +10,7 @@ tags:
 
 # Pilot
 
-<!-- ![Pilot Whale](./pilot-whale.jpg) -->
-:::info
-I'm requesting permission to use the photo.
-:::
+<!-- ![Pilot Whale](./pilot-whale.jpg "Used with permission from *[sdmdiving.com](sdmdiving.com)*.") -->
 
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 

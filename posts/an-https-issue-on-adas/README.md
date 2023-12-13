@@ -12,8 +12,10 @@ tags:
 # 一次 ADAS 设备上的 HTTPS 排障过程
 
 <!-- ![Spinner Dolphin](./long-snouted-spinner-dolphin-spin-cycle.jpg) -->
-> I'm getting the right to use the 'Spinner Dolphin' picture.
->
+:::info
+I'm requesting permission to use the photo.
+:::
+
 > 有一批设备总是软件升级失败，你看一下是怎么回事？
 
 ## 背景

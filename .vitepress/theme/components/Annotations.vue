@@ -1,19 +1,27 @@
 <template>
   <div class="annotations">
-    <a
-      :href="withBase(`/sorts#${toDashedHash(frontmatter.sort)}`)"
-      class="sort"
+    <div
+      v-if="frontmatter.sort"
+      class="sortBox"
     >
-      {{ frontmatter.sort?.toUpperCase() }}
-    </a>
-    <!-- <Dot /> -->
+      <a
+        :href="withBase(`/sorts#${toDashedHash(frontmatter.sort)}`)"
+        class="sort"
+      >
+        {{ frontmatter.sort?.toUpperCase() }}
+      </a>
+    </div>
+    <Dot
+      v-if="frontmatter.sort && frontmatter.tags.length"
+      class="dot"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useData, withBase } from "vitepress";
 import { toDashedHash } from "../utils";
-// import Dot from "../components/Dot.vue";
+import Dot from "../components/Dot.vue";
 
 const { frontmatter } = useData();
 </script>
@@ -23,6 +31,10 @@ const { frontmatter } = useData();
   border-top: 1px solid var(--vp-c-divider);
   padding: 2rem 0;
   font-size: 14px;
+}
+
+.sortBox {
+  display: inline-block;
 }
 
 .sort {
@@ -43,5 +55,9 @@ const { frontmatter } = useData();
 
 .dark .sort:hover {
   background-color: var(--vp-c-brand-2);
+}
+
+.dot {
+  margin: 0.7rem;
 }
 </style>

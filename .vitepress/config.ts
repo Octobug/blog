@@ -3,6 +3,7 @@ import type { ThemeConfig } from "./theme/types/theme-config";
 import themeConfig from "./config.theme";
 import { BASE_URL, withBaseURL } from "./config.utils";
 import gaConfig from "./theme/ganalytics";
+import mdImageFigures from "markdown-it-image-figures";
 
 export default defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
@@ -44,5 +45,14 @@ export default defineConfigWithTheme<ThemeConfig>({
     "./.github/",
     "./README.md",
   ],
-  themeConfig
+  themeConfig,
+  markdown: {
+    config: (md) => {
+      // usage: ![alt](https://link-to-image 'title'){.class}
+      md.use(mdImageFigures, {
+        figcaption: "title",
+        copyAttrs: "^class$",
+      });
+    },
+  },
 });

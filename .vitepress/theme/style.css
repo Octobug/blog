@@ -206,3 +206,17 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
   border: 0.1rem solid var(--vp-c-neutral);
   box-shadow: none;
 }
+
+/* image alt as subtitle */
+.main figcaption {
+  margin-top: -1.3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--vp-c-text-3);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.main figcaption a {
+  color: var(--vp-c-text-3);
+}

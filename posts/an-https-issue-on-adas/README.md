@@ -9,7 +9,7 @@ tags:
   - OpenSSL
 ---
 
-# [WIP] 一次 ADAS 设备上的 HTTPS 排障过程
+# 一次 ADAS 设备上的 HTTPS 排障过程
 
 :::info
 I'm requesting permission to use the copyrighted content.
@@ -33,7 +33,7 @@ I'm requesting permission to use the copyrighted content.
 
 ### 车载设备网络环境
 
-目前车载设备联网方式一般有两种：
+本文其实和 ADAS 关系不大，主要和 ADAS 所处的网络环境有关。目前车载设备联网方式一般有两种：
 
 1. 通过物联网卡直接上网
 2. 通过其他车载设备代理上网
@@ -80,7 +80,7 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 验证错误 [[3]]，结�
 
 ### 排除平台服务因素
 
-既然故障设备是同一批，那么应该是由同样的因素造成。我在公司找了台相同型号的测试机，安装相同版本的软件，并且使用相同的联网方式。但是并不能复现问题。也许可能有其他差异点我没考虑到，不过从直觉上我认为，既然不能复现，那平台服务出问题的概率比较小。
+既然故障设备是同一批，那么应该是由同样的因素造成。我在公司找了台相同型号的测试机，安装相同版本的软件，并且使用相同的联网方式。但是并不能复现问题。也许是有其他差异点我没考虑到，不过从直觉上我认为，既然不能复现，那平台服务出问题的概率比较小。
 
 ### 排除设备因素
 
@@ -137,9 +137,9 @@ curl: (60) SSL certificate problem: unable to get local issuer certificate
 
 排除到这里，只剩“设备到服务器的网络链路”了，既不是设备的问题，也不是服务器的问题。但是我没有更坚实的证据，如何说服客户？
 
-### SSL
+### TLS
 
-从上面 curl 的报错看，错误发生在 SSL 证书验证过程 [[10]]，先尝试用 `--verbose` 选项看看其详细过程。
+TLS 是 SSL 的新名称 [[10]]。从上面 curl 的报错看，错误发生在证书验证阶段 [[10]]，先尝试用 `--verbose` 选项看看其详细过程。
 
 ```sh
 $ curl --verbose ...
@@ -178,32 +178,205 @@ curl: (60) SSL certificate problem: self signed certificate
 ...
 ```
 
-从上面的输出可以看到在 TLS 的握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
+从以上输出可以看到在 TLS 握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
 
-#### SSL 握手过程
+#### TLS 握手过程
 
->>>>> pending
+TLS 连接建立之前也有和 TCP 三次握手 [[11], [12]] 相似的过程，只不过要复杂一些。既然证书验证是发生在这个阶段，就不得不了解这个过程中到底发生了什么，具体到哪一步出了问题。
+
+TLS `v1.2` 握手的完整消息流 [[13]] 如下，可以看到在经过 4 个箭头之后才开始传输应用数据，比 TCP 多了一次握手：
+
+```txt
+      Client                                               Server
+
+      ClientHello                  -------->
+                                                      ServerHello
+                                                     Certificate*
+                                               ServerKeyExchange*
+                                              CertificateRequest*
+                                   <--------      ServerHelloDone
+      Certificate*
+      ClientKeyExchange
+      CertificateVerify*
+      [ChangeCipherSpec]
+      Finished                     -------->
+                                               [ChangeCipherSpec]
+                                   <--------             Finished
+      Application Data             <------->     Application Data
+
+             Figure 1.  Message flow for a full handshake
+```
+
+结合以上的 `curl --verbose` 输出以及这个消息流图，出错应该是在 `CertificateVerify*` 步骤。有没有什么办法可以观察这个步骤的细节？
 
 #### OpenSSL 调试工具
 
->>>>> pending
+我通过这个帖子找到了 OpenSSL 的客户端调试工具 `openssl s_client`：
 
-到这里我才想到用 curl 访问 baidu.com 试试看。前面我用 ping 命令测试访问了几个大网站，结果都正常之后就直接沉浸到 curl 的异常表现里。
+[How to debug SSL handshake using cURL? - Answered by `@Christian Davén`](https://stackoverflow.com/a/22814663/7267801). *stackoverflow.com*.
+
+这个命令可以直接在设备上观察 TLS 握手过程：
+
+```sh
+$ openssl s_client -connect platform.domain:443
+
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+verify error:num=10:certificate has expired
+notAfter=Jul 18 11:22:50 2017 GMT
+verify return:1
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+notAfter=Jul 18 11:22:50 2017 GMT
+verify return:1
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:/C=aa/L=Default City/O=Default Company Ltd
+   i:/C=aa/L=Default City/O=Default Company Ltd
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIB+zCCAWQCCQDfkfPK0EYYmDANBgkqhkiG9w0BAQUFADBCMQswCQYDVQQGEwJh
+DATA-MASKING-DATA-MASKING-DATA-MASKING-DATA-MASKING-DATA-MASKING
+DATA-MASKING-DATA-MASKING-DATA-MASKING-DATA-MASKING-DATA-MASKING
+DATA-MASKING-DATA-MASKING-...-DATA-MASKING-DATA-MASKING-==
+-----END CERTIFICATE-----
+subject=/C=aa/L=Default City/O=Default Company Ltd
+issuer=/C=aa/L=Default City/O=Default Company Ltd
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 1058 bytes and written 433 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 1024 bit
+Secure Renegotiation IS supported
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: D8156AD7E345B4C744EFCBC6A9C3D75DB2D291307F916654021CC2E8AD856093
+    Session-ID-ctx: 
+    Master-Key: 76A79F0630CD26992C802C32BB261C462DA6E45960B1E1629941B137247F151E69CE2975533AA30E8BA11403CDE81240
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 75 55 17 c6 6d b4 82 38-56 68 a8 1d 97 5a de a0   uU..m..8Vh...Z..
+    0010 - e0 f7 1f 42 27 2d 85 8d-9e 55 78 5c 71 07 47 18   ...B'-...Ux\q.G.
+    0020 - 46 26 db 75 6e 63 53 b5-6e cc 64 87 a9 35 70 fa   F&.uncS.n.d..5p.
+    0030 - 1b 19 23 3c 0f c0 ec 76-90 e8 a8 ee 17 4f d0 7a   ..#<...v.....O.z
+    0040 - 3a ad 8b 0b 09 d1 ac 01-9c a9 23 5c d1 db 88 21   :.........#\...!
+    0050 - 4d 69 2f c5 df 5b 37 b3-b9 6d ff 10 19 1f dd c5   Mi/..[7..m......
+    0060 - a5 51 99 65 c9 2b d7 9e-f9 cd cb cd 43 04 51 e2   .Q.e.+......C.Q.
+    0070 - 2c 4a dd b2 8d 1e 23 ed-eb e9 a3 b7 c2 3a 9c bf   ,J....#......:..
+    0080 - 85 06 65 94 33 06 72 1d-f4 b2 e6 d0 4a b6 43 9e   ..e.3.r.....J.C.
+    0090 - 6c 1a a2 75 67 b7 47 d0-67 be 97 5b c5 68 7c 61   l..ug.G.g..[.h|a
+    00a0 - 11 2a 24 54 0d 47 3a cb-93 43 eb e1 a3 37 9b de   .*$T.G:..C...7..
+
+    Start Time: 1576571529
+    Timeout   : 300 (sec)
+    Verify return code: 10 (certificate has expired)
+---
+DONE
+```
+
+终于看到这个莫名其妙的自签名证书了，运维平台正确的证书链是这样的：
+
+```txt
+Certificate chain
+ 0 s:/OU=Domain Control Validated/CN=*.platform.domain
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc./OU=http://certs.godaddy.com/repository//CN=Go Daddy Secure Certificate Authority - G2
+ 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc./OU=http://certs.godaddy.com/repository//CN=Go Daddy Secure Certificate Authority - G2
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc./CN=Go Daddy Root Certificate Authority - G2
+ 2 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc./CN=Go Daddy Root Certificate Authority - G2
+   i:/C=US/O=The Go Daddy Group, Inc./OU=Go Daddy Class 2 Certification Authority
+ 3 s:/C=US/O=The Go Daddy Group, Inc./OU=Go Daddy Class 2 Certification Authority
+   i:/C=US/O=The Go Daddy Group, Inc./OU=Go Daddy Class 2 Certification Authority
+```
+
+显然，请求确实被转发到了某个神秘服务器，返回了那个奇怪的自签名证书。我还尝试增加选项 `-state -bugs -showcerts -tlsextdebug` 提取更多输出，但它们没有提供更有用的信息。
+
+既然请求被转发，那必然有相应的转发规则，如果能确定转发规则就可以跟客户交代了。到这里我才想到：访问别人家的网站，证书验证会有问题吗？排查早期我用 `ping` 命令测试访问了几个大网站的域名，结果都正常。这给了我设备访问别人家网站没问题的错觉，之后就直接沉浸到 curl 的异常表现里。
+
+```sh
+$ openssl s_client -connect www.qq.com:443
+
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+verify error:num=10:certificate has expired
+notAfter=Jul 18 11:22:50 2017 GMT
+verify return:1
+depth=0 C = aa, L = Default City, O = Default Company Ltd
+notAfter=Jul 18 11:22:50 2017 GMT
+verify return:1
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:/C=aa/L=Default City/O=Default Company Ltd
+   i:/C=aa/L=Default City/O=Default Company Ltd
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+...
+...
+---
+DONE
+```
+
+😅 访问 qq.com 的结果竟然和访问运维平台一模一样。其实到这一步已经 100% 确认和平台服务无关了，只是具体的转发规则还没确定。
+
+这两个命令有什么不同？
+
+```sh
+$ openssl s_client -connect platform.domain:443 // [!code --]
+$ openssl s_client -connect www.qq.com:443 // [!code ++]
+...
+```
+
+没错，只有域名不一样。所以我改掉域名，随便写了个 ping 不可达的 IP: `openssl s_client -connect 33.22.22.11:443`
+
+*老北京马蜂怎么蜇人？——您猜怎么着？*
+
+响应结果一模一样。
+
+至此，流量转发规则也可以确认了。用 curl 访问 `33.22.22.11:443` 的结果：
+
+```sh
+$ curl "11.23.23.23:443"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   271  100   271    0     0  12119      0 --:--:-- --:--:-- --:--:-- 67750
+<html>
+<head><title>400 The plain HTTP request was sent to HTTPS port</title></head>
+<body bgcolor="white">
+<center><h1>400 Bad Request</h1></center>
+<center>The plain HTTP request was sent to HTTPS port</center>
+<hr><center>nginx/1.10.1</center>
+</body>
+</html>
+```
 
 ## 结论
 
-设备的上网代理被设置了这样的流量转发规则：“是 443 端口就转！”至于请求具体被如何篡改以及被转到哪里去就不得而知了。
+设备的上网代理被设置了这样的流量转发规则：“是 443 端口就转！”至于请求有没有被篡改以及被转到哪里去就不得而知了。
 
-这样的故障对有经验的工程师来说可能是一眼看穿，假如是发生在浏览器环境也相对更容易排查，因为浏览器的提示更加直观。但是发生在嵌入式设备上，对于一个没有相关经验的新手来说，能定位出来真的很考验耐心和运气。
+这样的故障对有经验的工程师来说可能是一眼看穿，假如发生在浏览器环境也相对更容易排查，因为浏览器的提示更加直观。但是发生在嵌入式设备上，对于一个没有相关经验的新手来说，能定位出来真的很考验耐心。还有运气。
 
-SSL 协议相当复杂，哪怕只是配置使用 SSL 证书也很容易出错。这里有个网站展示了各种各样的 SSL 错误，供学习参考：<https://badssl.com/>
+SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。有个网站展示了各种各样的 SSL 错误，供学习参考：<https://badssl.com/>
 
 ::: details 是海豚就转！
 
-题图 [[20]] 是**一只**海豚跳跃出水面旋转的全过程合成图，这种海豚叫飞旋海豚 (Spinner Dolphin) [[21]]。
-
->>>>> pending
-
+题图 [[14]] 是**一只**海豚跳跃出水面旋转的全过程合成图，这种海豚叫飞旋海豚 (Spinner Dolphin) [[15]]。
 :::
 
 ## References
@@ -213,12 +386,16 @@ SSL 协议相当复杂，哪怕只是配置使用 SSL 证书也很容易出错�
 3. [curl.1 the man page - Exit codes][3]. *curl.se*.
 4. [CA certificates extracted from Mozilla][4]. *curl.se*.
 5. [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats? - Answered by `@sysadmin1138`][5]. *serverfault.com*.
-6. [搜狗百科 - 部标一体机][6]. *baike.sogou.com*.
+6. [部标一体机][6]. *baike.sogou.com*.
 7. [Configuring HTTPS servers][7]. *nginx.org*.
 8. [What role does clock synchronization play in SSL communcation - Answered by `@Thomas Pornin`][8]. *security.stackexchange.com*.
 9. [curl - Is data encrypted when using the --insecure option? - Answered by `@Filip Roséen`][9]. *stackoverflow.com*.
 10. [SSL Certificate Verification][10]. *curl.se*.
-11. [Ocean Wildlife: Spinner Dolphins][20]. *wildandwonderful.org*.
+11. [TCP handshake][11]. *developer.mozilla.org*.
+12. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection][12]. *datatracker.ietf.org*.
+13. [RFC 5246 ( The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
+14. [Ocean Wildlife: Spinner Dolphins][14]. *wildandwonderful.org*.
+15. [Spinner dolphin][15]. *wikipedia.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Advanced_driver-assistance_system>
 [2]: <https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate>
@@ -230,4 +407,8 @@ SSL 协议相当复杂，哪怕只是配置使用 SSL 证书也很容易出错�
 [8]: <https://security.stackexchange.com/a/72871/255451>
 [9]: <https://stackoverflow.com/a/8520236/7267801>
 [10]: <https://curl.se/docs/sslcerts.html>
-[20]: <https://www.wildandwonderful.org/spinner-dolphins>
+[11]: <https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake>
+[12]: <https://datatracker.ietf.org/doc/html/rfc793#section-3.4>
+[13]: <https://datatracker.ietf.org/doc/html/rfc5246#section-7.3>
+[14]: <https://www.wildandwonderful.org/spinner-dolphins>
+[15]: <https://en.wikipedia.org/wiki/Spinner_dolphin>

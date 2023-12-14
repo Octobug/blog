@@ -10,7 +10,9 @@ tags:
 
 # Pilot
 
-<!-- @include: ../../.vitepress/mdblocks/permission.md -->
+:::info
+I'm requesting permission to use the copyrighted content.
+:::
 
 <!-- ![Pilot Whale](../../temp/pilot-whale.jpg "Used with permission from *[sdmdiving.com](https://sdmdiving.com)*.") -->
 
@@ -56,6 +58,8 @@ tags:
 - 题图 [[3]] 中的鲸鱼是领航鲸 (Pilot Whale) [[4]]。
 
 :::
+
+- <https://www.flickr.com/photos/cmichel67/47539866471/in/photostream/>
 
 ## References
 

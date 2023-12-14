@@ -11,7 +11,9 @@ tags:
 
 # [WIP] 一次 ADAS 设备上的 HTTPS 排障过程
 
-<!-- @include: ../../.vitepress/mdblocks/permission.md -->
+:::info
+I'm requesting permission to use the copyrighted content.
+:::
 
 <!-- ![Spinner Dolphin](../../temp/long-snouted-spinner-dolphin-spin-cycle.jpg "Used with permission from *[wildandwonderful.org]([wildandwonderful.org](https://www.wildandwonderful.org/))*.") -->
 
@@ -124,7 +126,7 @@ $ curl -k --cacert /path/to/cacert.pem 'https://platform.domain/path/to/package'
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 curl: (60) SSL certificate problem: unable to get local issuer certificate
 ...
-# 原稿没有记录这个细节，这个结果是从网上搜索补充的，应该不会记错。
+# 原稿没有记录这个细节，这个结果是从网上搜索补充的，应该没记错。
 ```
 
 虽然使用 `-k` 会忽略证书验证过程，但因为指定了 HTTPS 协议，数据传输仍然需要加密 [[9]]。这个结果想来也合理，一个来路不明的自签名证书，本地的 CA 证书哪会有对应证书颁发机构的信息，所以验证不通过很正常。
@@ -137,7 +139,7 @@ curl: (60) SSL certificate problem: unable to get local issuer certificate
 
 ### SSL
 
-从上面 curl 的报错看，错误发生在 SSL 证书验证过程 [[10]]，只能先尝试用 `--verbose` 选项看看其详细过程。
+从上面 curl 的报错看，错误发生在 SSL 证书验证过程 [[10]]，先尝试用 `--verbose` 选项看看其详细过程。
 
 ```sh
 $ curl --verbose ...
@@ -176,7 +178,7 @@ curl: (60) SSL certificate problem: self signed certificate
 ...
 ```
 
-从上面的输出可以看到在 TLS 的握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端便主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书，甚至连这个错误的证书是什么样也不知道。
+从上面的输出可以看到在 TLS 的握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
 
 #### SSL 握手过程
 

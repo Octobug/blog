@@ -17,7 +17,7 @@ tags:
 
 [Can I just cite the source of a copyrighted image if I use it for my website?](https://www.quora.com/Can-I-just-cite-the-source-of-a-copyrighted-image-if-I-use-it-for-my-website). *quora.com*.
 
-结果比较让我意外，未经授权的非商业途也是侵权。所以我赶紧撤掉已经用上的两张照片，并琢磨怎么解决这个问题。
+结果比较让我意外，未经授权的非商业用途也是侵权。所以我赶紧撤掉已经用上的两张照片，并琢磨怎么解决这个问题。
 
 ## 内容平台
 
@@ -75,7 +75,7 @@ Powered by creators everywhere.
 
 我预计之后会使用 [Fisheries and Oceans Canada (加拿大渔业和海洋部)](https://www.dfo-mpo.gc.ca/) 网站上面的一张图，所以再以加拿大政府网站为例，看一下它们对非商业使用的授权条款：
 
-> ### Non-commercial reproduction
+> **Non-commercial reproduction**
 >
 > Information on this website has been published with the intent that it be readily available for personal or public non-commercial use. Unless otherwise specified, users may reproduce all published information in whole or in part, and in any format, without charge or further permission.
 >

@@ -331,7 +331,7 @@ Server certificate
 DONE
 ```
 
-😅 访问 qq.com 的结果竟然和访问运维平台一模一样。其实到这一步已经 100% 确认和平台服务无关了，只是具体的转发规则还没确定。
+访问 qq.com 的结果竟然和访问运维平台一模一样。其实到这一步已经 100% 确认和平台服务无关了，只是具体的转发规则还没确定。
 
 这两个命令有什么不同？
 
@@ -343,9 +343,7 @@ $ openssl s_client -connect www.qq.com:443 // [!code ++]
 
 没错，只有域名不一样。所以我改掉域名，随便写了个 ping 不可达的 IP: `openssl s_client -connect 33.22.22.11:443`
 
-*老北京马蜂怎么蜇人？——不知道，怎么蜇？——您猜怎么着？*
-
-响应结果一模一样。
+😅 响应结果一模一样。
 
 至此，流量转发规则也可以确认了。用 curl 访问 `33.22.22.11:443` 的结果：
 
@@ -395,7 +393,7 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 10. [SSL Certificate Verification][10]. *curl.se*.
 11. [TCP handshake][11]. *developer.mozilla.org*.
 12. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection][12]. *datatracker.ietf.org*.
-13. [RFC 5246 ( The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
+13. [RFC 5246 (The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
 14. [Ocean Wildlife: Spinner Dolphins][14]. *wildandwonderful.org*.
 15. [Spinner dolphin][15]. *en.wikipedia.org*.
 

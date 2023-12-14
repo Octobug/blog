@@ -129,10 +129,10 @@ Powered by creators everywhere.
 
 ## References
 
-- [AI-Generated Content (AIGC): A Survey][1]. *arxiv.org*.
-- [Prompt engineering][2]. *en.wikipedia.org*.
-- [淇淇][3]. *zh.wikipedia.org*.
-- [Baiji][4]. *en.wikipedia.org*.
+1. [AI-Generated Content (AIGC): A Survey][1]. *arxiv.org*.
+2. [Prompt engineering][2]. *en.wikipedia.org*.
+3. [淇淇][3]. *zh.wikipedia.org*.
+4. [Baiji][4]. *en.wikipedia.org*.
 
 [1]: <https://arxiv.org/pdf/2304.06632.pdf>
 [2]: <https://en.wikipedia.org/wiki/Prompt_engineering>

@@ -52,14 +52,14 @@ I'm requesting permission to use the copyrighted content.
 
 以前不知道想要写什么，现在知道想要写什么，但是很多问题我并没有答案。已经知道答案的，我便把它们记录在这里。
 
+---
+
 ::: details Pilot?
 
 - "Pilot" 经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
-- 题图 [[3]] 中的鲸鱼是领航鲸 (Pilot Whale) [[4]]。
+- 封面图 [[3]] 中的鲸鱼是领航鲸 (Pilot Whale) [[4]]。
 
 :::
-
-- <https://www.flickr.com/photos/cmichel67/47539866471/in/photostream/>
 
 ## References
 

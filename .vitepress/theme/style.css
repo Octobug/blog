@@ -200,6 +200,8 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
   margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dark .main img {

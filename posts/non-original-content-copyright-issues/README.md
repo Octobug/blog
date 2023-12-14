@@ -13,7 +13,7 @@ tags:
 
 前不久写本站第一篇文章时随手配了一张通过 Google 搜到的图片，越看越喜欢，所以决定尽量给每一篇文章配个封面图。
 
-这两天突然想到，直接拿别人的图来用，虽然是非商用目的，也许不是法律意义上的侵权，但不一定符合作者意愿，所以搜索了一番。然后看到这个贴子：
+这两天突然想到，直接拿别人的图来用，虽然是非商业用途，也许不是法律意义上的侵权，但不一定符合作者意愿，所以搜索了一番。然后看到这个贴子：
 
 [Can I just cite the source of a copyrighted image if I use it for my website?](https://www.quora.com/Can-I-just-cite-the-source-of-a-copyrighted-image-if-I-use-it-for-my-website). *quora.com*.
 
@@ -55,7 +55,7 @@ Openverse 的索引可能是过时的。当作者改变其作品的授权方式�
 
 > Explore and share your observations from the natural world.
 
-[iNaturalist]((https://www.inaturalist.org)) 上面的图片主要关于野生动植物。它们是科学家、博物学家和业余爱好者上传的，同时往往会有详细的时间、地点、物种名称等观测记录信息。这些图片不全是免费授权，使用时需要一一确认授权许可。
+[iNaturalist](https://www.inaturalist.org) 上面的图片主要关于野生动植物。它们是科学家、博物学家和业余爱好者上传的，同时往往会有详细的时间、地点、物种名称等观测记录信息。这些图片不全是免费授权，使用时需要一一确认授权许可。
 
 #### 其他
 

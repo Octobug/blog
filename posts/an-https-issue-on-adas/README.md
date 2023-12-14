@@ -211,7 +211,7 @@ TLS `v1.2` 握手的完整消息流 [[13]] 如下，可以看到在经过 4 个�
 
 #### OpenSSL 调试工具
 
-我通过这个帖子找到了 OpenSSL 的客户端调试工具 `openssl s_client`：
+我通过这个贴子找到了 OpenSSL 的客户端调试工具 `openssl s_client`：
 
 [How to debug SSL handshake using cURL? - Answered by `@Christian Davén`](https://stackoverflow.com/a/22814663/7267801). *stackoverflow.com*.
 
@@ -343,7 +343,7 @@ $ openssl s_client -connect www.qq.com:443 // [!code ++]
 
 没错，只有域名不一样。所以我改掉域名，随便写了个 ping 不可达的 IP: `openssl s_client -connect 33.22.22.11:443`
 
-*老北京马蜂怎么蜇人？——您猜怎么着？*
+*老北京马蜂怎么蜇人？——不知道，怎么蜇？——您猜怎么着？*
 
 响应结果一模一样。
 
@@ -376,13 +376,13 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 
 ::: details 是海豚就转！
 
-题图 [[14]] 是**一只**海豚跳跃出水面旋转的全过程合成图，这种海豚叫飞旋海豚 (Spinner Dolphin) [[15]]。
+封面图 [[14]] 是**一只**海豚跳跃出水面旋转的全过程合成图，这种海豚叫飞旋海豚 (Spinner Dolphin) [[15]]。
 :::
 
 ## References
 
-1. [Advanced driver-assistance system][1]. *wikipedia.org*.
-2. [Certificate authority - Issuing a certificate][2]. *wikipedia.org*.
+1. [Advanced driver-assistance system][1]. *en.wikipedia.org*.
+2. [Certificate authority - Issuing a certificate][2]. *en.wikipedia.org*.
 3. [curl.1 the man page - Exit codes][3]. *curl.se*.
 4. [CA certificates extracted from Mozilla][4]. *curl.se*.
 5. [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats? - Answered by `@sysadmin1138`][5]. *serverfault.com*.
@@ -395,7 +395,7 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 12. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection][12]. *datatracker.ietf.org*.
 13. [RFC 5246 ( The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
 14. [Ocean Wildlife: Spinner Dolphins][14]. *wildandwonderful.org*.
-15. [Spinner dolphin][15]. *wikipedia.org*.
+15. [Spinner dolphin][15]. *en.wikipedia.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Advanced_driver-assistance_system>
 [2]: <https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate>

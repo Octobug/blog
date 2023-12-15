@@ -1,7 +1,6 @@
 ---
 date: 2023-12-14
-location: 深圳 财富港大厦
-community: 宝安区西乡街道渔业社区
+spot: 财富港大厦
 sort: Law
 tags:
   - Copyright

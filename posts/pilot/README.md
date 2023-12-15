@@ -1,7 +1,6 @@
 ---
 date: 2019-06-02
-location: 深圳 财富港大厦
-community: 宝安区西乡街道渔业社区
+spot: 财富港大厦
 sort: Miscellaneous
 tags:
   - Small Talk

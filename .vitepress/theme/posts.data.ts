@@ -18,9 +18,11 @@ export default createContentLoader(extendedConfig.mdfilePatterns, {
   includeSrc: true,
   transform(rawData) {
     return rawData.map(p => {
+      const rt = readingTime(p.src || "");
       p.frontmatter.title = extractTile(p.src || "");
       p.frontmatter.datetime = new Date(p.frontmatter.date);
-      p.frontmatter.readingTime = readingTime(p.src || "").text;
+      p.frontmatter.readingTime = rt.text;
+      p.frontmatter.words = rt.words;
       p.url = withBaseURL(p.url.replace("/README", ""));
       return p;
     }).sort((a, b) => {

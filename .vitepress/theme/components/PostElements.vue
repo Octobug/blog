@@ -4,7 +4,10 @@
     :class="$style.elementList"
     hidden
   >
-    <span :class="$style.elementItem">
+    <span
+      :class="$style.elementItem"
+      :tooltip="moment(post.datetime).format('dddd')"
+    >
       {{ moment(post.datetime).format("LL") }}
     </span>
     <Dot
@@ -14,6 +17,7 @@
     <span
       v-if="post.location"
       :class="$style.elementItem"
+      :tooltip="post.community"
     >
       {{ post.location }}
     </span>
@@ -21,7 +25,10 @@
       v-if="post.readingTime"
       :class="$style.dot"
     />
-    <span :class="$style.elementItem">
+    <span
+      :class="$style.elementItem"
+      :tooltip="`${post.words} words`"
+    >
       {{ post.readingTime }}
     </span>
   </div>
@@ -67,11 +74,12 @@ onContentUpdated(() => {
 .elementList {
   border-top: 1px dashed var(--vp-c-divider);
   padding-top: 0.5rem;
+  padding-bottom: 2rem;
   margin-top: 0.5rem;
-  margin-bottom: 2rem;
   font-size: 0.88rem;
   white-space: nowrap;
   overflow-x: scroll;
+  overflow-y: hidden;
 
   /* Internet Explorer 10+ */
   -ms-overflow-style: none;
@@ -86,6 +94,34 @@ onContentUpdated(() => {
 
 .elementItem {
   color: var(--vp-c-text-3);
+}
+
+span.elementItem {
+  position: relative;
+  display: inline-block;
+}
+
+span.elementItem[tooltip]:after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: -80%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  line-height: 16px;
+  color: var(--vp-c-text-3);
+  background-color: var(--vp-c-default-soft);
+  border: 1px solid var(--vp-c-default-3);
+  border-radius: 3px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+  padding: 0 4px;
+  opacity: 0;
+  transition: 0.25s all;
+}
+
+span.elementItem[tooltip]:hover:after {
+  opacity: 1;
+  transition-delay: 0.5s;
 }
 
 .dot {

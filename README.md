@@ -15,12 +15,12 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 ### Features
 
 - [x] Single Post
-  - [x] Elements
+  - [x] Elements (with tooltips)
     - Publication Date
     - Location
     - Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
-  - [x] Comments (with [Giscus](https://github.com/giscus/giscus))
+  - [x] Comments (by [Giscus](https://github.com/giscus/giscus))
   - [x] Sort (Category)
   - [ ] Tags
 - [x] Home

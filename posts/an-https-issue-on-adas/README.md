@@ -1,6 +1,7 @@
 ---
 date: 2019-12-18
 location: 深圳 创维半导体设计大厦西座
+community: 南山区粤海街道高新区社区
 sort: Computer Science
 tags:
   - Network

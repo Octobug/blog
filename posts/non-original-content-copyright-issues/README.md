@@ -9,7 +9,7 @@ tags:
 
 # 公开使用非原创内容的版权问题
 
-![Baiji Qiqi](./baiji-qiqi.jpg "Used with permission from *[commons.wikimedia.org](https://commons.wikimedia.org/w/index.php?curid=95653143)* under [CC BY-SA 3.0](https://creativecommons.org/licenses/by/3.0/).")
+![Baiji Qiqi](./baiji-qiqi.jpg "Used with permission: ***Roland Seitre***. [*commons.wikimedia.org*](https://commons.wikimedia.org/w/index.php?curid=95653143). [CC BY-SA 3.0](https://creativecommons.org/licenses/by/3.0/).")
 
 前不久写本站第一篇文章时随手配了一张通过 Google 搜到的图片，越看越喜欢，所以决定尽量给每一篇文章配个封面图。
 
@@ -123,7 +123,7 @@ Powered by creators everywhere.
 
 :::details 封面图
 
-本站第一张经过授权的封面图是一只名为“淇淇” [[3]] 的雄性白鱀豚 (Baiji) [[4]]，死于 2002 年 7 月 14 日。淇淇是最后的确切的白𬶨豚活体记录，目前国际学界普遍认为白鱀豚已经功能性灭绝 [[4]]。
+本站第一张经过许可的封面图是一只名为“淇淇” [[3]] 的雄性白鱀豚 (Baiji) [[4]]，死于 2002 年 7 月 14 日。淇淇是最后的确切的白𬶨豚活体记录，目前国际学界普遍认为白鱀豚已经功能性灭绝 [[4]]。
 
 :::
 

@@ -20,7 +20,7 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
     - Location
     - Reading Time
   - [x] Prev/Next (without the built-in global sidebar)
-  - [x] Comments (by [Giscus](https://github.com/giscus/giscus))
+  - [x] Comments ([Giscus](https://github.com/giscus/giscus))
   - [x] Sort (Category)
   - [ ] Tags
 - [x] Home

@@ -47,4 +47,7 @@ Feel free to customize it based on your own ideas. Please check out the [Contrib
 
 ## License
 
-[CC BY-SA 4.0](./LICENSE).
+Copyright (c) 2019-present. Shaobiao Lin.
+
+- Contents in directories `posts/`, `visions/`, and `piblic/` are licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
+- Others are licensed under [MIT](./LICENSE).

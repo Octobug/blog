@@ -38,7 +38,7 @@ tags:
 [Openverse](https://openverse.org/) 可以理解为免费授权内容的搜索引擎，它的内容是从其他内容平台索引而来。当内容作者将他们的作品标记为免费授权，Openverse 可能就会收录这些内容。
 
 :::danger 注意！
-Openverse 的索引可能是过时的。当作者改变其作品的授权方式，比如从 "CC BY-SA 3.0" 改成 "All Rights Reserved"（“版权所有 不得转载”），Openverse 不一定会及时更新。
+Openverse 的索引可能是过时的。当作者改变其作品的授权方式，比如从某个允许非商用的协议改成 "All Rights Reserved"（“版权所有 不得转载”），Openverse 不一定会及时更新。
 
 所以当你要搬运 Openverse 上面的内容时，最好点进去源头看，避免无意间的侵权。
 :::

@@ -332,8 +332,8 @@ DONE
 这两个命令有什么不同？
 
 ```sh
-$ openssl s_client -connect platform.domain:443 // [!code --]
-$ openssl s_client -connect www.qq.com:443 // [!code ++]
+$ openssl s_client -connect platform.domain:443 # [!code --]
+$ openssl s_client -connect www.qq.com:443      # [!code ++]
 ...
 ```
 
@@ -344,7 +344,7 @@ $ openssl s_client -connect www.qq.com:443 // [!code ++]
 至此，流量转发规则也可以确认了。用 curl 访问 `33.22.22.11:443` 的结果：
 
 ```sh
-$ curl "11.23.23.23:443"
+$ curl "33.22.22.11:443"
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 

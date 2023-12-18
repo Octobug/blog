@@ -11,11 +11,7 @@ tags:
 
 # 一次 ADAS 设备上的 HTTPS 排障过程
 
-:::info
-I'm requesting permission to use the copyrighted content.
-:::
-
-<!-- ![Spinner Dolphin](../../temp/long-snouted-spinner-dolphin-spin-cycle.jpg "Used with permission from *[wildandwonderful.org]([wildandwonderful.org](https://www.wildandwonderful.org/))*.") -->
+![Spinner Dolphin](./spinner-dolphin.gif "Permitted under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). ©️ [**Dennis Rabeling**](https://www.inaturalist.org/people/dennisthediver). [*inaturalist.org*](https://www.inaturalist.org/photos/177838721).")
 
 > 有一批设备总是软件升级失败，你看一下是怎么回事？
 
@@ -374,9 +370,12 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 
 ---
 
-::: details 是海豚就转！
+::: details 是海豚就转
 
-封面图 [[14]] 是**一只**海豚跳跃出水面旋转的全过程合成图，这种海豚叫飞旋海豚 (Spinner Dolphin) [[15]]。
+封面图是一只海豚旋转跳跃出水面。
+
+这种海豚叫长吻飞旋海豚 (Spinner Dolphin) [[14]]，因喜欢飞跃出水面旋转而得名。
+
 :::
 
 ## References
@@ -394,8 +393,7 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 11. [TCP handshake][11]. *developer.mozilla.org*.
 12. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection][12]. *datatracker.ietf.org*.
 13. [RFC 5246 (The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
-14. [Ocean Wildlife: Spinner Dolphins][14]. *wildandwonderful.org*.
-15. [Spinner dolphin][15]. *en.wikipedia.org*.
+14. [Spinner dolphin][14]. *en.wikipedia.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Advanced_driver-assistance_system>
 [2]: <https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate>
@@ -410,5 +408,4 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 [11]: <https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake>
 [12]: <https://datatracker.ietf.org/doc/html/rfc793#section-3.4>
 [13]: <https://datatracker.ietf.org/doc/html/rfc5246#section-7.3>
-[14]: <https://www.wildandwonderful.org/spinner-dolphins>
-[15]: <https://en.wikipedia.org/wiki/Spinner_dolphin>
+[14]: <https://en.wikipedia.org/wiki/Spinner_dolphin>

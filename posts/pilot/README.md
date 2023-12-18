@@ -10,11 +10,7 @@ tags:
 
 # Pilot
 
-:::info
-I'm requesting permission to use the copyrighted content.
-:::
-
-<!-- ![Pilot Whale](../../temp/pilot-whale.jpg "Used with permission from *[sdmdiving.com](https://sdmdiving.com)*.") -->
+![Pilot Whale](./pilot-whale.jpg "Permitted under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) (image resized). ©️ [**Christopher Michel**](https://www.flickr.com/photos/cmichel67/). [*flickr.com*](https://www.flickr.com/photos/cmichel67/47539866471/in/photolist-REw454-2fqWf7k-REw4ex-2fmgKwf-REw42P-2fqWf3c-2ejZmEG).")
 
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 
@@ -57,7 +53,7 @@ I'm requesting permission to use the copyrighted content.
 ::: details Pilot?
 
 - "Pilot" 经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
-- 封面图 [[3]] 中的鲸鱼是领航鲸 (Pilot Whale) [[4]]。
+- 封面图中的鲸鱼是领航鲸 (Pilot Whale) [[3]]，由作者摄于斯里兰卡 [[4]]。
 
 :::
 
@@ -65,10 +61,10 @@ I'm requesting permission to use the copyrighted content.
 
 1. [Television pilot][1]. *en.wikipedia.org*.
 2. [List of television episodes titled Pilot][2]. *en.wikipedia.org*.
-3. [Days Like Today Are Why I Want to Live Forever!][3]. *sdmdiving.com*.
-4. [Pilot whale][4]. *en.wikipedia.org*.
+3. [Pilot whale][3]. *en.wikipedia.org*.
+4. [Sri Lanka][4]. *en.wikipedia.org*.
 
 [1]: <https://en.wikipedia.org/wiki/Television_pilot>
 [2]: <https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot>
-[3]: <https://sdmdiving.com/wildlife-travel-blog/tag/pilot+whale+diving>
-[4]: <https://en.wikipedia.org/wiki/Pilot_whale>
+[3]: <https://en.wikipedia.org/wiki/Pilot_whale>
+[4]: <https://en.wikipedia.org/wiki/Sri_Lanka>

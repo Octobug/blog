@@ -4,6 +4,7 @@ spot: 创维半导体设计大厦西座
 sort: Computer Science
 tags:
   - Network
+  - SSL/TLS
   - HTTPS
   - curl
   - OpenSSL
@@ -133,7 +134,7 @@ curl: (60) SSL certificate problem: unable to get local issuer certificate
 
 排除到这里，只剩“设备到服务器的网络链路”了，既不是设备的问题，也不是服务器的问题。但是我没有更坚实的证据，如何说服客户？
 
-### TLS
+### SSL/TLS
 
 TLS 是 SSL 的新名称 [[10]]。从上面 curl 的报错看，错误发生在证书验证阶段 [[10]]，先尝试用 `--verbose` 选项看看其详细过程。
 
@@ -176,7 +177,7 @@ curl: (60) SSL certificate problem: self signed certificate
 
 从以上输出可以看到在 TLS 握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
 
-#### TLS 握手过程
+#### SSL/TLS 握手过程
 
 TLS 连接建立之前也有和 TCP 三次握手 [[11], [12]] 相似的过程，只不过要复杂一些。既然证书验证是发生在这个阶段，就不得不了解这个过程中到底发生了什么，具体到哪一步出了问题。
 

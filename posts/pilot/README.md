@@ -5,7 +5,6 @@ sort: Miscellaneous
 tags:
   - Small Talk
   - Blog
-  - VitePress
 ---
 
 # Pilot

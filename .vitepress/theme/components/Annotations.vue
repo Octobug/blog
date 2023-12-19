@@ -1,20 +1,27 @@
 <template>
-  <div class="annotations">
-    <div
+  <div
+    v-if="frontmatter.sort || frontmatter.tags?.length"
+    class="annotations"
+  >
+    <a
       v-if="frontmatter.sort"
-      class="sortBox"
+      :href="withBase(`/sorts#${toDashedHash(frontmatter.sort)}`)"
+      class="badge sort"
     >
-      <a
-        :href="withBase(`/sorts#${toDashedHash(frontmatter.sort)}`)"
-        class="sort"
-      >
-        {{ frontmatter.sort?.toUpperCase() }}
-      </a>
-    </div>
+      {{ frontmatter.sort?.toUpperCase() }}
+    </a>
     <Dot
-      v-if="frontmatter.sort && frontmatter.tags.length"
+      v-if="frontmatter.sort && frontmatter.tags?.length"
       class="dot"
     />
+    <a
+      v-for="tag in frontmatter.tags"
+      :key="tag"
+      :href="withBase(`/tags#${toDashedHash(tag)}`)"
+      class="badge tag"
+    >
+      {{ tag }}
+    </a>
   </div>
 </template>
 
@@ -33,16 +40,17 @@ const { frontmatter } = useData();
   font-size: 14px;
 }
 
-.sortBox {
+.badge {
+  border-radius: 4px;
   display: inline-block;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .sort {
   color: var(--vp-c-neutral-inverse);
   background-color: var(--vp-c-brand-3);
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 4px 8px;
+  padding: 1px 8px;
 }
 
 .sort:hover {
@@ -58,6 +66,32 @@ const { frontmatter } = useData();
 }
 
 .dot {
-  margin: 0.7rem;
+  margin: 1px 0.7rem;
+  display: inline-block;
+}
+
+.tag {
+  color: var(--vp-c-brand-3);
+  line-height: 20px;
+  border: 2px solid var(--vp-c-brand-3);
+  padding: 1.7px 5px;
+  margin-top: 1rem;
+  margin-right: 0.7rem;
+}
+
+.tag:hover {
+  border: 2px solid var(--vp-c-brand-3);
+  background-color: var(--vp-c-brand-3);
+  color: var(--vp-c-neutral-inverse);
+}
+
+.dark .tag {
+  color: var(--vp-c-brand-1);
+  border: 2px solid var(--vp-c-brand-1);
+}
+
+.dark .tag:hover {
+  color: var(--vp-c-neutral-inverse);
+  background-color: var(--vp-c-brand-1);
 }
 </style>

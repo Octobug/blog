@@ -3,7 +3,7 @@ date: 2019-06-02
 spot: 财富港大厦
 sort: Miscellaneous
 tags:
-  - Small Talk
+  - Causerie
   - Blog
 ---
 

@@ -31,10 +31,10 @@ export default {
       text: "SORTS",
       link: "/sorts",
     },
-    // {
-    //   text: "TAGS",
-    //   link: "/pages/tags",
-    // },
+    {
+      text: "TAGS",
+      link: "/tags",
+    },
     // {
     //   text: "VISIONS",
     //   link: "/pages/visions",

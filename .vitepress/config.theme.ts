@@ -46,10 +46,10 @@ export default {
         //   text: "Blog Collection",
         //   link: "/collection",
         // },
-        // {
-        //   text: "Acknowledgments",
-        //   link: "/acknowledgments",
-        // },
+        {
+          text: "Acknowledgments",
+          link: "/acknowledgments",
+        },
         // {
         //   text: "Atom Feed",
         //   link: "/atom.xml",

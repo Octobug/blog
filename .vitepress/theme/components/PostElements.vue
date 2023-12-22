@@ -1,10 +1,12 @@
 <template>
   <div
+    v-if="post.datetime || post.spot || post.readingTime"
     name="post-elements"
     :class="$style.elementList"
     hidden
   >
     <span
+      v-if="post.datetime"
       :class="$style.elementItem"
       :tooltip="moment(post.datetime).format('dddd')"
     >
@@ -17,15 +19,16 @@
     <span
       v-if="post.spot"
       :class="$style.elementItem"
-      :tooltip="post.location.district"
+      :tooltip="post.location?.district"
     >
-      {{ `${post.location.city} ${post.spot}` }}
+      {{ `${post.location?.city || ""} ${post.spot}` }}
     </span>
     <Dot
       v-if="post.readingTime"
       :class="$style.dot"
     />
     <span
+      v-if="post.readingTime"
       :class="$style.elementItem"
       :tooltip="`${post.words} words`"
     >

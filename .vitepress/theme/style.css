@@ -233,14 +233,14 @@ figure figcaption a {
   color: var(--vp-c-text-3) !important;
 }
 
-/* Acknowledgments page only */
-.acknowledgments h1 {
+/* Special pages only */
+.doc-page h1 {
   text-align: center;
   font-size: 28px;
 }
 
-.acknowledgments h1,
-.acknowledgments h2,
-.acknowledgments h3 {
+.doc-page h1,
+.doc-page h2,
+.doc-page h3 {
   font-family: "Times New Roman", Georgia, sans-serif;
 }

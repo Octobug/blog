@@ -13,7 +13,7 @@ tags:
 
 # 慎用 iptables：误用规则引发的疑问
 
-![BCY0349 Masquerade](./bcy0349.jpg "Permitted under the [Terms and conditions](https://www.dfo-mpo.gc.ca/terms-conditions-avis-eng.htm). ©️ [**Contributors**](https://www.dfo-mpo.gc.ca/species-especes/mammals-mammiferes/humpback-rorqual-a-bosse/photos/index-eng.html) on [*dfo-mpo.gc.ca*](https://www.dfo-mpo.gc.ca/species-especes/mammals-mammiferes/humpback-rorqual-a-bosse/photos/bcy-eng.html).")
+![BCY0349 Masquerade](./bcy0094.jpg "Permitted under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (brightness adjusted). ©️ [**Debbie Patton**](https://happywhale.com/user/3248) on [*happywhale.com*](https://happywhale.com/individual/18392).")
 
 昨天去了一趟广州。在深圳安检排队时微信突然来了一串消息：
 
@@ -170,10 +170,7 @@ iptables 是个强大而复杂的系统软件，由于其工作机制偏系统�
 
 :::details 封面图
 
-封面图是一头大翅鲸 (Humpback whale，也叫座头鲸) [[11]] 的尾鳍。
-
-- 图中这头大翅鲸的编号是 `BCY0349`，名字叫 Masquerade。
-- 编号中的 `BC` 是 British Columbia 的首字母缩写，`Y` 是名录编号，目前有 `XYZ` 三个名录 [[12]]。
+封面图是一头名为 Masquerade 的鲸鱼的尾鳍，这种鲸鱼叫座头鲸 (Humpback whale)，也叫大翅鲸 [[11]]。
 
 :::
 
@@ -190,7 +187,6 @@ iptables 是个强大而复杂的系统软件，由于其工作机制偏系统�
 9. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 1.5. Operation][9]. *datatracker.ietf.org*.
 10. [MySQL 8.0 Reference Manual - 5.1.8 Server System Variables][10]. *dev.mysql.com*.
 11. [Humpback whale][11]. *wikipedia.org*.
-12. [Photographic Catalogue of Humpback Whales in British Columbia][12]. *dfo-mpo.gc.ca*.
 
 [1]: <https://forum.networklessons.com/t/what-is-the-source-ip-address-when-we-ping-127-0-0-1/3643>
 [2]: <https://en.wikipedia.org/wiki/Unix_domain_socket>
@@ -203,4 +199,3 @@ iptables 是个强大而复杂的系统软件，由于其工作机制偏系统�
 [9]: <https://datatracker.ietf.org/doc/html/rfc793#section-1.5>
 [10]: <https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_wait_timeout>
 [11]: <https://en.wikipedia.org/wiki/Humpback_whale>
-[12]: <https://www.dfo-mpo.gc.ca/species-especes/mammals-mammiferes/humpback-rorqual-a-bosse/photos/index-eng.html>

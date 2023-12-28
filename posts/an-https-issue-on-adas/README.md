@@ -67,7 +67,7 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 验证错误 [[3]]，结�
   - 服务器所在的云服务商
 - **平台服务器**
   - 操作系统网络配置
-  - 反向代理服务器 NGINX 的 TLS/SSL 配置 [[7]]
+  - 反向代理服务器 NGINX 的 SSL/TLS 配置 [[7]]
 
 这些设备的操作系统是 Linux，只能通过命令行操作。并且因为是嵌入式设备，能用的命令行工具比较有限。好在错误能稳定复现，而且出错的设备是同一批，软件、网络条件一致，所以有足够的环境来逐步试验排除无关因素。
 
@@ -111,7 +111,7 @@ If you'd like to turn off curl's verification of the certificate, use
 exit status 60
 ```
 
-前面提到平台端记录的错误退出码，从这里可以看到更详细的错误信息 "curl: (60) SSL certificate problem: self signed certificate"。运维平台的 SSL 证书是正常购买的，这个“自签名证书”从何而来？如果使用 `-k` 忽略 SSL 证书的验证呢？
+前面提到平台端记录的错误退出码，从这里可以看到更详细的错误信息 `curl: (60) SSL certificate problem: self signed certificate`。运维平台的 SSL 证书是正常购买的，这个“自签名证书”从何而来？如果使用 `-k` 忽略 SSL 证书的验证呢？
 
 ```sh
 $ curl -k --cacert /path/to/cacert.pem 'https://platform.domain/path/to/package'
@@ -175,7 +175,7 @@ curl: (60) SSL certificate problem: self signed certificate
 ...
 ```
 
-从以上输出可以看到在 TLS 握手过程中，有一步提示 "SSL certificate problem: self signed certificate"，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
+从以上输出可以看到在 TLS 握手过程中，有一步提示 `SSL certificate problem: self signed certificate`，之后客户端主动关闭了连接。但是，并不能看出客户端为什么会收到错误的证书信息，甚至连这个错误的证书是什么样也不知道。
 
 #### SSL/TLS 握手过程
 

@@ -1,6 +1,6 @@
 ---
 date: 2023-12-14
-spot: 财富港大厦
+spot: 财富港
 sort: Law
 tags:
   - Copyright

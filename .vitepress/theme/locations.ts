@@ -9,7 +9,7 @@ const DISTRICT = {
 };
 
 const LOCATIONS = {
-  财富港大厦: {
+  财富港: {
     city: CITY.深圳,
     district: DISTRICT.渔业社区,
   },
@@ -20,7 +20,11 @@ const LOCATIONS = {
   大冲新城花园: {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
-  }
+  },
+  郎景园: {
+    city: CITY.深圳,
+    district: DISTRICT.大冲社区,
+  },
 };
 
 export default function getLocation(spot: string) {

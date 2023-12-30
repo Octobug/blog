@@ -1,14 +1,15 @@
 import { defineConfigWithTheme } from "vitepress";
+import mdImageFigures from "markdown-it-image-figures";
 import type { ThemeConfig } from "./theme/types/theme-config";
 import themeConfig from "./config.theme";
-import { BASE_URL, withBaseURL } from "./config.utils";
+import { BASE_PATH, withBaseURL } from "./config.utils";
 import gaConfig from "./theme/ganalytics";
-import mdImageFigures from "markdown-it-image-figures";
+import { buildFeed } from "./theme/feed";
 
 export default defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
   description: "Octobug's blog.",
-  base: BASE_URL,
+  base: BASE_PATH,
   cleanUrls: true,
   lastUpdated: true,
   head: [
@@ -46,6 +47,9 @@ export default defineConfigWithTheme<ThemeConfig>({
     "./README.md",
   ],
   themeConfig,
+  buildEnd: async ({ outDir }) => {
+    await buildFeed(outDir);
+  },
   markdown: {
     config: (md) => {
       // usage: ![alt](https://link-to-image 'title'){.class}

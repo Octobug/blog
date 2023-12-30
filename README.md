@@ -34,7 +34,7 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
 - [x] Posts (Archives)
 - [x] Sorts (Categories)
 - [x] Tags
-- [ ] Atom Feed
+- [x] Atom Feed
 - [x] Others
   - [x] Local Search (supports Chinese)
   - [x] [Google Analytics](https://analytics.google.com/)

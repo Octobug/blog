@@ -2,7 +2,7 @@ import "dotenv/config";
 import { env } from "process";
 import * as path from "path";
 
-export const BASE_URL = env.BASE_URL || undefined;
+export const BASE_PATH = env.BASE_PATH || undefined;
 
 export const giscus = {
   repo_id: env.GISCUS_REPO_ID || "",
@@ -12,8 +12,13 @@ export const giscus = {
 export const gMeasurementID = env.G_MEASUREMENT_ID || "";
 
 export function withBaseURL(urlPath: string) {
-  if (BASE_URL && urlPath.includes(BASE_URL)) {
+  if (BASE_PATH && urlPath.includes(BASE_PATH)) {
     return urlPath;
   }
-  return path.join(BASE_URL || "/", urlPath);
+  return path.join(BASE_PATH || "/", urlPath);
+}
+
+export function joinURL(baseURL: string, ...paths: string[]) {
+  const urlPath = path.join(...paths);
+  return new URL(urlPath, baseURL).href;
 }

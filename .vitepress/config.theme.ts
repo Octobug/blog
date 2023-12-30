@@ -50,10 +50,11 @@ export default {
           text: "Acknowledgments",
           link: "/acknowledgments",
         },
-        // {
-        //   text: "Atom Feed",
-        //   link: "/atom.xml",
-        // },
+        {
+          text: "Atom Feed",
+          link: withBaseURL("/atom.xml"),
+          target: "_blank",
+        },
         {
           text: "Repository",
           link: "https://github.com/Octobug/blog",

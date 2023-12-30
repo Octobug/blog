@@ -23,6 +23,15 @@ npm run dev
 npm run build
 ```
 
+### Atom Feed Preview
+
+Feed contents are built with VitePress's [`buildEnd`](https://vitepress.dev/reference/site-config#buildend) build hook, so you need to run `build` & `preview` to see the results:
+
+```sh
+npm run build
+npm run preview
+```
+
 There are several other npm script commands in the `scripts` part of [`package.json`](../package.json) that you might want to use.
 
 ### Visual Studio Code

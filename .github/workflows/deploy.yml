@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  BASE_URL: ${{ vars.BASE_URL }}
+  BASE_PATH: ${{ vars.BASE_PATH }}
   GISCUS_REPO_ID: ${{ vars.GISCUS_REPO_ID }}
   GISCUS_CATEGORY_ID: ${{ vars.GISCUS_CATEGORY_ID }}
 

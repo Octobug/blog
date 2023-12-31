@@ -58,5 +58,9 @@ export default defineConfigWithTheme<ThemeConfig>({
         copyAttrs: "^class$",
       });
     },
+    image: {
+      // image lazy loading is disabled by default
+      lazyLoading: true
+    }
   },
 });

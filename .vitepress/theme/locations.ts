@@ -5,10 +5,15 @@ const CITY = {
 const DISTRICT = {
   大冲社区: "南山区粤海街道大冲社区",
   高新区社区: "南山区粤海街道高新区社区",
+  海滨社区: "宝安区新安街道海滨社区",
   渔业社区: "宝安区西乡街道渔业社区",
 };
 
 const LOCATIONS = {
+  宝安图书馆: {
+    city: CITY.深圳,
+    district: DISTRICT.海滨社区,
+  },
   财富港: {
     city: CITY.深圳,
     district: DISTRICT.渔业社区,

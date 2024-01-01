@@ -10,7 +10,7 @@ tags:
 
 # Pilot
 
-![Pilot Whale](./pilot-whale.jpg "Permitted under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) (image resized). ©️ [**Christopher Michel**](https://www.flickr.com/photos/cmichel67/). [*flickr.com*](https://www.flickr.com/photos/cmichel67/47539866471/in/photolist-REw454-2fqWf7k-REw4ex-2fmgKwf-REw42P-2fqWf3c-2ejZmEG).")
+![Pilot Whale](./pilot-whale.jpg "Permitted under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) (image resized). © [**Christopher Michel**](https://www.flickr.com/photos/cmichel67/). [*flickr.com*](https://www.flickr.com/photos/cmichel67/47539866471/in/photolist-REw454-2fqWf7k-REw4ex-2fmgKwf-REw42P-2fqWf3c-2ejZmEG).")
 
 为了让这篇成为博客的第一篇文章，我写了个假日期。这个日期是我从珠海搬到深圳的日子，算是一个新的开始。
 

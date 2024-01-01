@@ -12,7 +12,7 @@ tags:
 
 # 一次 ADAS 设备上的 HTTPS 排障过程
 
-![Spinner Dolphin](./spinner-dolphin.jpg "Permitted by ©️ [**Richard Barrett**](https://www.wildandwonderful.org/). [*wildandwonderful.org*](https://www.wildandwonderful.org/spinner-dolphins).")
+![Spinner Dolphin](./spinner-dolphin.jpg "Permitted by © [**Richard Barrett**](https://www.wildandwonderful.org/). [*wildandwonderful.org*](https://www.wildandwonderful.org/spinner-dolphins).")
 
 > 有一批设备总是软件升级失败，你看一下是怎么回事？
 
@@ -377,7 +377,7 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 
 这种海豚叫飞旋海豚 (Spinner Dolphin) [[14]]，因喜欢飞跃出水面旋转而得名。一次完整的旋转跳跃如下图：
 
-![Spinner Dolphin](./spinner-dolphin.gif "Permitted under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). ©️ [**Dennis Rabeling**](https://www.inaturalist.org/people/dennisthediver). [*inaturalist.org*](https://www.inaturalist.org/photos/177838721).")
+![Spinner Dolphin](./spinner-dolphin.gif "Permitted under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). © [**Dennis Rabeling**](https://www.inaturalist.org/people/dennisthediver). [*inaturalist.org*](https://www.inaturalist.org/photos/177838721).")
 
 :::
 

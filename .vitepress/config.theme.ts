@@ -14,7 +14,7 @@ export default {
   },
   footer: {
     message: 'All original contents are licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.',
-    copyright: `Copyright ©️ 2019-${new Date().getFullYear()} <a href="https://github.com/Octobug">Octobug</a>`,
+    copyright: `Copyright © 2019-${new Date().getFullYear()} <a href="https://github.com/Octobug">Shaobiao Lin</a>`,
   },
   lastUpdated: {
     formatOptions: {

@@ -9,7 +9,7 @@ tags:
 
 # 公开使用非原创内容的版权问题
 
-![Baiji Qiqi](./baiji-qiqi.jpg "Permitted under [CC BY-SA 3.0](https://creativecommons.org/licenses/by/3.0/). ©️ **Roland Seitre**. [*commons.wikimedia.org*](https://commons.wikimedia.org/w/index.php?curid=95653143).")
+![Baiji Qiqi](./baiji-qiqi.jpg "Permitted under [CC BY-SA 3.0](https://creativecommons.org/licenses/by/3.0/). © **Roland Seitre**. [*commons.wikimedia.org*](https://commons.wikimedia.org/w/index.php?curid=95653143).")
 
 前不久写本站第一篇文章时随手配了一张通过 Google 搜到的图片，越看越喜欢，所以决定尽量给每一篇文章配个封面图。
 

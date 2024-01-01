@@ -13,7 +13,7 @@ tags:
 
 # 慎用 iptables：误用规则引发的疑问
 
-![BCY0349 Masquerade](./bcy0094.jpg "Permitted under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (brightness adjusted). ©️ [**Debbie Patton**](https://happywhale.com/user/3248). [*happywhale.com*](https://happywhale.com/individual/18392).")
+![BCY0349 Masquerade](./bcy0094.jpg "Permitted under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (brightness adjusted). © [**Debbie Patton**](https://happywhale.com/user/3248). [*happywhale.com*](https://happywhale.com/individual/18392).")
 
 昨天去了一趟广州。在深圳安检排队时微信突然来了一串消息：
 

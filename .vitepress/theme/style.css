@@ -219,6 +219,12 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
   box-shadow: none;
 }
 
+.zoom07 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
 /* image subtitle */
 figure figcaption {
   margin-top: -1.3rem;

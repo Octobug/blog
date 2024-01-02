@@ -4,6 +4,7 @@ import mdImageFigures from "markdown-it-image-figures";
 import mdFootnote from "markdown-it-footnote";
 
 function genReferenceSection(md: MarkdownIt) {
+  // usage: https://markdown-it.github.io/#fnref1
   md.use(mdFootnote);
   md.renderer.rules.footnote_block_open = () => (`
     <h2 id="references">
@@ -18,12 +19,15 @@ function genReferenceSection(md: MarkdownIt) {
   `);
 }
 
-export default function useMDItPlugins(md: MarkdownIt) {
+function genImageFigures(md: MarkdownIt) {
   // usage: ![alt](https://link-to-image 'title'){.class}
   md.use(mdImageFigures, {
     figcaption: "title",
     copyAttrs: "^class$",
   });
+}
 
+export default function useMDItPlugins(md: MarkdownIt) {
+  genImageFigures(md);
   genReferenceSection(md);
 }

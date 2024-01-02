@@ -261,6 +261,7 @@ sup.footnote-ref a {
 ol.footnotes-list li p{
   margin: 0;
 }
+
 ol.footnotes-list li p a.footnote-backref {
   text-decoration: none;
   font-family: monospace;

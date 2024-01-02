@@ -12,7 +12,9 @@ tags:
 
 ![Vaquita Porpoises](./vaquita.jpg "A public domain image. [**Paula Olson**](https://www.fisheries.noaa.gov/contact/paula-olson). [*commons.wikimedia.org*](https://commons.wikimedia.org/wiki/File:Vaquita6_Olson_NOAA.jpg).")
 
-前两天完成了这个博客的最后一个功能 (Atom Feed)。本来打算在 2023 年最后一天写一篇总结，但刚好有朋友邀约去爬大南山 [[1]]，所以推迟到新年的第一天。对于爬山我的态度很明确，不愿爬，不怕爬，必要时不得不爬：
+前两天完成了这个博客的最后一个功能 (Atom Feed)。本来打算在 2023 年最后一天写一篇总结，但刚好有朋友邀约去爬大南山[^nanshan]，所以推迟到新年的第一天。对于爬山我的态度很明确，不愿爬，不怕爬，必要时不得不爬：
+
+[^nanshan]: [大南山 (深圳)](https://zh.wikipedia.org/zh-cn/大南山_(深圳)). *zh.wikipedia.org*.
 
 ![View from the Top](./view-from-the-top-of-nanshan.jpg "请欣赏二〇二三年最后一天深圳市南山区~~最美丽~~的风景")
 
@@ -65,7 +67,7 @@ VitePress 的 Markdown 文件有几个类型，通过 `frontmatter` 中的 `layo
 
 构建生成的静态网站中，如果有页面存在动态内容（比如显示时间），在浏览器 console 会报如下错误：
 
-:::danger
+:::danger Error
 Hydration completed but contains mismatches.
 :::
 
@@ -145,16 +147,17 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 
 #### markdown-it 插件
 
-在 VitePress 中使用 markdown-it 插件：[Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)
+如何在 VitePress 中使用 markdown-it 插件：
+
+- [Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)
+- [Octobug/blog/.vitepress/theme/mdit.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/mdit.ts)
+
+插件列表：
 
 - **图片注解**：[arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures)
-  - 如何使用：
-    - [vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)
-    - Placeholder .ts
+  - 例子：[vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)
 - **自动生成引用脚注**：[markdown-it/markdown-it-footnote](https://github.com/markdown-it/markdown-it-footnote)
-  - 如何使用：
-    - Placeholder .ts
-    - Placeholder .css
+  - 插件样式调整：[Octobug/blog/.vitepress/theme/style.css](https://github.com/Octobug/blog/blob/17e8383da904d7c9f550ab35b0dfebe292dde09a/.vitepress/theme/style.css#L256C10-L256C10)
 
 #### 处理图片文件大小
 
@@ -216,18 +219,10 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 :::details Vaquita Porpoise
 
-封面图是一只小头鼠海豚 (Vaquita Porpoise) [[2]] 妈妈领着她的幼崽 [[3]]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体 [[4]]。
+封面图是一只小头鼠海豚 (Vaquita Porpoise)[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。
 
 :::
 
-## References
-
-1. [大南山 (深圳)][1]. *zh.wikipedia.org*.
-2. [Vaquita][2]. *en.wikipedia.org*.
-3. [Endangered Vaquita Porpoise Not Doomed to Extinction by Inbreeding Depression][3]. *fisheries.noaa.gov*.
-4. [Phocoena sinus (Vaquita)][4]. *iucnredlist.org*.
-
-[1]: <https://zh.wikipedia.org/zh-cn/大南山_(深圳)>
-[2]: <https://en.wikipedia.org/wiki/Vaquita>
-[3]: <https://www.fisheries.noaa.gov/feature-story/endangered-vaquita-porpoise-not-doomed-extinction-inbreeding-depression>
-[4]: <https://www.iucnredlist.org/species/17028/214541137>
+[^vaquita]: [Vaquita](https://en.wikipedia.org/wiki/Vaquita). *en.wikipedia.org*.
+[^mom_and_calf]: [Endangered Vaquita Porpoise Not Doomed to Extinction by Inbreeding Depression](https://www.fisheries.noaa.gov/feature-story/endangered-vaquita-porpoise-not-doomed-extinction-inbreeding-depression). *fisheries.noaa.gov*.
+[^ce_vaquita]: [Phocoena sinus (Vaquita)](https://www.iucnredlist.org/species/17028/214541137). *iucnredlist.org*.

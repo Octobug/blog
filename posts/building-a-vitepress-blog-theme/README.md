@@ -89,6 +89,7 @@ Hydration completed but contains mismatches.
 文章有时会包含图片文件，这些图片要集中放在一起（比如放在 `assets/` 目录中）还是各自和所属文章放在一起？经过一番纠结之后，我选择了后者，因为这样在引用图片时可以用最短的相对路径，同时图片文件也更好管理。每篇 Markdown 文章对应一个目录，与其相关的文件都放在同一个目录里：
 
 ```sh
+$ tree posts
 posts
 ├── an-https-issue-on-adas
 │   ├── README.md
@@ -99,6 +100,7 @@ posts
 │   └── bcy0094.jpg
 ├── building-a-vitepress-blog-theme
 │   ├── README.md
+│   ├── feeder-screenshot.jpg
 │   ├── vaquita.jpg
 │   └── view-from-the-top-of-nanshan.jpg
 ├── non-original-content-copyright-issues

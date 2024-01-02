@@ -188,12 +188,14 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
 
 .vp-doc h3 {
   font-size: 19px;
+  margin-top: 28px;
   margin-bottom: 14px;
 }
 
 .vp-doc h4 {
   font-size: 17px;
-  margin-bottom: 12px;
+  margin-top: 22px;
+  margin-bottom: 10px;
 }
 
 /* hack for post elements's margin-bottom */
@@ -249,4 +251,17 @@ figure figcaption a {
 .doc-page h2,
 .doc-page h3 {
   font-family: "Times New Roman", Georgia, sans-serif;
+}
+
+/* Markdown Footnotes */
+sup.footnote-ref a {
+  text-decoration: none;
+}
+
+ol.footnotes-list li p{
+  margin: 0;
+}
+ol.footnotes-list li p a.footnote-backref {
+  text-decoration: none;
+  font-family: monospace;
 }

@@ -36,7 +36,7 @@ const { frontmatter } = useData();
 <style scoped>
 .annotations {
   border-top: 1px solid var(--vp-c-divider);
-  padding: 2rem 0;
+  padding: 1rem 0 1.5rem 0;
   font-size: 14px;
 }
 

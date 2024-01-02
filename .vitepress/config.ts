@@ -1,10 +1,10 @@
 import { defineConfigWithTheme } from "vitepress";
-import mdImageFigures from "markdown-it-image-figures";
 import type { ThemeConfig } from "./theme/types/theme-config";
 import themeConfig from "./config.theme";
 import { BASE_PATH, withBaseURL } from "./config.utils";
 import gaConfig from "./theme/ganalytics";
 import { buildFeed } from "./theme/feed";
+import useMDItPlugins from "./theme/mdit";
 
 export default defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
@@ -52,11 +52,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   },
   markdown: {
     config: (md) => {
-      // usage: ![alt](https://link-to-image 'title'){.class}
-      md.use(mdImageFigures, {
-        figcaption: "title",
-        copyAttrs: "^class$",
-      });
+      useMDItPlugins(md);
     },
     image: {
       // image lazy loading is disabled by default

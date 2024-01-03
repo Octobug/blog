@@ -66,7 +66,9 @@ sudo iptables -t nat -A POSTROUTING -j MASQUERADE
 
 同事对服务器 iptables 做了相关的配置，而刚好出了故障，从直觉上来说这两件事有关联的概率很大。但由于后续用 `iptables-restore` 导入了原来的配置，所以这个因素暂时就先搁置了。
 
-对于疑问 `2`，按照正常情况，如果客户端使用 `localhost` 连接 `DB`，那么客户端自身的地址也会是 `localhost` [[1]]，现在却变成 `IP.IP.IP.IP`，导致被 `DB` 拒绝连接。
+对于疑问 `2`，按照正常情况，如果客户端使用 `localhost` 连接 `DB`，那么客户端自身的地址也会是 `localhost`[^127_ping_source]，现在却变成 `IP.IP.IP.IP`，导致被 `DB` 拒绝连接。
+
+[^127_ping_source]: [What is the source IP address when we ping 127.0.0.1?](https://forum.networklessons.com/t/what-is-the-source-ip-address-when-we-ping-127-0-0-1/3643)
 
 会是 `localhost` 指向有问题吗？
 
@@ -91,7 +93,10 @@ Welcome to the MySQL monitor.  Commands end with ; or \g
 ...
 ```
 
-之后跟朋友 `@Shady` 吐槽了这个现象，他告诉我在 Linux 上 `mysql` 命令行客户端默认使用 Unix domain socket [[2], [3]] 而不是 TCP 协议。这个信息很重要：
+之后跟朋友 `@Shady` 吐槽了这个现象，他告诉我在 Linux 上 `mysql` 命令行客户端默认使用 Unix domain socket[^unix_socket][^mysql_client_proto] 而不是 TCP 协议。这个信息很重要：
+
+[^unix_socket]: [Unix domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket)
+[^mysql_client_proto]: [4.3.3 Connecting using Unix Sockets and Windows Named Pipes](https://dev.mysql.com/doc/mysql-shell/8.2/en/mysql-shell-connection-socket.html)
 
 ```sh
 $ mysql -uUSER -h 127.0.0.1 -p --protocol=TCP
@@ -113,8 +118,11 @@ sudo iptables -t nat -A POSTROUTING -j MASQUERADE
 
 这条命令的意思是：
 
-- 对 `nat` 表 (`-t TABLE`) 增加针对 `POSTROUTING` 链 (`-A CHAIN`) 的 `-j MASQUERADE` 规则 (`-j TARGET`) [[4]]
-- 翻译成人话就是：将服务器发出的所有网络数据包源 IP 修改为网络出口（即网卡）的 IP [[5]]
+- 对 `nat` 表 (`-t TABLE`) 增加针对 `POSTROUTING` 链 (`-A CHAIN`) 的 `-j MASQUERADE` 规则 (`-j TARGET`) [^iptables_man]
+- 翻译成人话就是：将服务器发出的所有网络数据包源 IP 修改为网络出口（即网卡）的 IP [^iptables_masq]
+
+[^iptables_man]: [iptables(8) — Linux manual page](https://man7.org/linux/man-pages/man8/iptables.8.html)
+[^iptables_masq]: [Iptables Tutorial - Chapter 11. Iptables targets and jumps - 11.9. MASQUERADE target](https://www.frozentux.net/iptables-tutorial/chunkyhtml/x4422.html)
 
 这非常符合故障特征，`DB` 报错中的 `IP.IP.IP.IP` 就是网卡地址。我用 `sudo iptables -L -t nat` 一看，规则果然还在。所以我将条规则移除：
 
@@ -128,9 +136,11 @@ sudo iptables -t nat -D POSTROUTING -j MASQUERADE
 
 新的疑问来了：同事说前面已经用 `iptables-restore` 导入备份，为什么新增的规则还在？
 
-我检查了他的 bash history [[6]]，确实有过 `iptables-restore IPTABLES.bak` 的操作记录，备份文件 `IPTABLES.bak` 中确实也没有 `-A POSTROUTING -j MASQUERADE` 相关的内容。
+我检查了他的 bash history，确实有过 `iptables-restore IPTABLES.bak` 的操作记录，备份文件 `IPTABLES.bak` 中确实也没有 `-A POSTROUTING -j MASQUERADE` 相关的内容。
 
-直觉告诉我，大概率是因为 `iptables-restore` 不是预期中的完全按备份文件覆盖现有规则。在 `iptables-restore` 的 man page [[6]] 中， `-n, --noflush` 参数说：
+直觉告诉我，大概率是因为 `iptables-restore` 不是预期中的完全按备份文件覆盖现有规则。在 `iptables-restore` 的 man page[^iptables_restore] 中， `-n, --noflush` 参数说：
+
+[^iptables_restore]: [iptables-restore(8) — Linux manual page](https://man7.org/linux/man-pages/man8/iptables-restore.8.html)
 
 ```sh
 -n, --noflush
@@ -145,20 +155,27 @@ sudo iptables -t nat -D POSTROUTING -j MASQUERADE
 
 > 为什么在同一台服务器上面，且使用同样配置连接 `DB` 的 `BUSY` 服务不受影响？
 
-直觉上，大概率是因为新增的 `nat` 规则不影响现有的 TCP 连接。做了一番搜寻之后，确实如此 [[7], [8]]：
+直觉上，大概率是因为新增的 `nat` 规则不影响现有的 TCP 连接。做了一番搜寻之后，确实如此[^iptables_nat][^iptables_nat_conn]：
+
+[^iptables_nat]: [3. Netfilter Architecture - 3.2 Packet Selection: IP Tables - NAT](https://www.netfilter.org/documentation/HOWTO/netfilter-hacking-HOWTO-3.html)
+[^iptables_nat_conn]: [iptables - redirecting established connections - Answered by `@Khaled`](https://serverfault.com/a/828705/553550)
 
 > **NAT**
 >
 > This table is slightly different from the `filter' table, in that only the first packet of a new connection will traverse the table: the result of this traversal is then applied to all future packets in the same connection.
 
-其实想来也正常，因为 TCP 的 socket pair 是一个四元组 `SRC_IP:SRC_PORT - DST_IP:DST_PORT` [[9]] ，如果 `SRC_IP` 变了，对连接的另一端来说，这根本就是另一个连接。如果修改原有连接的数据包会摧毁整个连接。
+其实想来也合理，因为 TCP 的 socket pair 是一个四元组 `SRC_IP:SRC_PORT-DST_IP:DST_PORT`[^tcp_rfc_1_5]，如果 `SRC_IP` 变了，对连接的另一端来说，这根本就是另一个连接。如果修改原有连接的数据包会摧毁整个连接。
+
+[^tcp_rfc_1_5]: [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 1.5. Operation](https://datatracker.ietf.org/doc/html/rfc793#section-1.5)
 
 > **Connections**:
 >
 > Each connection is uniquely specified by a pair of sockets
   identifying its two sides.
 
-另外，`DB` 的系统变量 `wait_timeout` 为默认的 8 小时 [[10]]。而 `BUSY` 服务高频访问 `DB`，连接池长时间保持活跃，没有连接被 `DB` 关闭，所以 `BUSY` 服务也就不受 iptables 影响。
+另外，`DB` 的系统变量 `wait_timeout` 为默认的 8 小时[^mysql_sysvar]。而 `BUSY` 服务高频访问 `DB`，连接池长时间保持活跃，没有连接被 `DB` 关闭，所以 `BUSY` 服务也就不受 iptables 影响。
+
+[^mysql_sysvar]: [MySQL 8.0 Reference Manual - 5.1.8 Server System Variables](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_wait_timeout)
 
 ## 结语
 
@@ -170,32 +187,8 @@ iptables 是个强大而复杂的系统软件，由于其工作机制偏系统�
 
 :::details Masquerade
 
-封面图是一头名为 Masquerade 的鲸鱼的尾鳍，这种鲸鱼叫座头鲸 (Humpback whale)，也叫大翅鲸 [[11]]。
+封面图是一头名为 Masquerade 的鲸鱼的尾鳍，这种鲸鱼叫座头鲸 (Humpback whale)，也叫大翅鲸[^humpback]。
 
 :::
 
-## References
-
-1. [What is the source IP address when we ping 127.0.0.1?][1]. *forum.networklessons.com*.
-2. [Unix domain socket][2]. *en.wikipedia.org*.
-3. [4.3.3 Connecting using Unix Sockets and Windows Named Pipes][3]. *dev.mysql.com*.
-4. [iptables(8) — Linux manual page][4]. *man7.org*.
-5. [Iptables Tutorial - Chapter 11. Iptables targets and jumps - 11.9. MASQUERADE target][5]. *frozentux.net*.
-6. [iptables-restore(8) — Linux manual page][6]. *man7.org*.
-7. [iptables - redirecting established connections - Answered by `@Khaled`][7]. *serverfault.com*.
-8. [3. Netfilter Architecture - 3.2 Packet Selection: IP Tables - NAT][8]. *netfilter.org*.
-9. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 1.5. Operation][9]. *datatracker.ietf.org*.
-10. [MySQL 8.0 Reference Manual - 5.1.8 Server System Variables][10]. *dev.mysql.com*.
-11. [Humpback whale][11]. *wikipedia.org*.
-
-[1]: <https://forum.networklessons.com/t/what-is-the-source-ip-address-when-we-ping-127-0-0-1/3643>
-[2]: <https://en.wikipedia.org/wiki/Unix_domain_socket>
-[3]: <https://dev.mysql.com/doc/mysql-shell/8.2/en/mysql-shell-connection-socket.html>
-[4]: <https://man7.org/linux/man-pages/man8/iptables.8.html>
-[5]: <https://www.frozentux.net/iptables-tutorial/chunkyhtml/x4422.html>
-[6]: <https://man7.org/linux/man-pages/man8/iptables-restore.8.html>
-[7]: <https://serverfault.com/a/828705/553550>
-[8]: <https://www.netfilter.org/documentation/HOWTO//netfilter-hacking-HOWTO-3.html>
-[9]: <https://datatracker.ietf.org/doc/html/rfc793#section-1.5>
-[10]: <https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_wait_timeout>
-[11]: <https://en.wikipedia.org/wiki/Humpback_whale>
+[^humpback]: [Humpback whale](https://en.wikipedia.org/wiki/Humpback_whale)

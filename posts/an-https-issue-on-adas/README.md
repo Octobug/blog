@@ -4,9 +4,9 @@ spot: 创维半导体设计大厦西座
 sort: Computer Science
 tags:
   - Network
-  - SSL/TLS
   - HTTPS
   - curl
+  - SSL/TLS
   - OpenSSL
 ---
 
@@ -18,7 +18,9 @@ tags:
 
 ## 背景
 
-这批设备是近期出货到某地的后装 ADAS [[1]] 产品，软件升级功能通过一个自研的运维平台实现。
+这批设备是近期出货到某地的后装 ADAS[^adas] 产品，软件升级功能通过一个自研的运维平台实现。
+
+[^adas]: [Advanced driver-assistance system](https://en.wikipedia.org/wiki/Advanced_driver-assistance_system)
 
 ::: warning “后装”？
 
@@ -55,19 +57,27 @@ exit status 60
 
 ### curl 的报错
 
-curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 验证错误 [[3]]，结合设备所处网络环境，可能导致这个错误的因素非常多。比如：
+curl 的 `exit status 60` 退出码是 CA 证书[^issue_a_cert]验证错误[^curl_exit_codes]，结合设备所处网络环境，可能导致这个错误的因素非常多。比如：
+
+[^issue_a_cert]: [Certificate authority - Issuing a certificate](https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate)
+[^curl_exit_codes]: [curl.1 the man page - Exit codes](https://curl.se/docs/manpage.html)
 
 - **设备端**
   - 操作系统时钟
-  - CA 证书文件 (`cacert.pem` [[4], [5]])
+  - CA 证书文件 `cacert.pem`[^cacert][^cert_formats]
   - 嵌入式软件（嵌入式软件有时会对系统网络做特殊的配置）
 - **设备到服务器的网络链路**
-  - 网络代理设备（据同事说，这批设备是通过部标一体机 [[6]] 代理上网）
+  - 网络代理设备（据同事说，这批设备是通过部标一体机[^bubiaoji]代理上网）
   - 物联网运营商
   - 服务器所在的云服务商
 - **平台服务器**
   - 操作系统网络配置
-  - 反向代理服务器 NGINX 的 SSL/TLS 配置 [[7]]
+  - 反向代理服务器 NGINX 的 SSL/TLS 配置[^nginx_ssltls]
+
+[^cacert]: [CA certificates extracted from Mozilla](https://curl.se/docs/caextract.html)
+[^cert_formats]: [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats? - Answered by `@sysadmin1138`](https://serverfault.com/a/9717/553550)
+[^bubiaoji]: [部标一体机](https://baike.sogou.com/v63216644.htm)
+[^nginx_ssltls]: [Configuring HTTPS servers](https://nginx.org/en/docs/http/configuring_https_servers.html)
 
 这些设备的操作系统是 Linux，只能通过命令行操作。并且因为是嵌入式设备，能用的命令行工具比较有限。好在错误能稳定复现，而且出错的设备是同一批，软件、网络条件一致，所以有足够的环境来逐步试验排除无关因素。
 
@@ -81,7 +91,9 @@ curl 的 `exit status 60` 退出码是 CA 证书 [[2]] 验证错误 [[3]]，结�
 
 ### 排除设备因素
 
-curl 在验证服务器证书的过程中，需要用到系统的当前时间 [[8]]，比如会检查当前时间是否在证书有效期范围内。然而我抽查了几台，系统时间都是正确的。
+curl 在验证服务器证书的过程中，需要用到系统的当前时间[^ssl_clock]，比如会检查当前时间是否在证书有效期范围内。然而我抽查了几台，系统时间都是正确的。
+
+[^ssl_clock]: [What role does clock synchronization play in SSL communcation - Answered by `@Thomas Pornin`](https://security.stackexchange.com/a/72871/255451)
 
 设备调用 curl 访问服务器时用 `--cacert` 指定了 CA 证书文件，也许是证书文件不对，或者是 curl 版本有问题？我检查了 curl 版本，并使用 `md5sum` 对比证书文件和可执行文件，这些也都是正确的。
 
@@ -126,7 +138,9 @@ curl: (60) SSL certificate problem: unable to get local issuer certificate
 # 原稿没有记录这个细节，这个结果是从网上搜索补充的，应该没记错。
 ```
 
-虽然使用 `-k` 会忽略证书验证过程，但因为指定了 HTTPS 协议，数据传输仍然需要加密 [[9]]。这个结果想来也合理，一个来路不明的自签名证书，本地的 CA 证书哪会有对应证书颁发机构的信息，所以验证不通过很正常。
+虽然使用 `-k` 会忽略证书验证过程，但因为指定了 HTTPS 协议，数据传输仍然需要加密[^curl_insecure]。这个结果想来也合理，一个来路不明的自签名证书，本地的 CA 证书哪会有对应证书颁发机构的信息，所以验证不通过很正常。
+
+[^curl_insecure]: [curl - Is data encrypted when using the --insecure option? - Answered by `@Filip Roséen`](https://stackoverflow.com/a/8520236/7267801)
 
 以上种种迹象看起来很像是访问到了错误的服务器。所以我用 `ping` 命令看是不是域名解析出错了，结果显示域名解析也是正常的。
 
@@ -136,7 +150,9 @@ curl: (60) SSL certificate problem: unable to get local issuer certificate
 
 ### SSL/TLS
 
-TLS 是 SSL 的新名称 [[10]]。从上面 curl 的报错看，错误发生在证书验证阶段 [[10]]，先尝试用 `--verbose` 选项看看其详细过程。
+SSL 是 TLS 的旧称[^sslcerts]。从上面 curl 的报错看，错误发生在证书验证阶段[^sslcerts]，先尝试用 `--verbose` 选项看看其详细过程。
+
+[^sslcerts]: [SSL Certificate Verification](https://curl.se/docs/sslcerts.html)
 
 ```sh
 $ curl --verbose ...
@@ -179,9 +195,14 @@ curl: (60) SSL certificate problem: self signed certificate
 
 #### SSL/TLS 握手过程
 
-TLS 连接建立之前也有和 TCP 三次握手 [[11], [12]] 相似的过程，只不过要复杂一些。既然证书验证是发生在这个阶段，就不得不了解这个过程中到底发生了什么，具体到哪一步出了问题。
+TLS 连接建立之前也有和 TCP 三次握手[^tcp_handshake][^tcp]相似的过程，只不过要复杂一些。既然证书验证是发生在这个阶段，就不得不了解这个过程中到底发生了什么，具体到哪一步出了问题。
 
-TLS `v1.2` 握手的完整消息流 [[13]] 如下，可以看到在经过 4 个箭头之后才开始传输应用数据，比 TCP 多了一次握手：
+[^tcp_handshake]: [TCP handshake](https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake)
+[^tcp]: [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection](https://datatracker.ietf.org/doc/html/rfc793#section-3.4)
+
+TLS `v1.2` 握手的完整消息流[^handshake_flow]如下，可以看到在经过 4 个箭头之后才开始传输应用数据，比 TCP 多了一次握手：
+
+[^handshake_flow]: [RFC 5246 (The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview](https://datatracker.ietf.org/doc/html/rfc5246#section-7.3)
 
 ```txt
       Client                                               Server
@@ -375,40 +396,10 @@ SSL 协议相当复杂，哪怕只是配置使用证书也很容易出问题。�
 
 封面图是一只海豚跳跃出水面旋转的全过程合成图。
 
-这种海豚叫飞旋海豚 (Spinner Dolphin) [[14]]，因喜欢飞跃出水面旋转而得名。一次完整的旋转跳跃如下图：
+这种海豚叫飞旋海豚 (Spinner Dolphin)[^spinner]，因喜欢飞跃出水面旋转而得名。一次完整的旋转跳跃如下图：
+
+[^spinner]: [Spinner dolphin](https://en.wikipedia.org/wiki/Spinner_dolphin)
 
 ![Spinner Dolphin](./spinner-dolphin.gif "Permitted under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). © [**Dennis Rabeling**](https://www.inaturalist.org/people/dennisthediver). [*inaturalist.org*](https://www.inaturalist.org/photos/177838721).")
 
 :::
-
-## References
-
-1. [Advanced driver-assistance system][1]. *en.wikipedia.org*.
-2. [Certificate authority - Issuing a certificate][2]. *en.wikipedia.org*.
-3. [curl.1 the man page - Exit codes][3]. *curl.se*.
-4. [CA certificates extracted from Mozilla][4]. *curl.se*.
-5. [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats? - Answered by `@sysadmin1138`][5]. *serverfault.com*.
-6. [部标一体机][6]. *baike.sogou.com*.
-7. [Configuring HTTPS servers][7]. *nginx.org*.
-8. [What role does clock synchronization play in SSL communcation - Answered by `@Thomas Pornin`][8]. *security.stackexchange.com*.
-9. [curl - Is data encrypted when using the --insecure option? - Answered by `@Filip Roséen`][9]. *stackoverflow.com*.
-10. [SSL Certificate Verification][10]. *curl.se*.
-11. [TCP handshake][11]. *developer.mozilla.org*.
-12. [RFC 793 (TRANSMISSION CONTROL PROTOCOL) - 3.4. Establishing a connection][12]. *datatracker.ietf.org*.
-13. [RFC 5246 (The Transport Layer Security (TLS) Protocol Version 1.2) - 7.3. Handshake Protocol Overview][13]. *datatracker.ietf.org*.
-14. [Spinner dolphin][14]. *en.wikipedia.org*.
-
-[1]: <https://en.wikipedia.org/wiki/Advanced_driver-assistance_system>
-[2]: <https://en.wikipedia.org/wiki/Certificate_authority#Issuing_a_certificate>
-[3]: <https://curl.se/docs/manpage.html>
-[4]: <https://curl.se/docs/caextract.html>
-[5]: <https://serverfault.com/a/9717/553550>
-[6]: <https://baike.sogou.com/v63216644.htm>
-[7]: <https://nginx.org/en/docs/http/configuring_https_servers.html>
-[8]: <https://security.stackexchange.com/a/72871/255451>
-[9]: <https://stackoverflow.com/a/8520236/7267801>
-[10]: <https://curl.se/docs/sslcerts.html>
-[11]: <https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake>
-[12]: <https://datatracker.ietf.org/doc/html/rfc793#section-3.4>
-[13]: <https://datatracker.ietf.org/doc/html/rfc5246#section-7.3>
-[14]: <https://en.wikipedia.org/wiki/Spinner_dolphin>

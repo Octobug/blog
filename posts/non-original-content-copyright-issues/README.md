@@ -101,7 +101,10 @@ Powered by creators everywhere.
 
 ## AI 生成图
 
-鉴于最近 AIGC [[1]] 很火，我也尝试用了一下 AI 文生图。结果生成的图片很无厘头，可以说是降本增笑了。鉴于没有我满意的生成结果，我就不推荐网站了。这里放两张生成图（在不同的网站使用一样的 `prompt` [[2]]）：
+鉴于最近 AIGC[^aigc] 很火，我也尝试用了一下 AI 文生图。结果生成的图片很无厘头，可以说是降本增笑了。鉴于没有我满意的生成结果，我就不推荐网站了。这里放两张生成图（在不同的网站使用一样的 `prompt`[^prompt]：
+
+[^aigc]: [AI-Generated Content (AIGC): A Survey](https://arxiv.org/pdf/2304.06632.pdf)
+[^prompt]: [Prompt engineering](https://en.wikipedia.org/wiki/Prompt_engineering)
 
 ![AIGC Worst](./aigc-worst.jpg "尾鳍一样的东西在天上飞")
 
@@ -135,18 +138,9 @@ Powered by creators everywhere.
 
 :::details 白鱀豚淇淇
 
-本站第一张经过许可的封面图是一只名为“淇淇” [[3]] 的雄性白鱀豚 (Baiji) [[4]]，死于 2002 年 7 月 14 日。淇淇是最后的确切的白𬶨豚活体记录，目前国际学界普遍认为白鱀豚已经功能性灭绝 [[4]]。
+本站第一张经过许可的封面图是一只名为“淇淇”[^qiqi]的雄性白鱀豚 (Baiji)[^baiji]，死于 2002 年 7 月 14 日。淇淇是最后的确切的白𬶨豚活体记录，目前国际学界普遍认为白鱀豚已经功能性灭绝[^baiji]。
 
 :::
 
-## References
-
-1. [AI-Generated Content (AIGC): A Survey][1]. *arxiv.org*.
-2. [Prompt engineering][2]. *en.wikipedia.org*.
-3. [淇淇][3]. *zh.wikipedia.org*.
-4. [Baiji][4]. *en.wikipedia.org*.
-
-[1]: <https://arxiv.org/pdf/2304.06632.pdf>
-[2]: <https://en.wikipedia.org/wiki/Prompt_engineering>
-[3]: <https://zh.wikipedia.org/wiki/淇淇>
-[4]: <https://en.wikipedia.org/wiki/Baiji>
+[^qiqi]: [淇淇](https://zh.wikipedia.org/wiki/淇淇)
+[^baiji]: [Baiji](https://en.wikipedia.org/wiki/Baiji)

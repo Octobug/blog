@@ -88,7 +88,7 @@ Hydration completed but contains mismatches.
 
 #### 文章目录结构
 
-文章有时会包含图片文件，这些图片要集中放在一起（比如放在 `assets/` 目录中）还是各自和所属文章放在一起？经过一番纠结之后，我选择了后者，因为这样在引用图片时可以用最短的相对路径，同时图片文件也更好管理。每篇 Markdown 文章对应一个目录，与其相关的文件都放在同一个目录里：
+文章有时会包含图片文件，这些图片要集中放在一起（比如放在 `assets/` 目录中）还是各自和所属文章放在一起？经过一番纠结之后，我选择了后者。因为这样在引用图片时可以用最短的相对路径，同时图片文件也更好管理。每篇 Markdown 文章对应一个目录，与其相关的文件都放在同一个目录里：
 
 ```sh
 $ tree posts
@@ -141,7 +141,7 @@ posts
 
 #### 上一页/下一页
 
-VitePress 本身有“上一页/下一页”的功能，但需要将文章列表数据喂给 [Sidebar](https://vitepress.dev/reference/default-theme-sidebar#sidebar) 才会出发这个页面组件。然而在 `.vitepress/config.ts` 中无法使用 [Build-Time Data Loading - `createContentLoader`](https://vitepress.dev/guide/data-loading#createcontentloader) 接口加载文章列表：[vuejs/vitepress/discussions - can I use createContentLoader in config.js?](https://github.com/vuejs/vitepress/discussions/2790#discussioncomment-6729116)
+VitePress 本身有“上一页/下一页”的功能，但需要将文章列表数据喂给 [Sidebar](https://vitepress.dev/reference/default-theme-sidebar#sidebar) 才会触发这个页面组件。然而在 `.vitepress/config.ts` 中无法使用 [Build-Time Data Loading - `createContentLoader`](https://vitepress.dev/guide/data-loading#createcontentloader) 接口加载文章列表：[vuejs/vitepress/discussions - can I use createContentLoader in config.js?](https://github.com/vuejs/vitepress/discussions/2790#discussioncomment-6729116)
 
 也就是说需要自行读写文件把文章列表数据喂给 `sidebar`，这就有点得不偿失。所以我选择自行实现“上一页/下一页”组件，为了保持样式一致，这个组件基本上是从 VitePress 源代码中 copy 的：[.vitepress/theme/components/PrevNext.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/PrevNext.vue)
 

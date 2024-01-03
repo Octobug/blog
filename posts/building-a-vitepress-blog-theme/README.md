@@ -14,7 +14,7 @@ tags:
 
 前两天完成了这个博客的最后一个功能 (Atom Feed)。本来打算在 2023 年最后一天写一篇总结，但刚好有朋友邀约去爬大南山[^nanshan]，所以推迟到新年的第一天。对于爬山我的态度很明确，不愿爬，不怕爬，必要时不得不爬：
 
-[^nanshan]: [大南山 (深圳)](https://zh.wikipedia.org/zh-cn/大南山_(深圳)). *zh.wikipedia.org*.
+[^nanshan]: [大南山 (深圳)](https://zh.wikipedia.org/zh-cn/大南山_(深圳))
 
 ![View from the Top](./view-from-the-top-of-nanshan.jpg "请欣赏二〇二三年最后一天深圳市南山区~~最美丽~~的风景")
 
@@ -147,6 +147,8 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 
 #### markdown-it 插件
 
+[markdown-it/markdown-it](https://github.com/markdown-it/markdown-it) 非常强大，插件生态也足够丰富，且插件使用很方便。但它的 API 有些复杂，文档对新手也不友好。
+
 如何在 VitePress 中使用 markdown-it 插件：
 
 - [Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)
@@ -155,9 +157,10 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 插件列表：
 
 - **图片注解**：[arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures)
-  - 例子：[vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)
+  - 使用示例：[vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)
 - **自动生成引用脚注**：[markdown-it/markdown-it-footnote](https://github.com/markdown-it/markdown-it-footnote)
-  - 插件样式调整：[Octobug/blog/.vitepress/theme/style.css](https://github.com/Octobug/blog/blob/17e8383da904d7c9f550ab35b0dfebe292dde09a/.vitepress/theme/style.css#L256C10-L256C10)
+  - 扩展插件功能：自动为引用链接追加显示域名（这个功能我研究了一晚上才找到合适的 API）
+  - 调整插件样式：[Octobug/blog/.vitepress/theme/style.css](https://github.com/Octobug/blog/blob/17e8383da904d7c9f550ab35b0dfebe292dde09a/.vitepress/theme/style.css#L256C10-L256C10)
 
 #### 处理图片文件大小
 
@@ -223,6 +226,6 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 :::
 
-[^vaquita]: [Vaquita](https://en.wikipedia.org/wiki/Vaquita). *en.wikipedia.org*.
-[^mom_and_calf]: [Endangered Vaquita Porpoise Not Doomed to Extinction by Inbreeding Depression](https://www.fisheries.noaa.gov/feature-story/endangered-vaquita-porpoise-not-doomed-extinction-inbreeding-depression). *fisheries.noaa.gov*.
-[^ce_vaquita]: [Phocoena sinus (Vaquita)](https://www.iucnredlist.org/species/17028/214541137). *iucnredlist.org*.
+[^vaquita]: [Vaquita](https://en.wikipedia.org/wiki/Vaquita)
+[^mom_and_calf]: [Endangered Vaquita Porpoise Not Doomed to Extinction by Inbreeding Depression](https://www.fisheries.noaa.gov/feature-story/endangered-vaquita-porpoise-not-doomed-extinction-inbreeding-depression)
+[^ce_vaquita]: [Phocoena sinus (Vaquita)](https://www.iucnredlist.org/species/17028/214541137)

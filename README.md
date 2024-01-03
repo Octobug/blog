@@ -23,6 +23,9 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
   - [x] Comments ([giscus](https://github.com/giscus/giscus))
   - [x] Sort (Category)
   - [x] Tags
+  - [x] Markdown Extensions
+    - Auto-generated References ([markdown-it/markdown-it-footnote](https://github.com/markdown-it/markdown-it-footnote))
+    - Images with Caption ([arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures))
 - [x] Home
   - [x] Profile Card
     - Avatar

@@ -258,8 +258,9 @@ sup.footnote-ref a {
   text-decoration: none;
 }
 
-ol.footnotes-list li p{
+ol.footnotes-list li p {
   margin: 0;
+  line-height: 24px;
 }
 
 ol.footnotes-list li p a.footnote-backref {

@@ -52,19 +52,12 @@ tags:
 
 ::: details Pilot?
 
-- "Pilot" 经常被用作剧集第一集的名字 [[1],[2]]，中文可以译为“试播集”。
-- 封面图中的鲸鱼是领航鲸 (Pilot Whale) [[3]]，由作者摄于斯里兰卡 [[4]]。
+- "Pilot" 经常被用作剧集第一集的名字[^tv_pilot][^pilot_ep]，中文可以译为“试播集”。
+- 封面图中的鲸鱼是领航鲸 (Pilot Whale)[^pilot_whale]，由作者摄于斯里兰卡[^sri_lanka]。
 
 :::
 
-## References
-
-1. [Television pilot][1]. *en.wikipedia.org*.
-2. [List of television episodes titled Pilot][2]. *en.wikipedia.org*.
-3. [Pilot whale][3]. *en.wikipedia.org*.
-4. [Sri Lanka][4]. *en.wikipedia.org*.
-
-[1]: <https://en.wikipedia.org/wiki/Television_pilot>
-[2]: <https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot>
-[3]: <https://en.wikipedia.org/wiki/Pilot_whale>
-[4]: <https://en.wikipedia.org/wiki/Sri_Lanka>
+[^tv_pilot]: [Television pilot](https://en.wikipedia.org/wiki/Television_pilot)
+[^pilot_ep]: [List of television episodes titled Pilot](https://en.wikipedia.org/wiki/List_of_television_episodes_titled_Pilot)
+[^pilot_whale]: [Pilot whale](https://en.wikipedia.org/wiki/Pilot_whale)
+[^sri_lanka]: [Sri Lanka](https://en.wikipedia.org/wiki/Sri_Lanka)

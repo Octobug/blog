@@ -147,14 +147,14 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 
 #### markdown-it 插件
 
-[markdown-it/markdown-it](https://github.com/markdown-it/markdown-it) 非常强大，插件生态也足够丰富，且插件使用很方便。但它的 API 有些复杂，文档对新手也不友好。
+[markdown-it/markdown-it](https://github.com/markdown-it/markdown-it) 非常强大，插件使用方便，且插件生态也足够丰富。但它的 API 有些复杂，文档对新手很不友好。
 
 如何在 VitePress 中使用 markdown-it 插件：
 
 - [Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)
 - [Octobug/blog/.vitepress/theme/mdit.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/mdit.ts)
 
-插件列表：
+已使用的插件有：
 
 - **图片注解**：[arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures)
   - 使用示例：[vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)

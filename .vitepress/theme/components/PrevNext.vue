@@ -3,6 +3,7 @@
   <nav
     v-if="control.prev?.link || control.next?.link"
     :class="$style.prevNext"
+    class="pager-nav"
   >
     <div class="pager">
       <a

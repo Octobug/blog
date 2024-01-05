@@ -42,13 +42,13 @@ export default {
     {
       text: "MORE",
       items: [
-        // {
-        //   text: "Blog Collection",
-        //   link: "/collection",
-        // },
         {
           text: "Acknowledgments",
           link: "/acknowledgments",
+        },
+        {
+          text: "Blogmarks",
+          link: "/blogmarks",
         },
         {
           text: "Atom Feed",

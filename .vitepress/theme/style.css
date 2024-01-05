@@ -252,7 +252,7 @@ figure figcaption a {
 }
 
 .doc-page h1::first-letter {
-  font-size: 150%;
+  font-size: 140%;
 }
 
 .doc-page h1+p {
@@ -283,7 +283,12 @@ figure figcaption a {
 .doc-page li code {
   color: var(--vp-c-text-3);
   font-size: 0.7rem;
-  vertical-align: bottom;
+  vertical-align: middle;
+}
+
+.blogmarks li code {
+  font-family: var(--vp-font-family-base);
+  font-style: normal;
 }
 
 .doc-page li img {

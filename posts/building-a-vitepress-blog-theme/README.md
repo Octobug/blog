@@ -134,7 +134,7 @@ posts
 
 1. **在每篇 Markdown 文章中插入全局注册的 Vue 组件**：这个方案对于后续写文章来说过于繁琐 ❌
 2. **使用 frontmatter title，而不使用 Markdown 一级标题**：VitePress 为文章建立索引时将段落和其前面最近的一个标题归入同个 section，如果不使用 Markdown 一级标题，会导致第一个标题前面的内容不被索引而搜索不到 ❌
-   - [src/node/plugins/localSearchPlugin.ts](https://github.com/vuejs/vitepress/blob/27f60e0b7784603c6fb300bd8dce64515eb98962/src/node/plugins/localSearchPlugin.ts#L226C35-L226C35)
+   - [vuejs/vitepress/src/node/plugins/localSearchPlugin.ts](https://github.com/vuejs/vitepress/blob/27f60e0b7784603c6fb300bd8dce64515eb98962/src/node/plugins/localSearchPlugin.ts#L226C35-L226C35)
    - 这一点我不认为是 bug，因为规范的 Markdown 就是要有一个 `# 一级标题`。
 3. **通过 VitePress 的 markdown-it 接口写类插件代码**：[markdown-it API](https://markdown-it.github.io/markdown-it/) 挺复杂的，而且需要想办法将 frontmatter 中的信息传递给插件代码 ❌
 4. **使用 JavaScript 操作 DOM 元素**：先将 Vue 组件放在 Layout 的 doc slots 里面，再用 JS 把渲染后的 DOM 元素搬运到标题之下。这个方案很丑陋，但似乎是这几个方案里面最方便可行的一个 🤷
@@ -143,7 +143,7 @@ posts
 
 VitePress 本身有“上一页/下一页”的功能，但需要将文章列表数据喂给 [Sidebar](https://vitepress.dev/reference/default-theme-sidebar#sidebar) 才会触发这个页面组件。然而在 `.vitepress/config.ts` 中无法使用 [Build-Time Data Loading - `createContentLoader`](https://vitepress.dev/guide/data-loading#createcontentloader) 接口加载文章列表：[vuejs/vitepress/discussions - can I use createContentLoader in config.js?](https://github.com/vuejs/vitepress/discussions/2790#discussioncomment-6729116)
 
-也就是说需要自行读写文件把文章列表数据喂给 `sidebar`，这就有点得不偿失。所以我选择自行实现“上一页/下一页”组件，为了保持样式一致，这个组件基本上是从 VitePress 源代码中 copy 的：[.vitepress/theme/components/PrevNext.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/PrevNext.vue)
+也就是说需要自行读写文件把文章列表数据喂给 `sidebar`，这就有点得不偿失。所以我选择自行实现“上一页/下一页”组件，为了保持样式一致，这个组件基本上是从 VitePress 源代码中 copy 的：[Octobug/blog/.vitepress/theme/components/PrevNext.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/PrevNext.vue)
 
 #### markdown-it 插件
 
@@ -193,7 +193,7 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 在 [lucaong/minisearch/issues - Excuse me, how to support other language search, such as Chinese search, thank you](https://github.com/lucaong/minisearch/issues/201) 中有人推荐使用 [yanyiwu/nodejieba](https://github.com/yanyiwu/nodejieba) 或 [`Intl.Segmenter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter) 做中文分词。其中 nodejieba 似乎不支持浏览器端运行，目前没找到在 VitePress 中使用它的方案。而 `Intl.Segmenter` 还没有被 Firefox 支持，且移动端的分词效果也一般。
 
-但 `Intl.Segmenter` 是目前找到的唯一可行的方案，所以最终还是采用了它。详情见：[blog/.vitepress/theme/search.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/search.ts)
+但 `Intl.Segmenter` 是目前找到的唯一可行的方案，所以最终还是采用了它。详情见：[Octobug/blog/.vitepress/theme/search.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/search.ts)
 
 ## 其他
 

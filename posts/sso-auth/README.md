@@ -5,6 +5,7 @@ sort: Computer Science
 tags:
   - SSO
   - Authentication
+draft: true
 ---
 
 # 单点登录 (Single Sign-On) 身份验证

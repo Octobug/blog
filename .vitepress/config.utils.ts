@@ -22,3 +22,7 @@ export function joinURL(baseURL: string, ...paths: string[]) {
   const urlPath = path.join(...paths);
   return new URL(urlPath, baseURL).href;
 }
+
+export function isProduction() {
+  return !BASE_PATH;
+}

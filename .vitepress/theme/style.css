@@ -281,7 +281,6 @@ figure figcaption a {
 }
 
 .doc-page li code {
-  font-family: var(--vp-font-family-base);
   color: var(--vp-c-text-3);
   font-size: 0.7rem;
   vertical-align: bottom;

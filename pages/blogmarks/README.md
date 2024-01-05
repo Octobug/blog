@@ -4,7 +4,7 @@ pageClass: doc-page blogmarks
 
 # Blogmarks
 
-Blogs that I've been reading, listed in alphabetical order.
+Blogs I've been reading, listed in alphabetical order.
 
 ## Individuals
 

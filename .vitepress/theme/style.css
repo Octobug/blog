@@ -312,3 +312,16 @@ ol.footnotes-list li p a.footnote-backref {
   text-decoration: none;
   font-family: monospace;
 }
+
+/* Hide Scrollbar */
+.hide-scrollbar {
+  /* Internet Explorer 10+ */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  /* Safari and Chrome */
+  display: none;
+}

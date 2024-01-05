@@ -3,6 +3,7 @@
     v-if="post.datetime || post.spot || post.readingTime"
     name="post-elements"
     :class="$style.elementList"
+    class="hide-scrollbar"
     hidden
   >
     <span
@@ -83,16 +84,6 @@ onContentUpdated(() => {
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
-
-  /* Internet Explorer 10+ */
-  -ms-overflow-style: none;
-  /* Firefox */
-  scrollbar-width: none;
-}
-
-.elementList::-webkit-scrollbar {
-  /* Safari and Chrome */
-  display: none;
 }
 
 .elementItem {

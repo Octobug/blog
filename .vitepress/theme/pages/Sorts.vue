@@ -84,6 +84,9 @@ onMounted(() => {
 }
 
 .sortList {
+  padding-top: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--vp-c-divider);
   margin-bottom: 2rem;

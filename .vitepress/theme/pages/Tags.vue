@@ -1,16 +1,22 @@
 <template>
   <Container :class="$style.container">
     <div :class="$style.main">
-      <div :class="$style.tagList">
-        <Badge
-          v-for="tag of tags"
-          :key="tag"
-          :text="tag"
-          :number="postsByTag[tag].length"
-          :link="true"
-          :selected="tag === selectedTag"
-          @click="selectTag(tag)"
-        />
+      <div :class="$style.tagContainer">
+        <div
+          :class="$style.tagList"
+          class="hide-scrollbar"
+        >
+          <Badge
+            v-for="tag of tags"
+            :key="tag"
+            :text="tag"
+            :number="postsByTag[tag].length"
+            :link="true"
+            :selected="tag === selectedTag"
+            @click="selectTag(tag)"
+          />
+        </div>
+        <div :class="$style.transientBox" />
       </div>
       <PostList
         date-format="ll"
@@ -77,9 +83,30 @@ onMounted(() => {
   padding: 0 0 2rem;
 }
 
-.tagList {
-  padding-bottom: 1rem;
+.tagContainer {
   border-bottom: 1px solid var(--vp-c-divider);
   margin-bottom: 2rem;
+  position: relative;
+}
+
+.transientBox {
+  position: absolute;
+  bottom: 0;
+  height: 2rem;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  mask: linear-gradient(to bottom, transparent, var(--vp-c-bg) 20%);
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0),
+      var(--vp-c-bg));
+}
+
+.tagList {
+  padding-top: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1.2rem;
+  max-height: calc(2.3rem * 5);
+  overflow-y: scroll;
 }
 </style>

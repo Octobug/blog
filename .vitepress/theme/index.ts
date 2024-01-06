@@ -6,6 +6,7 @@ import Layout from "./pages/Layout.vue";
 import Posts from "./pages/Posts.vue";
 import Sorts from "./pages/Sorts.vue";
 import Tags from "./pages/Tags.vue";
+import PostElements from "./components/PostElements.vue";
 
 export default {
   extends: Theme,
@@ -15,5 +16,6 @@ export default {
     app.component("Posts", Posts);
     app.component("Sorts", Sorts);
     app.component("Tags", Tags);
+    app.component("PostElements", PostElements);
   },
 };

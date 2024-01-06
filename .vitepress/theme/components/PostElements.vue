@@ -4,7 +4,6 @@
     name="post-elements"
     :class="$style.elementList"
     class="hide-scrollbar"
-    hidden
   >
     <span
       v-if="post.datetime"
@@ -53,24 +52,8 @@ function getPostData() {
   return findPost(allPosts, page.value)?.frontmatter || frontmatter.value;
 }
 
-function adjustPosition() {
-  const elements = document.getElementsByName("post-elements");
-  if (elements.length > 1) {
-    return;
-  }
-  const block = elements[0];
-  const title = document.querySelector(".main h1");
-  const parent = title?.parentElement;
-  if (block && title && parent) {
-    const newBlock = block.cloneNode(true);
-    (<Element>newBlock).removeAttribute("hidden");
-    parent.insertBefore(newBlock, title.nextSibling);
-  }
-}
-
 onContentUpdated(() => {
   post.value = getPostData();
-  setTimeout(adjustPosition, 1);
 });
 </script>
 

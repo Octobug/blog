@@ -61,7 +61,7 @@ VitePress 的 Markdown 文件有几个类型，通过 `frontmatter` 中的 `layo
   - [Registering Global Components](https://vitepress.dev/guide/extending-default-theme#registering-global-components)
   - [Layout Slots](https://vitepress.dev/guide/extending-default-theme#layout-slots)
 
-当你用 Vue 组件自行实现了某个页面，可以根据 "Registering Global Components" 将其注册为全局组件。这样就可以在 Markdown 页面（区别于作为文章的 Markdown）中使用这个页面组件，避免在自定义 Layout 时混杂太多不同页面的实现。详情请看：[Octobug/blog/.vitepress/theme/pages](https://github.com/Octobug/blog/tree/main/.vitepress/theme/pages)
+当你用 Vue 组件自行实现了某个页面，可以根据 "Registering Global Components" 将其注册为全局组件。这样就可以在 Markdown 页面（区别于作为文章的 Markdown）中使用这个页面组件，避免在自定义 Layout 时混杂太多不同页面的实现。详情见：[Octobug/blog/.vitepress/theme/pages](https://github.com/Octobug/blog/tree/main/.vitepress/theme/pages)。
 
 ### SSR 兼容性
 
@@ -71,7 +71,7 @@ VitePress 的 Markdown 文件有几个类型，通过 `frontmatter` 中的 `layo
 Hydration completed but contains mismatches.
 :::
 
-这种情况可以使用 `<ClientOnly><NonSSRFriendlyComponent /></ClientOnly>` 将动态部分包裹起来：[SSR Compatibility - `<ClientOnly>`](https://vitepress.dev/guide/ssr-compat#clientonly)
+这种情况可以使用 `<ClientOnly><NonSSRFriendlyComponent /></ClientOnly>` 将动态部分包裹起来：[SSR Compatibility - `<ClientOnly>`](https://vitepress.dev/guide/ssr-compat#clientonly)。
 
 ## 常见的博客功能
 
@@ -132,29 +132,43 @@ posts
 
 在 VitePress 中，文章标题和正文是一个 `<Content />` 整体，不可拆分。要在文章标题下方插入上面这行“三要素”有几个方案：
 
-1. **在每篇 Markdown 文章中插入全局注册的 Vue 组件**：这个方案对于后续写文章来说过于繁琐 ❌
-2. **使用 frontmatter title，而不使用 Markdown 一级标题**：VitePress 为文章建立索引时将段落和其前面最近的一个标题归入同个 section，如果不使用 Markdown 一级标题，会导致第一个标题前面的内容不被索引而搜索不到 ❌
+1. ❌ **在每篇 Markdown 文章中插入全局注册的 Vue 组件**：这个方案对于后续写文章来说过于繁琐。
+2. ❌ **使用 frontmatter title，而不使用 Markdown 一级标题**：VitePress 为文章建立索引时将段落和其前面最近的一个标题归入同个 section，如果不使用 Markdown 一级标题，会导致第一个标题前面的内容不被索引而搜索不到。
    - [vuejs/vitepress/src/node/plugins/localSearchPlugin.ts](https://github.com/vuejs/vitepress/blob/27f60e0b7784603c6fb300bd8dce64515eb98962/src/node/plugins/localSearchPlugin.ts#L226C35-L226C35)
-   - 这一点我不认为是 bug，因为规范的 Markdown 就是要有一个 `# 一级标题`。
-3. **通过 VitePress 的 markdown-it 接口写类插件代码**：[markdown-it API](https://markdown-it.github.io/markdown-it/) 挺复杂的，而且需要想办法将 frontmatter 中的信息传递给插件代码 ❌
-4. **使用 JavaScript 操作 DOM 元素**：先将 Vue 组件放在 Layout 的 doc slots 里面，再用 JS 把渲染后的 DOM 元素搬运到标题之下。这个方案很丑陋，但似乎是这几个方案里面最方便可行的一个 🤷
+   - 这一点我不认为是 bug，因为规范的 Markdown 就是要有一个 `# 一级标题`
+3. ❌ **使用 JavaScript 操作 DOM 元素**：先将 Vue 组件放在 Layout 的 doc slots 里面，再用 JS 把渲染后的 DOM 元素搬运到标题之下。这个方案过于 hack 过于丑陋。
+4. ✅ **通过 VitePress 的 markdown-it 接口写类插件代码**：[markdown-it API](https://markdown-it.github.io/markdown-it/) 很复杂，但它是最适合做这件事的：
+    1. 将需要插入 Markdown 文章中间的 Vue 组件注册为全局组件；
+    2. 改写 `md.renderer.rules[token.type]` 渲染函数，将 Vue 组件插入到 markdown-it 的渲染结果中；
+    3. VitePress 会进一步处理 Markdown 渲染后的 HTML，此时插入的 Vue 组件才会被编译：[Using Vue in Markdown](https://vitepress.dev/guide/using-vue#using-vue-in-markdown)。
+
+例如：
+
+```ts
+md.renderer.rules.heading_close = (tokens, idx, options, _env, self) => {
+  let result = self.renderToken(tokens, idx, options);
+  if (tokens[idx].markup === "#") {
+    result += "\n\n<PostElements />\n\n";
+  }
+  return result;
+};
+```
+
+详情见：[Octobug/blog/.vitepress/theme/mdit.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/mdit.ts)。
 
 #### 上一页/下一页
 
 VitePress 本身有“上一页/下一页”的功能，但需要将文章列表数据喂给 [Sidebar](https://vitepress.dev/reference/default-theme-sidebar#sidebar) 才会触发这个页面组件。然而在 `.vitepress/config.ts` 中无法使用 [Build-Time Data Loading - `createContentLoader`](https://vitepress.dev/guide/data-loading#createcontentloader) 接口加载文章列表：[vuejs/vitepress/discussions - can I use createContentLoader in config.js?](https://github.com/vuejs/vitepress/discussions/2790#discussioncomment-6729116)
 
-也就是说需要自行读写文件把文章列表数据喂给 `sidebar`，这就有点得不偿失。所以我选择自行实现“上一页/下一页”组件，为了保持样式一致，这个组件基本上是从 VitePress 源代码中 copy 的：[Octobug/blog/.vitepress/theme/components/PrevNext.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/PrevNext.vue)
+也就是说需要自行读写文件把文章列表数据喂给 `sidebar`，这就有点得不偿失。所以我选择自行实现“上一页/下一页”组件，为了保持样式一致，这个组件基本上是从 VitePress 源代码中 copy 的：[Octobug/blog/.vitepress/theme/components/PrevNext.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/PrevNext.vue)。
 
 #### markdown-it 插件
 
-[markdown-it/markdown-it](https://github.com/markdown-it/markdown-it) 非常强大，插件使用方便，且插件生态也足够丰富。但它的 API 有些复杂，文档对新手很不友好。
+[markdown-it/markdown-it](https://github.com/markdown-it/markdown-it) 非常强大，插件使用方便，且插件生态也足够丰富。但它的开发 API 有些复杂，文档对新手很不友好。
 
-如何在 VitePress 中使用 markdown-it 插件：
+如何在 VitePress 中使用 markdown-it 插件：[Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)。
 
-- [Markdown Extensions - Advanced Configuration](https://vitepress.dev/guide/markdown#advanced-configuration)
-- [Octobug/blog/.vitepress/theme/mdit.ts](https://github.com/Octobug/blog/blob/main/.vitepress/theme/mdit.ts)
-
-已使用的插件有：
+已使用插件列表：
 
 - **图片注解**：[arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures)
   - 使用示例：[vuejs/vitepress/issues - Image captions](https://github.com/vuejs/vitepress/issues/892#issuecomment-1172840466)
@@ -164,7 +178,7 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 
 #### 处理图片文件大小
 
-对于部署在 GitHub Pages、Netlify 这些免费托管平台上的静态网站来说，图片文件如果太大十分影响用户体验。每次手动用 Photoshop 之类的软件处理图片大小都让我觉得很繁琐。macOS 系统用户可以用 `sips` 命令来处理，相较于使用 GUI 软件处理要快捷非常多。比如将一张图的长边分辨率转成 `1080 px`，且保留图片比例：
+对于部署在 GitHub Pages、Netlify 这些免费托管平台上的静态网站来说，图片文件如果太大十分影响用户体验。每次手动用 Photoshop 之类的软件处理图片大小都让我觉得很繁琐。macOS 系统用户可以用自带的 `sips` 命令来处理，相较于使用 GUI 软件处理要快捷非常多。比如将一张图的长边分辨率转成 `1080 px`，且保留图片比例：
 
 ```sh
 sips -Z 1080 origin.jpg -o resized.jpg

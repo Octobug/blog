@@ -61,18 +61,13 @@ async function generateContents(): Promise<Item[]> {
     excerpt: true,
   });
   const allPosts = await loader.load();
-
-  return await Promise.all(
-    allPosts.map(async p => {
-      return {
-        title: p.frontmatter.title,
-        id: p.url,
-        link: joinURL(BASE_URL, p.url),
-        date: p.frontmatter.date,
-        content: withGitHubImages(p),
-        category: [p.frontmatter.sort].map(s => { return { name: s }; }),
-        author: [AUTHOR],
-      } satisfies Item;
-    })
-  );
+  return allPosts.map(p => ({
+    title: p.frontmatter.title,
+    id: p.url,
+    link: joinURL(BASE_URL, p.url),
+    date: p.frontmatter.date,
+    content: withGitHubImages(p),
+    category: [p.frontmatter.sort].map(s => { return { name: s }; }),
+    author: [AUTHOR],
+  }));
 }

@@ -24,7 +24,7 @@ function appendReferenceHostname(md: MarkdownIt) {
       const href = (linkOpen.attrs ? linkOpen.attrs[0] : [])[1];
       if (href) {
         const url = new URL(href);
-        const hostname = url.hostname.replace("www.", "");
+        const hostname = url.hostname.replace(/^www./, "");
 
         const emOpen = new state.Token("em_open", "em", 1);
         fnChildren?.push(emOpen);

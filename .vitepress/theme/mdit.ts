@@ -19,7 +19,7 @@ function appendReferenceHostname(md: MarkdownIt) {
 
       const dot = new state.Token("text", "", 0);
       dot.content = ". ";
-      fnChildren?.push(dot);
+      fnChildren.push(dot);
 
       const href = (linkOpen.attrs ? linkOpen.attrs[0] : [])[1];
       if (href) {
@@ -27,15 +27,15 @@ function appendReferenceHostname(md: MarkdownIt) {
         const hostname = url.hostname.replace(/^www./, "");
 
         const emOpen = new state.Token("em_open", "em", 1);
-        fnChildren?.push(emOpen);
+        fnChildren.push(emOpen);
 
         const emHostname = new state.Token("text", "", 0);
         emHostname.content = hostname;
-        fnChildren?.push(emHostname);
+        fnChildren.push(emHostname);
 
         const emClose = new state.Token("em_close", "em", -1);
-        fnChildren?.push(emClose);
-        fnChildren?.push(dot);
+        fnChildren.push(emClose);
+        fnChildren.push(dot);
       }
     }
   });

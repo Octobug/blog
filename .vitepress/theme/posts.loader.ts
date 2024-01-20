@@ -6,10 +6,10 @@ import { withBaseURL, isProduction } from "../config.utils";
 import getLocation from "./locations";
 
 // Title Workaround
-function extractTile(text: string) {
+function extractTitle(text: string) {
   const titlePattern = /---\n\n# (?<title>.*)\n/;
   const match = text.match(titlePattern);
-  return match?.groups?.title || "NonTitled";
+  return match?.groups?.title || "Untitled";
 }
 
 export default async (options) => {
@@ -29,7 +29,7 @@ export default async (options) => {
           const rt = readingTime(p.src || "");
           const mdpath = p.url.replace("/README", "");
           p.url = withBaseURL(mdpath);
-          p.frontmatter.title = extractTile(p.src || "");
+          p.frontmatter.title = extractTitle(p.src || "");
           p.frontmatter.datetime = new Date(p.frontmatter.date);
           p.frontmatter.location = getLocation(p.frontmatter.spot);
           p.frontmatter.readingTime = rt.text;

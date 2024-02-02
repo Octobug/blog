@@ -1,4 +1,5 @@
 const CITY = {
+  潮州: "潮州",
   深圳: "深圳",
 };
 
@@ -7,6 +8,7 @@ const DISTRICT = {
   高新区社区: "南山区粤海街道高新区社区",
   海滨社区: "宝安区新安街道海滨社区",
   渔业社区: "宝安区西乡街道渔业社区",
+  博士村: "潮安区东凤镇博士村",
 };
 
 const LOCATIONS = {
@@ -25,6 +27,10 @@ const LOCATIONS = {
   大冲新城花园: {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
+  },
+  家里: {
+    city: CITY.潮州,
+    district: DISTRICT.博士村,
   },
   郎景园: {
     city: CITY.深圳,

@@ -56,7 +56,7 @@ export default {
           target: "_blank",
         },
         {
-          text: "Repository",
+          text: "This Repository",
           link: "https://github.com/Octobug/blog",
         }
       ]

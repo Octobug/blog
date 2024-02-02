@@ -175,7 +175,7 @@ VitePress 本身有“上一页/下一页”的功能，但需要将文章列表
 - **自动生成引用脚注**：[markdown-it/markdown-it-footnote](https://github.com/markdown-it/markdown-it-footnote)
   - 扩展插件功能：自动为引用链接追加显示域名（这个功能我研究了一晚上才找到合适的 API）
   - 调整插件样式：[Octobug/blog/.vitepress/theme/style.css](https://github.com/Octobug/blog/blob/17e8383da904d7c9f550ab35b0dfebe292dde09a/.vitepress/theme/style.css#L256C10-L256C10)
-- **图表**: [emersonbottero/vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid)
+- **图表**：[emersonbottero/vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid)
 
 #### 处理图片文件大小
 

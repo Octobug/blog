@@ -43,9 +43,11 @@
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-image-figures": "^2.1.1",
     "markdownlint-cli": "^0.37.0",
+    "mermaid": "^10.7.0",
     "moment-timezone": "^0.5.43",
     "reading-time": "^1.5.0",
     "typescript": "^5.2.2",
-    "vitepress": "^1.0.0-rc.41"
+    "vitepress": "^1.0.0-rc.41",
+    "vitepress-plugin-mermaid": "^2.0.16"
   }
 }

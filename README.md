@@ -26,6 +26,7 @@ This blog is powered by [VitePress](https://vitepress.dev/) with a customized th
   - [x] Markdown Extensions
     - Auto-generated References ([markdown-it/markdown-it-footnote](https://github.com/markdown-it/markdown-it-footnote))
     - Images with Caption ([arve0/markdown-it-implicit-figures](https://github.com/arve0/markdown-it-implicit-figures))
+    - Mermaid ([emersonbottero/vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid))
 - [x] Home
   - [x] Profile Card
     - Avatar

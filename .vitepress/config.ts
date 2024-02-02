@@ -1,4 +1,5 @@
 import { defineConfigWithTheme } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
 import type { ThemeConfig } from "./theme/types/theme-config";
 import themeConfig from "./config.theme";
 import { BASE_PATH, withBaseURL } from "./config.utils";
@@ -6,7 +7,7 @@ import gaConfig from "./theme/ganalytics";
 import { buildFeed } from "./theme/feed";
 import useMDItPlugins from "./theme/mdit";
 
-export default defineConfigWithTheme<ThemeConfig>({
+const config = defineConfigWithTheme<ThemeConfig>({
   title: "WhaleVocal",
   description: "Octobug's blog.",
   base: BASE_PATH,
@@ -59,5 +60,15 @@ export default defineConfigWithTheme<ThemeConfig>({
       // image lazy loading is disabled by default
       lazyLoading: true
     }
+  },
+});
+
+export default withMermaid({
+  ...config,
+  // MermaidConfig: https://mermaid.js.org/config/setup/modules/mermaidAPI.html#mermaidapi-configuration-defaults
+  mermaid: {
+  },
+  mermaidPlugin: {
+    // class: "mermaid my-class", // CSS classes for parent container 
   },
 });

@@ -12,6 +12,29 @@ draft: true
 
 ![Orca exhaling](./salish-sea-orca-exhaling.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image resized). © [**liamkmc**](https://www.inaturalist.org/people/liamkmc). [*inaturalist.org*](https://www.inaturalist.org/photos/106254096).")
 
+```mermaid
+sequenceDiagram
+  participant Application
+  participant Authorization Server
+  participant Resource Server
+
+  Application->>Authorization Server: 1. [Client credential]
+  Note over Authorization Server: /token
+
+  Authorization Server->>Application: 2. [Access token]
+
+  Application->>Resource Server: 3. [Access token]
+
+  Application->>Authorization Server: 4. [Client credential]
+  Note over Authorization Server: /token
+
+  Authorization Server->>Application: 5. [Access token]
+
+  Application->>Resource Server: 6. [Access token]
+```
+
+## Single Logout
+
 :::details Salish Sea Orcas
 
 封面图是一头萨利希海 (Salish Sea)[^salish_sea] 虎鲸 (Orca)[^orca] 在呼吸时喷出水雾。

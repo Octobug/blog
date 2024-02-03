@@ -1,5 +1,5 @@
 ---
-pageClass: doc-page blogmarks
+pageClass: doc-page
 ---
 
 # Blogmarks
@@ -16,3 +16,10 @@ Blogs I've been reading, listed in alphabetical order.
 ## Organizations
 
 - ![github](./github.blog.ico) [The GitHub Blog](https://github.blog/)
+
+<style>
+li code {
+  font-family: var(--vp-font-family-base);
+  font-style: normal;
+}
+</style>

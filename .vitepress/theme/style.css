@@ -286,11 +286,6 @@ figure figcaption a {
   vertical-align: middle;
 }
 
-.blogmarks li code {
-  font-family: var(--vp-font-family-base);
-  font-style: normal;
-}
-
 .doc-page li img {
   border-radius: 50%;
   border: 1px solid white;

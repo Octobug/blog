@@ -56,7 +56,7 @@ const { Layout } = DefaultTheme;
 .main img {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
-  margin-bottom: 2rem;
+  margin-bottom: 0.8rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -74,7 +74,6 @@ const { Layout } = DefaultTheme;
 
 /* image subtitle */
 figure figcaption {
-  margin-top: -1.3rem;
   margin-bottom: 1.5rem;
   text-align: center;
   color: var(--vp-c-text-3);

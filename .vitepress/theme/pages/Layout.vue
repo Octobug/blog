@@ -100,4 +100,8 @@ ol.footnotes-list li p a.footnote-backref {
   text-decoration: none;
   font-family: monospace;
 }
+
+li.footnote-item p em {
+  color: var(--vp-c-text-2);
+}
 </style>

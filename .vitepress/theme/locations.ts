@@ -4,11 +4,12 @@ const CITY = {
 };
 
 const DISTRICT = {
+  博士村: "潮安区东凤镇博士村",
   大冲社区: "南山区粤海街道大冲社区",
   高新区社区: "南山区粤海街道高新区社区",
   海滨社区: "宝安区新安街道海滨社区",
+  海富社区: "宝安区新安街道海富社区",
   渔业社区: "宝安区西乡街道渔业社区",
-  博士村: "潮安区东凤镇博士村",
 };
 
 const LOCATIONS = {
@@ -35,6 +36,10 @@ const LOCATIONS = {
   郎景园: {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
+  },
+  紫寓公寓: {
+    city: CITY.深圳,
+    district: DISTRICT.海富社区,
   },
 };
 

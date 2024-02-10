@@ -35,6 +35,7 @@
 import type { ContentData } from "vitepress";
 import { onContentUpdated, useData } from "vitepress";
 import { ref } from "vue";
+import { toDashedHash } from "../utils";
 import { data as allPosts } from "../posts.data";
 import PostList from "./PostList.vue";
 
@@ -49,6 +50,8 @@ const postList = ref<ContentData[]>([]);
 postList.value = allPosts.slice(0, page.size);
 
 function turnTo(n: number) {
+  window.location.hash = `#${toDashedHash(n.toString())}`;
+  n = Math.min(n, page.total);
   page.cursor.value = n;
   const start = (n - 1) * page.size;
   postList.value = allPosts.slice(start, start + page.size);
@@ -60,8 +63,15 @@ function setPostListMinHeight() {
   (<HTMLElement>root).style.setProperty("--post-list-min-height", `${h}rem`);
 }
 
+function loadPage() {
+  const defaultPage = parseInt(window.location.hash?.slice(1));
+  page.cursor.value = defaultPage || 1;
+  turnTo(page.cursor.value);
+}
+
 onContentUpdated(() => {
   setPostListMinHeight();
+  loadPage();
 });
 </script>
 

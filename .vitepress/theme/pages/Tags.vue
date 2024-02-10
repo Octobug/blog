@@ -65,7 +65,7 @@ function selectTag(tag: string) {
 }
 
 onMounted(() => {
-  const defaultHash = window.location.hash?.slice(1);
+  const defaultHash = decodeURIComponent(window.location.hash?.slice(1));
   selectedTag.value = hashToTag[defaultHash] || ALL;
 
   selectTag(selectedTag.value);

@@ -37,7 +37,8 @@ tags:
 
 <figure>
 <figcaption>
-来自 <a>ASCII艺术字（图）集</a>
+来自 <a href="https://www.bootschool.net/ascii-art/chinese?pageNO=4">ASCII 艺术字（图）集</a>.
+<em>bootschool.net.</em>
 </figcaption>
 </figure>
 
@@ -85,9 +86,9 @@ tags:
       "Other": 23
     ```
 
-2. List of countries by GDP (nominal)[^countries_by_gdp] `权重 2`：每个国家有各自的官方语言，所以国家 GDP 也可以作为一个判断依据。当一个国家经济体量足够大，即使人均 GDP 很低，也有很大概率催生出优秀的文化产业。最典型的是印度宝莱坞。
-3. 2023 Duolingo Language Report[^duolingo_2023] `权重 1`：多邻国年度语言报告，取其中的最受欢迎的语言 Top 10。
-4. Languages used on the Internet[^internet_langs] `权重 1`：不同语言的互联网内容量统计。
+2. **List of countries by GDP (nominal)**[^countries_by_gdp] `权重 2`：每个国家有各自的官方语言，所以国家 GDP 也可以作为一个判断依据。当一个国家经济体量足够大，即使人均 GDP 很低，也有很大概率催生出优秀的文化产业。最典型的是印度宝莱坞。
+3. **2023 Duolingo Language Report**[^duolingo_2023] `权重 1`：多邻国年度语言报告，取其中的最受欢迎的语言 Top 10。
+4. **Languages used on the Internet**[^internet_langs] `权重 1`：不同语言的互联网内容量统计。
 
 [^langs_by_gdp]: [World languages by GDP, 2023 edition](https://www.reddit.com/r/languagelearning/comments/11xt73g/world_languages_by_gdp_2023_edition/)
 [^countries_by_gdp]: [List of countries by GDP (nominal)](https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal))
@@ -111,11 +112,11 @@ tags:
 
 ## Top 10
 
-折算后的前十语言如下：
+综合后的前十语言如下：
 
 ### 1. English (英语)
 
-英语事实上的实用性不必多说。
+英语事实上的实用性与影响力不必多说。
 
 ### 2. Español (西班牙语)
 
@@ -127,7 +128,7 @@ tags:
 
 ### 5. 中文
 
-中文产生的 GDP 排第二，中国 GDP 也是第二，综合排名被后两个指标严重拉低了，但这个排名还挺符合我的观感。在上文提到的 "Languages used on the Internet" 中，中文比例极低，只有 1.3%。这个不合理的比例大概率是 🧱 导致的统计错误，或者是内容没有传播出去导致在中文地区之外没有存在感。
+中文产生的 GDP 排第二，中国 GDP 也是第二，综合排名被后两个指标严重拉低了，但这个排名还挺符合我的观感。在上文提到的 "Languages used on the Internet" 中，中文比例极低，只有 1.3%。这个不合理的比例大概率是 🧱 导致的统计错误，或者是内容确实没有传播出去导致在中文地区之外没有存在感。
 
 对此我只感到可惜，甚至想说是作茧自缚。
 
@@ -192,7 +193,7 @@ tags:
 
 ::: details 52 Hz Whale
 
-封面图是 52 Hz 声波信号的频谱图，这些声波被认为是一头鲸鱼发出的，它被称为 "52 Blue"[^52hz_whale]。52 Blue 的迁徙模式和蓝鲸 (Blue Whale)[^blue_whale]以及长须鲸 (Fin Whale)[^fin_whale]相似，但蓝鲸和长须鲸的声音频率均低于 52 Hz，这个频率与任何其他鲸鱼的频率都不一样，很可能根本无法沟通。因此这头拥有独特声音频率的鲸鱼也被称为“世界上最孤独的鲸鱼”[^52hz_whale]。
+封面图是 52 Hz 声波信号的频谱图，这些声波被认为是一头鲸鱼发出的，它被称为 "52 Blue"[^52hz_whale]。52 Blue 的迁徙模式和蓝鲸 (Blue Whale)[^blue_whale]以及长须鲸 (Fin Whale)[^fin_whale]相似，但蓝鲸和长须鲸的声音频率均低于 52 Hz，这个频率与任何其他鲸鱼的频率都不一样，它们之间很可能根本无法互相沟通。因此这头拥有独特声音频率的鲸鱼也被称为“世界上最孤独的鲸鱼”[^52hz_whale]。
 
 [^52hz_whale]: [52-hertz whale](https://en.wikipedia.org/wiki/52-hertz_whale)
 [^blue_whale]: [Blue whale](https://en.wikipedia.org/wiki/Blue_whale)

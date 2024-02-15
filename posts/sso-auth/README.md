@@ -9,6 +9,7 @@ tags:
   - OIDC
   - SAML
   - OAuth
+  - JWT
 draft: true
 ---
 

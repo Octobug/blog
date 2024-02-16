@@ -8,6 +8,7 @@ tags:
   - JWT
   - Network
   - Internet
+draft: true
 ---
 
 # 跟着 How to Read an RFC 看 RFC7519

@@ -17,7 +17,7 @@ draft: true
 
 这篇文章本来是朋友 `@Shady` 和我共同翻译的译文。后来才注意到作者网站上并没有明确的版权许可信息，所以就先将译文撤掉了。
 
-我尝试写邮件询问作者是否允许我将译文公开发布，不过没有回音。所以我稍微整理了一下笔记重新发布。
+我尝试写邮件询问作者是否允许我将译文公开发布，不过没有回音。所以我改为发布重新整理的笔记。
 
 - 原文：[How to Read an RFC](https://www.mnot.net/blog/2018/07/31/read_rfc)
 - 作者：[mnot’s blog (Mark Nottingham)](https://www.mnot.net/)

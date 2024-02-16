@@ -1,6 +1,6 @@
 ---
 date: 2021-11-06
-location: 深圳，创维半导体设计大厦西座
+location: 覔书店
 sort: Computer Science
 tags:
   - GitLab

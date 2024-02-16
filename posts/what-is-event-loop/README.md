@@ -1,6 +1,6 @@
 ---
 date: 2022-09-13
-location: 深圳，创维半导体设计大厦西座
+location: 猫头鹰自习室
 sort: Computer Science
 tags:
   - GitLab

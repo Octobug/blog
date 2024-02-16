@@ -1,6 +1,6 @@
 ---
 date: 2020-10-16
-spot: 创维半导体设计大厦西座
+spot: 紫寓公寓
 sort: Computer Science
 tags:
   - MySQL

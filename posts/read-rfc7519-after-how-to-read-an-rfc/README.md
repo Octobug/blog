@@ -11,42 +11,36 @@ tags:
 draft: true
 ---
 
-# 跟着 How to Read an RFC 看 RFC7519
+# 跟着 How to Read an RFC 读 RFC7519
 
 :::info `:(`
 
-这篇文章本来是朋友 `@Shady` 和我共同翻译的译文。后来才注意到作者网站上并没有明确的版权许可信息，所以就先将译文撤掉了。
+这篇本来是朋友 `@Shady` 和我共同翻译的译文。后来才注意到作者网站上并没有明确的版权许可信息，所以就先将译文撤掉了。
 
-我尝试写邮件询问作者是否允许我将译文公开发布，不过没有回音。所以我改为发布重新整理的笔记。
+我尝试写邮件询问作者是否允许我将译文公开发布，但是没有回音。所以改为发布重新整理的笔记。
 
-- 原文：[How to Read an RFC](https://www.mnot.net/blog/2018/07/31/read_rfc)
-- 作者：[mnot’s blog (Mark Nottingham)](https://www.mnot.net/)
+- [How to Read an RFC](https://www.mnot.net/blog/2018/07/31/read_rfc)
+- [mnot’s blog (Mark Nottingham)](https://www.mnot.net/)
 
 :::
 
-读 "How to Read an RFC" 这篇文章缘起于阅读 [RFC7519: JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)——对新手来说，尤其是对非英语母语者来说，阅读 RFC 文档是挺痛苦的一件事。
+读 *How to Read an RFC* 这篇文章缘起于阅读 [RFC7519: JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)——对新手来说，尤其是对非英语母语者来说，阅读 RFC 文档是挺痛苦的一件事。
 
 ## 从哪儿开始？
 
-[rfc_editor]: https://www.rfc-editor.org/
-[ietf_tools]: https://tools.ietf.org/
+几个常用的查阅 RFC 的网站：
 
-[RFC Editor][rfc_editor] 是查找 RFC 文档的权威网站。不过我们在下面可以看到，该站点可能会缺少一些关键信息，因此大多数人都选择使用 [tools.ietf.org][ietf_tools]。
-
-由于 RFC 文件数量太多（目前将近 9,000 个！），仅仅是找到正确的 RFC 也是很困难的。显然你可以使用普通的 Web 搜索引擎查找它们，RFC Editor 在其站点上也有出色的搜索功能。
-
-[every_rfc]: https://everyrfc.org/
-
-另一个选择则是 [EveryRFC][every_rfc]，在这里你可以根据 RFC 文档的标题、关键字进行搜索，也可以直接选定某些标签进行探索。
-
-[rfc_format]: https://www.rfc-editor.org/rse/format-faq/
-[greenbytes]: https://greenbytes.de/tech/webdav/
-[wiki_webdav]: https://zh.wikipedia.org/wiki/%E5%9F%BA%E4%BA%8EWeb%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E5%86%99%E5%92%8C%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6
-[http_group]: https://httpwg.org/specs/
-
-毫无疑问，纯文本、格式丑陋的 RFC 文件难以阅读，不过这一问题即将被改变；RFC Editor 将支持新的 [RFC 格式][rfc_format]，该格式设计更美观、同时支持定制化。同时，如果你想要的是可用性更高的 RFC 文件，可以选择使用第三方存储库来查阅；例如，[greenbytes][greenbytes] 维护了一个与 WebDAV（[基于 Web 的分布式编写和版本控制][wiki_webdav]）相关的 RFC 文件列表，[HTTP 工作组（HTTP Working Group）][http_group] 则维护与 HTTP 相关的列表。
+- tools.ietf.org
+  - 2024.02.17 更新：新的域名应该是 [datatracker.ietf.org](https://datatracker.ietf.org/)
+- [rfc-editor.org](https://www.rfc-editor.org/)
+- [httpwg.org](https://httpwg.org/specs/)：由 HTTP 工作组（HTTP Working Group）维护的与 HTTP 相关的 RFC 列表
+- [greenbytes.de](https://greenbytes.de/tech/webdav/)：与 WebDAV (Web-based Distributed Authoring and Versioning)[^wiki_webdav] 相关的 RFC 文件列表
+- everyrfc.org
+  - 2024.02.17 更新：域名已过期
 
 ## 这份 RFC 属于哪一类？
+
+>>>>> progress
 
 所有的 RFC 文件顶部都有如下标注：
 
@@ -65,7 +59,7 @@ ISSN: 2070-1721
 
 事实上存在着很多不同“渠道（stream）”可以用来发布文档。**但是只有经由 IETF 发表的文稿，才表明该协议规范已经经过整个 IETF 组织审核并做出共识声明**。
 
-较早的文档（大约在 RFC5705 之前）中最左上角写的则是“Network Working Group（网络工作组）”，因而你需要多花一点时间才能确定它们是否代表 IETF 共识；你可以查阅“Status of this Memo（此备忘录的状态）”章节，也可以查阅 [RFC Editor 网站][rfc_editor]。
+较早的文档（大约在 RFC5705 之前）中最左上角写的则是“Network Working Group（网络工作组）”，因而你需要多花一点时间才能确定它们是否代表 IETF 共识；你可以查阅“Status of this Memo（此备忘录的状态）”章节，也可以查阅 [RFC Editor 网站](https://www.rfc-editor.org/)。
 
 [datatracker]: https://datatracker.ietf.org/submit/
 

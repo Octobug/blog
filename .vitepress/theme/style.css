@@ -232,6 +232,15 @@ a.VPSocialLink[aria-label="mastodon"]>svg {
   margin-bottom: -0.35rem;
 }
 
+.doc-page ul>li>em {
+  color: var(--vp-c-text-3);
+}
+
+.doc-page ul>li>a:hover {
+  text-decoration: underline;
+  color: var(--vp-c-neutral);
+}
+
 /* Hide Scrollbar */
 .hide-scrollbar {
   /* Internet Explorer 10+ */

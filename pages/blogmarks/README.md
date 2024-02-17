@@ -22,17 +22,4 @@ li code {
   font-family: var(--vp-font-family-base);
   font-style: normal;
 }
-
-ul li em {
-  color: var(--vp-c-text-3);
-}
-
-.vp-doc ul>li>a {
-  text-decoration: none;
-}
-
-.vp-doc ul>li>a:hover {
-  text-decoration: underline;
-  color: var(--vp-c-neutral);
-}
 </style>

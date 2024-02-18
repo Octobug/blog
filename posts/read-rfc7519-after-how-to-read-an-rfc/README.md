@@ -34,40 +34,48 @@ draft: true
   - 2024.02.17 更新：新的域名应该是 [datatracker.ietf.org](https://datatracker.ietf.org/)
 - [rfc-editor.org](https://www.rfc-editor.org/)
 - [httpwg.org](https://httpwg.org/specs/)：由 HTTP 工作组（HTTP Working Group）维护的与 HTTP 相关的 RFC 列表
-- [greenbytes.de](https://greenbytes.de/tech/webdav/)：与 WebDAV (Web-based Distributed Authoring and Versioning)[^wiki_webdav] 相关的 RFC 文件列表
+- [greenbytes.de](https://greenbytes.de/tech/webdav/)：与 WebDAV (Web-based Distributed Authoring and Versioning)[^wiki_webdav] 相关的 RFC 列表
 - everyrfc.org
   - 2024.02.17 更新：域名已过期
 
-## 这份 RFC 属于哪一类？
+[^wiki_webdav]: [WebDAV](https://zh.wikipedia.org/zh-cn/WebDAV)
 
->>>>> progress
+## RFC7519 属于哪一类？
 
-所有的 RFC 文件顶部都有如下标注：
+RFC7519 的顶部标注如下：
 
-```Text
-Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
-Request for Comments: 7230                                         Adobe
-Obsoletes: 2145, 2616                                    J. Reschke, Ed.
-Updates: 2817, 2818                                           greenbytes
-Category: Standards Track                                      June 2014
-ISSN: 2070-1721
+```txt
+Internet Engineering Task Force (IETF)                          M. Jones
+Request for Comments: 7519                                     Microsoft
+Category: Standards Track                                     J. Bradley
+ISSN: 2070-1721                                            Ping Identity
+                                                             N. Sakimura
+                                                                     NRI
+                                                                May 2015
 ```
 
-[indepent_stream]: https://www.rfc-editor.org/about/independent/
+- **"Internet Engineering Task Force (IETF)"**：互联网工程任务组。表明这是由 IETF 组织制定的标准。
+  - 除了 IETF，还有其他独立提交渠道[^indepent_stream]。
+  - 只有经由 IETF 发表的文稿，才表明该协议规范已经过 IETF 组织审核并做出共识声明。
+  - 大约在 RFC5705 之前，这一项写的是 "Network Working Group"。
+- **"Request for Comments: 7519"**：“请求意见稿”编号。
+  - 如果写的是 "Internet-Draft"（互联网草案），则说明它不是 RFC 而只是一个提议，最终不一定会被 IETF 采用。
+  - ***任何人***都可以写一个 Internet-Draft[^datatracker]。
+- **"Category: Standards Track"**：类别为 Standards Track。
+  - 一共有以下几类：
+    - Standards Track：标准记录
+    - Informational：报告性的
+    - Experimental：实验性的
+    - Best Current Practice：当前最佳实践
+  - 它们之间的区别有时是模糊的，如果是 IETF 产出的则表明该文稿已经过合理的评审。
+- **"ISSN: 2070-1721"**：RFC 系列文稿的 ISSN (International Standard Serial Number) 编号。[^wiki_issn][^issn_rfc]
+- **标注右侧**是文档的作者以及日期。
+  - 此处不会列出完整的贡献者名单。通常，完整名单写在“致谢”部分的末尾。
 
-最左上角的 “Internet Engineering Task Force (IETF)（互联网工程任务组）” 表明这是由 IETF 组织制定的标准。当然，也有其他方法可以发布无需获得 IETF 认可的 RFC 文件；例如，[独立提交渠道][indepent_stream]，尽管该方式并不广为人知，
-
-事实上存在着很多不同“渠道（stream）”可以用来发布文档。**但是只有经由 IETF 发表的文稿，才表明该协议规范已经经过整个 IETF 组织审核并做出共识声明**。
-
-较早的文档（大约在 RFC5705 之前）中最左上角写的则是“Network Working Group（网络工作组）”，因而你需要多花一点时间才能确定它们是否代表 IETF 共识；你可以查阅“Status of this Memo（此备忘录的状态）”章节，也可以查阅 [RFC Editor 网站](https://www.rfc-editor.org/)。
-
-[datatracker]: https://datatracker.ietf.org/submit/
-
-在此下方是“请求意见稿”编号。**如果显示的是“Internet-Draft（互联网草案）”，则它不是 RFC**；这只是一个提议，*任何人*都 [可以写一个][datatracker]。文稿只是互联网草案，并不意味着它最终会被 IETF 所采用。
-
-*类别*可以是“标准记录（Standards Track）”、“报告性的（Informational）”、“实验性的（Experimental）”和“当前最佳实践（Best Current Practice）”其中之一。它们之间的区别有时是模糊的，但如果是 IETF 产出的（请参见上文），则表明该文稿已经经过合理的评审。但是请注意，即使经过 IETF 共识发布，报告性和实验性文件也*不是*标准。
-
-最后，文档的**作者**列在标题的右侧。与学术界不同，这里不会列出完整的文稿贡献者的名单。通常，完整贡献者名单列表是在“致谢”部分的末尾完成的。在 RFC 文档中，这实际上指的是“编写文档的人”。通常，你会看到追加在名字后面的“Ed.”。这表明他们是编辑者，通常是因为文本原先已存在（例如修订 RFC 时）。
+[^indepent_stream]: [Independent Submissions](https://www.rfc-editor.org/about/independent/)
+[^datatracker]: [Internet-Draft submission](https://datatracker.ietf.org/submit/)
+[^wiki_issn]: [ISSN](https://en.wikipedia.org/wiki/ISSN)
+[^issn_rfc]: [The RFC Series (ISSN 2070-1721)](https://portal.issn.org/resource/ISSN/2070-1721)
 
 ## 它是最新版本吗？
 

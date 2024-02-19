@@ -24,7 +24,9 @@ draft: true
 
 :::
 
-读 *How to Read an RFC* 这篇文章缘起于阅读 [RFC7519: JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)——对新手来说，尤其是对非英语母语者来说，阅读 RFC 文档是挺痛苦的一件事。
+[rfc7519]: https://datatracker.ietf.org/doc/rfc7519/
+
+读 *How to Read an RFC* 这篇文章缘起于阅读 [RFC7519: JSON Web Token (JWT)][rfc7519]——对新手来说，尤其是对非英语母语者来说，阅读 RFC 文档是挺痛苦的一件事。
 
 ## 从哪儿开始？
 
@@ -63,12 +65,12 @@ ISSN: 2070-1721                                            Ping Identity
   - ***任何人***都可以写一个 Internet-Draft[^datatracker]。
 - **"Category: Standards Track"**：类别为 Standards Track。
   - 一共有以下几类：
-    - Standards Track：标准记录
-    - Informational：报告性的
-    - Experimental：实验性的
-    - Best Current Practice：当前最佳实践
+    - **Standards Track**：标准记录
+    - **Informational**：报告性的
+    - **Experimental**：实验性的
+    - **Best Current Practice**：当前最佳实践
   - 它们之间的区别有时是模糊的，如果是 IETF 产出的则表明该文稿已经过合理的评审。
-- **"ISSN: 2070-1721"**：RFC 系列文稿的 ISSN (International Standard Serial Number) 编号。[^wiki_issn][^issn_rfc]
+- **"ISSN: 2070-1721"**：RFC 系列文稿的 ISSN (International Standard Serial Number) 编号[^wiki_issn][^issn_rfc]。
 - **标注右侧**是文档的作者以及日期。
   - 此处不会列出完整的贡献者名单。通常，完整名单写在“致谢”部分的末尾。
 
@@ -77,37 +79,29 @@ ISSN: 2070-1721                                            Ping Identity
 [^wiki_issn]: [ISSN](https://en.wikipedia.org/wiki/ISSN)
 [^issn_rfc]: [The RFC Series (ISSN 2070-1721)](https://portal.issn.org/resource/ISSN/2070-1721)
 
-## 它是最新版本吗？
+## RFC7519 是最新版本吗？
 
-[diff_7158_7159]: https://tools.ietf.org/rfcdiff?url1=rfc7158&url2=rfc7159
+[^diff_7158_7159]: [Diff between RFC 7158 and RFC 7159](https://author-tools.ietf.org/iddiff?url1=rfc7158&url2=rfc7159)
 
-RFC 是系列文档的存档；它们甚至连一个字符都不能改变（请参阅 [RFC7158 和 RFC7159 之间的差异对比][diff_7158_7159] 以查看这个极端效果示例；它们只是搞错了年份 ;）。
+RFC 是系列文档的存档，一经发布就不会改变。如果出现错误则发布新版本更正，而不是修改原文档。因此，确保看到的是正确的文档很重要。
 
-因此，确保你看到的是正确的文档很重要。文稿头部标注包含了一些元数据，它们有以下作用：
+- 比如 RFC7158 和 RFC7159 之间的差异仅仅是前者搞错了年份[^diff_7158_7159]。
 
-- **过时列表**（Obsoletes）列出了被本文档完全替代的 RFC 文件；也就是说，你应该使用此文档，而不要使用 Obsoletes 指出的文档。需要注意的是，新版本的协议不一定会淘汰旧版本的协议；例如 HTTP/2 不会替代 HTTP/1.1，因为它仍然是旧协议的合法（也是必要的）规范。但是，RFC7230 的确淘汰了 RFC2616，因为它是该协议（HTTP/1.1）新的标准。
-- **更新列表**（Updates）列出了被本文档实质性改变了的 RFC，换句话说，如果你正在阅读更新列表的文档，则也应该阅读本文档。
+在 [RFC7519: JSON Web Token (JWT)][rfc7519] 页面中，可以看到：
 
-[rfc_2616]: https://tools.ietf.org/html/rfc2616
+> Updated by [RFC 8725](https://datatracker.ietf.org/doc/rfc8725/), [RFC 7797](https://datatracker.ietf.org/doc/rfc7797/)
 
-不幸的是，纯 ASCII 文本的 RFC 文件（例如 RFC Editor 上面的 RFC）无法告知你哪些文档更新或淘汰了你当前正在阅读的文档。这就是大多数人转而选择使用 tools.ietf.org 的 RFC 存储库的原因，它将这些信息放在 [如下的文件头部标注中][rfc_2616]：
+这表明 RFC7519 中有部分内容被 RFC8725 与 RFC7797 更新了。相应地，在 RFC8725 中的这部分内容则是：
 
-```text
-[Docs] [txt|pdf] [draft-ietf-http...] [Tracker] [Diff1] [Diff2] [Errata]
+> Updates [RFC 7519][rfc7519]
 
-Obsoleted by: 7230, 7231, 7232, 7233, 7234, 7235          DRAFT STANDARD
-Updated by: 2817, 5785, 6266, 6585                          Errata Exist
-```
+表明它更新了 RFC7519 中的内容。除了 "Updates"（被更新的文档写的是 "Updated by"），还有 "Obsoletes"（被废弃的文档写的是 "Obsoleted by"）。
 
-工具页面上的每个数字都是一个链接，因此你可以轻松找到最新的文档。
-
-即使是最新的 RFC 也经常出现问题。在工具头部栏中，你还会在右侧看到“Errata Exist（存在勘误）”的警告，以及位于其上方的勘误链接。
-
-**勘误**是在没必要发布新 RFC 文件时对相应文档的更正和澄清。有时，它们可能会对 RFC 的实施方式产生重大影响（例如规范中的错误导致重大误解），因此值得一读。
-
-[errata_7230]: https://www.rfc-editor.org/errata_search.php?rfc=7230
-
-例如这是 [RFC7230 的勘误表][errata_7230]。阅读勘误表时，请牢记其状态；许多人因为误读规范导致提交的勘误被否决了。
+- 需要注意的是，新版本的协议不一定会淘汰旧版本的协议。
+  - 例如 HTTP/2 不会替代 HTTP/1.1，因为它仍然是旧协议的有效规范。
+  - 而 RFC7230 淘汰了 RFC2616，因为它是该协议 (HTTP/1.1) 新的标准。
+- 有些 RFC 文档的状态栏中还标有 **"Errata"（勘误）**。
+  - 勘误是在没必要发布新 RFC 文件时对相应文档的更正和澄清。
 
 ## 理解上下文
 

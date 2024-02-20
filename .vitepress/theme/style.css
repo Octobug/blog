@@ -153,8 +153,8 @@
   --ct-c-default-0: #777777;
 }
 
-.VPHome {
-  padding-bottom: 4rem !important;
+.VPContent>.VPHome {
+  margin-bottom: 4rem;
 }
 
 header.VPNav a.title {

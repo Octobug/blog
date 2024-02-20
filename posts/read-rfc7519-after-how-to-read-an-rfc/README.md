@@ -103,84 +103,29 @@ RFC 是系列文档的存档，一经发布就不会改变。如果出现错误�
 - 有些 RFC 文档的状态栏中还标有 **"Errata"（勘误）**。
   - 勘误是在没必要发布新 RFC 文件时对相应文档的更正和澄清。
 
-## 理解上下文
-
-对于开发者来说，查看 RFC 并依照内容进行实施，最终结果却执行了与作者意图相反的操作，这种情况比你想像的要普遍得多。
-
-这是因为在读者选择性阅读（就像读任何“圣经”一样）时，要以一种不被误读的方式编写规范是极其困难的。
-
-因而，无论是否在同一份规范中，读者不仅要阅读直接相关的文本，（至少）阅读其引用的任何内容也是有必要的。假如你是在紧要关头，即使无法阅读整个文档，阅读所有可能相关的部分也会大有帮助。
-
-[http_crlf]: https://httpwg.org/specs/rfc7230.html#http.message
-[http_lf]:https://httpwg.org/specs/rfc7230.html#message.robustness
-
-例如，HTTP 消息头部被 [定义][http_crlf] 为由 CRLF 分隔，但是如果你跳过这部分文档到 [这里][http_lf]，显而易见你会看到“a recipient MAY recognize a single LF as a line terminator and ignore any preceding CR.（接收端**也许**会将 LF 符作为行分隔符，并忽略前面的 CR 符。）”的提示。
-
-[iana]:https://zh.wikipedia.org/wiki/%E4%BA%92%E8%81%94%E7%BD%91%E5%8F%B7%E7%A0%81%E5%88%86%E9%85%8D%E5%B1%80
-[http_registry]: https://www.iana.org/assignments/http-methods/http-methods.xhtml
-
-另一点需要谨记的是，许多协议都设置了 IANA（[Internet Assigned Numbers Authority，互联网号码分配局][iana]）登记列表管理它们的规范扩展；这些才是事实标准的来源，而不是规范文档。例如，HTTP 方法的权威列表包含在这个 [登记表][http_registry] 中，而不是在 HTTP 规范文档中。
-
 ## 用语要求
 
-几乎所有 RFC 在其顶部附近都有模板，看起来像这样：
+几乎所有 RFC 开头都有用语模板。RFC 7519 的 [1.1. Notational Conventions](https://datatracker.ietf.org/doc/html/rfc7519#section-1.1) 小节如下：
 
-```text
+```txt
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in
-BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-capitals, as shown here.
-
-本文档中的关键字 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", 与
-"OPTIONAL"，当且仅当它们的所有字母都是大写形式时，它们取的即是 BCP 14 [RFC2119]
-[RFC8174] 中表述的含义。
+"Key words for use in RFCs to Indicate Requirement Levels" [RFC2119].
+The interpretation should only be applied when the terms appear in
+all capital letters.
 ```
 
-[rfc_2119]: https://tools.ietf.org/html/rfc2119
+这段话可译为：
 
-这些 [RFC2119][rfc_2119] 关键字有助于定义互通性，但有时也会使开发者感到困惑。规范中有以下类似表述是常见的情况：
+> 本文档中的关键字 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY" 与 "OPTIONAL"，当且仅当它们的所有字母都是大写形式时，才解释为 "Key words for use in RFCs to Indicate Requirement Levels" [RFC2119] 中表述的含义。
 
-```text
-The Foo message MUST NOT contain a Bar header.
-消息 Foo 中不能包含头部 Bar。
-```
+- RFC2119[^rfc_2119] 定义的这些关键字有助于定义互通性 (interoperability[^interoperability])。
 
-该要求限制的对象是协议工件（artefact，可理解为协议的某种实现的实例，或者“协议伪实例”，类似于编程中的“伪代码”），即“Foo 消息”。如果你要发送一个该协议的实例对象，那么很显然它不应该包含 Bar 头部；如果它包含了，则它不是符合规范的消息。
+[^rfc_2119]: [RFC 2119: Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119)
+[^interoperability]: [Interoperability](https://en.wikipedia.org/wiki/Interoperability)
 
-但是，接收者收到该消息后将采取的行为则缺乏清晰的规定；如果你看到带有 Bar 头部的 Foo 消息，你会怎么办？
-
-有些开发者会拒绝处理包含 Bar 头部的 Foo 消息，即便规范没有说明应该这样做。其他开发者可能仍将处理该消息，但是会先解析丢弃 Bar 头部，或者忽略它——即使规范中明确指出需要处理所有头部。
-
-所有这些处理方式的差异都可能（无意间）导致互通性问题。正确的做法是遵循消息头部的常规处理，除​​非有相反的特定要求。
-
-因为一般来说，规范会在编写时明确指出相应行为的；换句话说，未被明确禁止的行为都是被允许的。因此，过度解读规范可能会在无意中带来一些坏处，因为你可能引入一些其他人必须处理的新行为。
-
-在理想情况下，该规范需要额外新增定义消息接受方行为，比如：
-
-```text
-Senders of the Foo message MUST NOT include a Bar header. Recipients
-of a Foo message that includes a Bar header MUST ignore the Bar header,
-but MUST NOT remove it.
-
-Foo 消息的发送者不得在其中包含 Bar 头部。包含 Bar 头部的 Foo 消息的接收者必须忽略
-Bar 头部，但不得移除它。
-```
-
-[http_conformance]: https://httpwg.org/specs/rfc7230.html#conformance
-
-如果没有相关规定，最好在规范中（例如，HTTP 协议的 [一致性与错误处理][http_conformance] 部分）的其他地方寻求有关错误处理的一般建议。
-
-另外需要记住的是要求的*目标*对象是什么；大多数规范都有一套高度完善的术语，用于区分协议中的不同角色。
-
-[http_proxy]: https://httpwg.org/specs/rfc7230.html#intermediaries
-
-例如，HTTP 具有 [代理][http_proxy] 的定义，它是一种中介，既实现了客户端又实现了服务器（但它不是 User-Agent 或真正的服务器）；他们需要注意针对所有这些角色的要求。
-
-同样地，HTTP 会根据特定情况在某些要求中区分“生成（generating）”消息和仅“转发（forwarding）”消息。关注这种特定的术语可以免去大量的猜测。
-
-### 关键字 “SHOULD”
+### 关键字 "SHOULD"
 
 是的，关键字 “SHOULD”值得单独说一下。尽管在移除这个关键字上面做了很多努力，这个含义模糊的词仍困扰着许多 RFC 文件。RFC2119 将其描述为：
 

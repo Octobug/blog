@@ -8,7 +8,6 @@ tags:
   - JWT
   - Network
   - Internet
-draft: true
 ---
 
 # 跟着 How to Read an RFC 读 RFC7519
@@ -123,7 +122,7 @@ all capital letters.
 
 - RFC2119[^rfc_2119] 定义的这些关键字有助于定义**互通性 (interoperability)**[^interoperability]。
 
-[^rfc_2119]: [RFC 2119: Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119)
+[^rfc_2119]: [RFC 2119, Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119)
 [^interoperability]: [Interoperability](https://en.wikipedia.org/wiki/Interoperability)
 
 ### 关键字 "SHOULD"
@@ -140,6 +139,8 @@ SHOULD  This word, or the adjective "RECOMMENDED", mean that there
         款，前提是必须理解其全部含义并在选择其他方案之前经过审慎的权衡。
 ```
 
+> RFC 的作者们经常使用“应该 (SHOULD)”和“不应该 (SHOULD NOT)”来表示“我们希望你这样做，但是我们知道我们并不总是要求你做到。”
+
 例如，在 RFC7519 的 [7.2. Validating a JWT](https://datatracker.ietf.org/doc/html/rfc7519#section-7.2) 小节中，有：
 
 ```text
@@ -154,62 +155,38 @@ SHOULD  This word, or the adjective "RECOMMENDED", mean that there
 
 “应该”不是必须遵守的，因为应用程序可能会有合理的原因而采取其他措施。在以上例子中还有“除非”这个词——它指定了“应该”允许的“特殊情况”。可以说，此处也可以将“应该”替换成“必须”。
 
-> RFC 的作者们经常使用“应该 (SHOULD)”和“不应该 (SHOULD NOT)”来表示“我们希望你这样做，但是我们知道我们并不总是要求你做到。”
+## 关于 ABNF (Augmented Backus–Naur Form)
 
-## 阅读规范实例
+[^abnf]: [RFC 5234, Augmented BNF for Syntax Specifications: ABNF](https://tools.ietf.org/html/rfc5234)
 
-另一个非常常见的陷阱是通过浏览规范示例，并参照范例进行具体实现。
+ABNF[^abnf] 常被用于定义协议工件示例。例如：
 
-不幸的是，示例通常是作者最少关注的部分，因为示例需要随着协议的每次更改而进行更新。
-
-结果就是，它们通常是规范中最不可靠的部分。是的，作者绝对应该在发布之前仔细检查示例，但是疏忽总是难以避免。
-
-另外，即使是一个完美的示例，也可能无法阐述清楚你关心的每个协议特性；为了简洁起见，在范例中通常会将它们截断，或者在解码步骤之后才显示。
-
-即使会花费更多时间，最好的方式还是阅读实际的文本；因为示例终究不是规范。
-
-## 使用 ABNF（Augmented Backus–Naur Form，增强型巴科斯-瑙尔范式）
-
-[abnf]: https://tools.ietf.org/html/rfc5234
-
-[增强型巴科斯-瑙尔范式][abnf] 常被用于定义协议工件实例。例如：
-
-```text
+```txt
 FooHeader = 1#foo
 foo       = 1*9DIGIT [ ";" "bar" ]
 ```
 
-一旦你习惯了这种表示法，ABNF 会提供一个易于理解的“草图”，概述一个协议实例的结构与格式。
+ABNF 是一种“理想化”的定义标准——它标示一条消息的理想形式，对应生成的消息需要与之完全匹配。这种表示法能提供一个更易于理解的“草图”，概述一个协议实例的结构与格式。
 
-然而，ABNF 是“理想化”定义——它标示一条消息的理想形式，那么对应生成的那些消息就需要与之完全匹配。它没有指定如何处理匹配失败的消息。实际上，许多规范都*无法*说明 ABNF 与消息处理要求之间的关系。
-
-如果你尝试严格执行 ABNF，大多数协议都会严重不匹配，但有时 ABNF 的确很重要。在上面的示例中，指明不允许在分号周围使用空格，但是可以打赌还是会有某些人会将空格放在分号周围，并且某些协议的实现会接受它。
-
-因此，请确保你阅读了 ABNF 周边的说明以了解其他要求或需要的上下文，假如你发现到没有直白的规范要求，你可能需要调整解析严格程度以使其比 ABNF 所暗示的更容易接受输入。
-
-一些规范开始承认 ABNF 的理想性，并指定了包含错误处理的显式解析算法。当这些被指定时，应严格遵循这些规定，以确保互通性。
+不过实际上有许多规范都没有严格匹配 ABNF。RFC7519 中就没有采用 ABNF 来展示消息示例。
 
 ## 安全注意事项
 
-[rfc_3552]:https://tools.ietf.org/html/rfc3552
+[^rfc_3552]: [RFC 3552, Guidelines for Writing RFC Text on Security Considerations](https://tools.ietf.org/html/rfc3552)
 
-自 [RFC3552][rfc_3552] 以来，RFC 模板就开始包含“安全注意事项”部分。
+自 RFC3552 以来，RFC 模板就开始包含 **"Security Considerations（安全注意事项）"** 部分 [^rfc_3552]。
 
-因此，很少有发布的 RFC 会缺少关于安全性的实质性部分；评审中不允许草案出现“此协议没有安全注意事项”的情况。
+RFC7519 的 [11. Security Considerations](https://datatracker.ietf.org/doc/html/rfc7519#section-11) 小节中强调：与加密应用相关的任何安全问题都必须由 JWT/JWS/JWE/JWK 代理处理，这些安全问题包括保护用户的非对称私钥和对称密钥以及针对各种攻击采取对策。
 
-所以需要阅读并确保你了解“安全注意事项”部分，无论你是要实施还是部署协议；如果不这样做，那么你接下来很可能会被安全性问题困扰。
-
-拓展阅读其它引用（如果有的话）也是一个好主意。如果没有，请尝试查找那些用于理解所讨论的问题的术语。
+后续还有 *11.1. Trust Decisions (信任决策)* 与 *11.2. Signing and Encryption Order (签名与加密顺序)* 两个更具体的小节。
 
 ## 了解更多
 
-[working_group]: https://datatracker.ietf.org/wg/
-[ietf_area]: https://ietf.org/topics/areas/
+除了 RFC 文件本身，还可以查阅相关的工作组[^wg]或者具体 RFC 的邮件列表。
 
-如果 RFC 无法回答你的问题，或者你不清楚其文本的含义，那么最好的办法是找到最相关的 [工作组][working_group]，并在其邮件列表中提出问题。如果没有活跃的工作组讨论相关主题，请尝试相应 [区域][ietf_area] 的邮件列表。
+[^wg]: [Active IETF working groups](https://datatracker.ietf.org/wg/)
 
-提交勘误表通常不是你应该采取的第一步——建议你先和他人进行交流确认。
+RFC7519 所属的工作组以及邮件列表分别是：
 
-现在许多工作组都在使用 GitHub 来管理其规范；如果你对现行规范存在疑问，请提出问题。如果它已经成为 RFC 文件，通常最好是使用邮件列表来反馈，除非你找到其他截然相反的指示。
-
-我相信还有更多关于如何阅读 RFC 的文章，有些人会质疑我写的这篇文章，但这就是我对它们的看法。我希望它能发挥作用。
+- [Web Authorization Protocol (oauth)](https://datatracker.ietf.org/wg/oauth/documents/)
+- [rfc7519 OR "draft-ietf-oauth-json-web-token"](https://mailarchive.ietf.org/arch/browse/oauth/?q=rfc7519%20OR%20%22draft-ietf-oauth-json-web-token%22)

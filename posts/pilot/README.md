@@ -6,6 +6,7 @@ sort: Miscellaneous
 tags:
   - Causerie
   - Blog
+  - Markdown
 ---
 
 # Pilot
@@ -36,7 +37,12 @@ tags:
 
 ## VitePress
 
-选择基于 [VitePress](https://vitepress.dev/) 开发博客主题的原因是，在二月份准备做 [english.highlight.ink](https://english.highlight.ink/)（一个英语自学指引）时简单调研了一些静态网站生成器，最后因为 VitePress 简洁轻巧且支持自定义主题而选择了它。
+在二月份准备做 [english.highlight.ink](https://english.highlight.ink/)（一个英语自学指引）时简单调研了一些静态网站生成器，最后因为 [VitePress](https://vitepress.dev/) 简洁轻巧且支持自定义主题而选择了它：
+
+- 基于 Vite 工具链
+- 支持自定义 Vue 组件
+- 支持 Markdown（基于 [markdown-it](https://github.com/markdown-it)，因此有丰富的插件生态）
+- 有活跃的开发者社区
 
 ## WhaleVocal
 

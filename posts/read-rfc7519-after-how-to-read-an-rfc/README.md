@@ -32,11 +32,12 @@ draft: true
 
 几个常用的查阅 RFC 的网站：
 
-- tools.ietf.org
-  - 2024.02.17 更新：新的域名应该是 [datatracker.ietf.org](https://datatracker.ietf.org/)
+- [datatracker.ietf.org](https://datatracker.ietf.org/)
 - [rfc-editor.org](https://www.rfc-editor.org/)
 - [httpwg.org](https://httpwg.org/specs/)：由 HTTP 工作组（HTTP Working Group）维护的与 HTTP 相关的 RFC 列表
 - [greenbytes.de](https://greenbytes.de/tech/webdav/)：与 WebDAV (Web-based Distributed Authoring and Versioning)[^wiki_webdav] 相关的 RFC 列表
+- tools.ietf.org
+  - 2024.02.17 更新：tools.ietf.org 会跳转到 [authors.ietf.org](https://authors.ietf.org/)；原本 tools 的部分功能的新页面为 [author-tools.ietf.org](https://author-tools.ietf.org/)。
 - everyrfc.org
   - 2024.02.17 更新：域名已过期
 
@@ -120,63 +121,40 @@ all capital letters.
 
 > 本文档中的关键字 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY" 与 "OPTIONAL"，当且仅当它们的所有字母都是大写形式时，才解释为 "Key words for use in RFCs to Indicate Requirement Levels" [RFC2119] 中表述的含义。
 
-- RFC2119[^rfc_2119] 定义的这些关键字有助于定义互通性 (interoperability[^interoperability])。
+- RFC2119[^rfc_2119] 定义的这些关键字有助于定义**互通性 (interoperability)**[^interoperability]。
 
 [^rfc_2119]: [RFC 2119: Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119)
 [^interoperability]: [Interoperability](https://en.wikipedia.org/wiki/Interoperability)
 
 ### 关键字 "SHOULD"
 
-是的，关键字 “SHOULD”值得单独说一下。尽管在移除这个关键字上面做了很多努力，这个含义模糊的词仍困扰着许多 RFC 文件。RFC2119 将其描述为：
+RFC2119 中对 "SHOULD" 的描述如下：
 
-```text
+```txt
 SHOULD  This word, or the adjective "RECOMMENDED", mean that there
         may exist valid reasons in particular circumstances to ignore a
         particular item, but the full implications must be understood and
         carefully weighed before choosing a different course.
 
-应该     这个词或是形容词“推荐”，它们的意思是在特定情况下可能存在正当理由而忽略特定条款，
-        前提是必须理解其全部含义并在选择其他方案之前经过请仔细权衡。
+        这个词或是形容词“推荐的”，它们的意思是在特定情况下可能存在正当理由而忽略特定条
+        款，前提是必须理解其全部含义并在选择其他方案之前经过审慎的权衡。
 ```
 
-实际上，作者经常使用“应该（SHOULD）”和“不应该（SHOULD NOT）”来表示“我们希望你这样做，但是我们知道我们并不总是要求你做到。”
-
-[http_method_overview]: https://httpwg.org/specs/rfc7231.html#method.overview
-
-例如，在 [HTTP 方法概述][http_method_overview] 中，我们可以看到：
+例如，在 RFC7519 的 [7.2. Validating a JWT](https://datatracker.ietf.org/doc/html/rfc7519#section-7.2) 小节中，有：
 
 ```text
-When a request method is received that is unrecognized or not
-implemented by an origin server, the origin server SHOULD respond
-with the 501 (Not Implemented) status code. When a request method
-is received that is known by an origin server but not allowed for
-the target resource, the origin server SHOULD respond with the 405
-(Method Not Allowed) status code.
+  Finally, note that it is an application decision which algorithms may
+  be used in a given context.  Even if a JWT can be successfully
+  validated, unless the algorithms used in the JWT are acceptable to
+  the application, it SHOULD reject the JWT.
 
-当收到无法识别或未经服务器实现的请求方法时，服务器**应该**响应状态代码 501（未
-实现）。当收到一个请求方法为服务器所知但目标资源不被允许访问时，服务器**应该**
-响应状态码 405（不允许的方法）。
+  最后，注意在给定上下文中可以使用哪些算法是由应用程序决定的。除非一个 JWT 中使用的
+  算法是应用程序所允许的，否则即使该 JWT 可以成功通过校验，它也应该拒绝该 JWT。
 ```
 
-这些“应该”不是必须遵守的，因为服务器也许有合理的理由决定采取其他措施；如果请求来自被认为是攻击者的客户端，则它可能会断开连接，或者请求的资源要求使用 HTTP 身份验证授权，则它可能会使用 401（未经身份验证）响应请求来取代 405 响应请求。
+“应该”不是必须遵守的，因为应用程序可能会有合理的原因而采取其他措施。在以上例子中还有“除非”这个词——它指定了“应该”允许的“特殊情况”。可以说，此处也可以将“应该”替换成“必须”。
 
-“应该”也*不*意味着服务器就可以随意忽略规范要求，因为这让它给人带来一种不尊重规范的感觉。
-
-[multipart]: https://httpwg.org/specs/rfc7231.html#multipart.types
-
-有时我们会 [看到][multipart] 遵循如下形式的 “应该”：
-
-```text
-A sender that generates a message containing a payload body SHOULD
-generate a Content-Type header field in that message unless the
-intended media type of the enclosed representation is unknown to
-the sender.
-
-在发送方生成了包含有效载荷（payload）体的消息时，“应该”同时在该消息中头部中生
-成 Content-Type 字段，除非有效载荷的媒体类型对发送方来说是未知的。
-```
-
-注意“除非”这个词——它指定了“应该”允许的“特殊情况”。可以说，这里将“应该”替换成“必须”，除非子句仍然适用，然而这种规范风格仍然普遍存在。
+> RFC 的作者们经常使用“应该 (SHOULD)”和“不应该 (SHOULD NOT)”来表示“我们希望你这样做，但是我们知道我们并不总是要求你做到。”
 
 ## 阅读规范实例
 

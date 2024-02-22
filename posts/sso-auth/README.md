@@ -6,6 +6,7 @@ tags:
   - SSO
   - Authentication
   - Authorization
+  - SLO
   - OIDC
   - SAML
   - OAuth
@@ -35,94 +36,99 @@ draft: true
 
 ## 主流协议
 
-目前应用比较广泛的支持 SSO 的开放标准主要有 **OIDC (OpenID Connect)**[^oidc] 和 **SAML (Security Assertion Markup Language) 2.0**[^saml]。OIDC 是基于 OAuth 2.0 的认证协议，它在 OAuth 的流程之上，增加了认证用户的标准化步骤 [^oidc_how]。而 SAML 在这之前我并没听说过，这个标准似乎在企业用户领域应用得比较多。比如 GitHub 关于 SAML 的文档也是归类在 Enterprise Cloud 中 [^gh_saml]。
+目前应用比较广泛的支持 SSO 的开放标准主要有 **OIDC (OpenID Connect)**[^oidc] 和 **SAML (Security Assertion Markup Language) 2.0**[^saml]。OIDC 是基于 OAuth 2.0 的认证协议，它在 OAuth 的流程之上，增加了认证用户的标准化步骤 [^oidc_how]。而 SAML 在此之前我并没听说过，这个标准似乎在企业用户领域应用得比较多。比如 GitHub 关于 SAML 的文档也是归类在 Enterprise Cloud 中 [^gh_saml]。
 
 [^oidc]: [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0-final.html)
 [^saml]: [Security Assertion Markup Language (SAML) v2.0](https://www.oasis-open.org/standard/saml/)
 [^oidc_how]: [What is OpenID Connect](https://openid.net/developers/how-connect-works/)
 [^gh_saml]: [Authenticating with SAML single sign-on](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on)
 
-## 基本模式
+## 典型流程
 
-不管是 OIDC 还是 SAML，它们的运作流程有一个共同的模式：多个应用使用同一个中心化的认证服务进行账户认证，正是这个中心化的认证服务提供了单点登录需要的用户认证状态。基本流程如下图：
+不管是 OIDC 还是 SAML，它们的运作流程都有一个相似的模式：多个应用使用同一个中心化的认证服务进行账户认证，正是这个中心化的认证服务提供了单点登录需要的用户认证状态。一个典型的流程（以 OIDC Authorization Code Flow[^oidc_code_flow] 为例）如下：
+
+[^oidc_code_flow]: [3.1. Authentication using the Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0-final.html#CodeFlowAuth)
+
+假设用户还没在认证服务 OpenID Provider 登录：
 
 ```mermaid
 sequenceDiagram
   participant User
   participant Browser
   participant Application 1
-  participant Application 2
-  participant Authentication Server
+  participant OpenID Provider
 
-  User->>Application: 1. to
+  User->>Application 1: 1. accesses
 
-  Application->Browser: 2. with [Code challenge][Code challenge method]
+  Application 1->Browser: 2. with [Code challenge][Code challenge method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
+  Deactivate Browser
   Note over OpenID Provider: /authorize
 
-  OpenID Provider->>User: 3. redirects to
+  OpenID Provider->>User: 3. interacts
 
-  User->>OpenID Provider: 4. with [Login credentials] to
+  User->>OpenID Provider: 4. with [Login credentials]
 
-  OpenID Provider->Browser: 5. with [Authorization code] to
+  OpenID Provider->Browser: 5. with [Authorization code]
   Activate Browser
-  Browser->>Application: redirects to
-  Note over Application: /callback
+  Browser->>Application 1: redirects to
+  Deactivate Browser
+  Note over Application 1: /callback
 
-  Application->>OpenID Provider: 6. with [Authorization code][Code verifier] to
+  Application 1->>OpenID Provider: 6. with [Authorization code][Code verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application: 7. with [ID Token][Access token][Refresh token] to
+  OpenID Provider->>Application 1: 7. with [ID Token][Access token][Refresh token]
 
-  Application->>OpenID Provider: 8. with [Access token] to
+  Application 1->>OpenID Provider: 8. with [Access token]
   Note over OpenID Provider: /userinfo
 ```
 
-### OIDC Authorization Code Flow
-
-The OIDC Authorization Code Flow is similar to the OAuth 2
-`authorization code grant` in relying upon two requests and an intermediary
-`authorization code`. To authenticate a user, an application redirects the
-user’s browser to an `OpenID Provider`. The `OpenID Provider` authenticates the
-user and redirects the user’s browser back to the `application` with an
-`authorization code`. The application uses the `authorization code` to obtain
-an `ID Token`, `access token`, and optionally a `refresh token`, from the
-`OpenID Provider`’s token endpoint.
+之后，用户又访问了 Application 2：
 
 ```mermaid
 sequenceDiagram
   participant User
   participant Browser
-  participant Application
+  participant Application 2
   participant OpenID Provider
 
-  User->>Application: 1. to
+  User->>Application 2: 9. accesses
 
-  Application->Browser: 2. with [Code challenge][Code challenge method]
+  Application 2->Browser: 10. with [Code challenge][Code challenge method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
+  Deactivate Browser
   Note over OpenID Provider: /authorize
+  Note over OpenID Provider: User already logged in
 
-  OpenID Provider->>User: 3. redirects to
-
-  User->>OpenID Provider: 4. with [Login credentials] to
-
-  OpenID Provider->Browser: 5. with [Authorization code] to
+  OpenID Provider->Browser: 11. with [Authorization code]
   Activate Browser
-  Browser->>Application: redirects to
-  Note over Application: /callback
+  Browser->>Application 2: redirects to
+  Deactivate Browser
+  Note over Application 2: /callback
 
-  Application->>OpenID Provider: 6. with [Authorization code][Code verifier] to
+  Application 2->>OpenID Provider: 12. with [Authorization code][Code verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application: 7. with [ID Token][Access token][Refresh token] to
+  OpenID Provider->>Application 2: 13. with [ID Token][Access token][Refresh token]
 
-  Application->>OpenID Provider: 8. with [Access token] to
+  Application 2->>OpenID Provider: 14. with [Access token]
   Note over OpenID Provider: /userinfo
 ```
 
-1. The `user` accesses the `application (relying party)`.
+### 涉及角色
+
+- `User`
+- `Browser`
+- `OpenID Provider`
+- `Application 1`
+- `Application 2`
+
+### 详细说明
+
+1. 用户 `User` 访问 `Application 1`（在 OIDC 中，依赖 叫 "Relying Party"）。
 2. The user’s browser redirected to the `OpenID Provider` with an
    `authentication request`.
 3. The `OpenID Provider` interacts with the user for authentication and to
@@ -193,7 +199,7 @@ Application->>User: 6. to
    responds to the user’s original request (assuming the user was successfully
    authenticated and has sufficient privileges for the request).
 
-## 登出
+## 单点登出（Single Logout）
 
 :::details Salish Sea Orcas
 

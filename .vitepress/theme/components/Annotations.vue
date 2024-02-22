@@ -74,7 +74,7 @@ const { frontmatter } = useData();
   color: var(--vp-c-brand-3);
   line-height: 20px;
   border: 2px solid var(--vp-c-brand-3);
-  padding: 1.7px 5px;
+  padding: 1px 5px;
   margin-top: 1rem;
   margin-right: 0.7rem;
 }

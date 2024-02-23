@@ -10,6 +10,7 @@ tags:
   - OIDC
   - SAML
   - OAuth
+  - PKCE
   - JWT
 draft: true
 ---
@@ -18,7 +19,7 @@ draft: true
 
 ![Orca exhaling](./salish-sea-orca-exhaling.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image resized). © [**liamkmc**](https://www.inaturalist.org/people/liamkmc). [*inaturalist.org*](https://www.inaturalist.org/photos/106254096).")
 
-最近参与的项目涉及到单点登录相关的功能，得以顺便补一些这方面的知识。虽然自己平时作为用户也没少用到单点登录，但对实现它的细节并没有概念。本文总结单点登录流程中的一些关键点。
+最近参与的项目涉及到单点登录相关的功能，得以顺便补一些这方面的知识。虽然自己平时作为用户也没少用到单点登录，但对实现它的方案并没有概念。本文总结单点登录流程中的一些关键点。
 
 ## 基本概念
 
@@ -47,9 +48,9 @@ draft: true
 
 不管是 OIDC 还是 SAML，它们的运作流程都有一个相似的模式：多个应用使用同一个中心化的认证服务进行账户认证，正是这个中心化的认证服务提供了单点登录需要的用户认证状态。一个典型的流程（以 OIDC Authorization Code Flow[^oidc_code_flow] 为例）如下：
 
-[^oidc_code_flow]: [3.1. Authentication using the Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0-final.html#CodeFlowAuth)
+[^oidc_code_flow]: [OpenID Connect Core 1.0 - 3.1. Authentication using the Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0-final.html#CodeFlowAuth)
 
-假设用户还没在认证服务 OpenID Provider 登录：
+假设用户还没有登录：
 
 ```mermaid
 sequenceDiagram
@@ -60,7 +61,7 @@ sequenceDiagram
 
   User->>Application 1: 1. accesses
 
-  Application 1->Browser: 2. with [Code challenge][Code challenge method]
+  Application 1->Browser: 2. with [code challenge][code challenge method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
   Deactivate Browser
@@ -68,24 +69,24 @@ sequenceDiagram
 
   OpenID Provider->>User: 3. interacts
 
-  User->>OpenID Provider: 4. with [Login credentials]
+  User->>OpenID Provider: 4. with [login credentials]
 
-  OpenID Provider->Browser: 5. with [Authorization code]
+  OpenID Provider->Browser: 5. with [authorization code]
   Activate Browser
   Browser->>Application 1: redirects to
   Deactivate Browser
   Note over Application 1: /callback
 
-  Application 1->>OpenID Provider: 6. with [Authorization code][Code verifier]
+  Application 1->>OpenID Provider: 6. with [authorization code][code verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application 1: 7. with [ID Token][Access token][Refresh token]
+  OpenID Provider->>Application 1: 7. with [id token][access token][refresh token]
 
-  Application 1->>OpenID Provider: 8. with [Access token]
+  Application 1->>OpenID Provider: 8. with [access token]
   Note over OpenID Provider: /userinfo
 ```
 
-之后，用户又访问了 Application 2：
+之后，用户又访问 Application 2：
 
 ```mermaid
 sequenceDiagram
@@ -96,68 +97,64 @@ sequenceDiagram
 
   User->>Application 2: 9. accesses
 
-  Application 2->Browser: 10. with [Code challenge][Code challenge method]
+  Application 2->Browser: 10. with [code challenge][code challenge method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
   Deactivate Browser
   Note over OpenID Provider: /authorize
   Note over OpenID Provider: User already logged in
 
-  OpenID Provider->Browser: 11. with [Authorization code]
+  OpenID Provider->Browser: 11. with [authorization code]
   Activate Browser
   Browser->>Application 2: redirects to
   Deactivate Browser
   Note over Application 2: /callback
 
-  Application 2->>OpenID Provider: 12. with [Authorization code][Code verifier]
+  Application 2->>OpenID Provider: 12. with [authorization code][code verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application 2: 13. with [ID Token][Access token][Refresh token]
+  OpenID Provider->>Application 2: 13. with [id token][access token][refresh token]
 
-  Application 2->>OpenID Provider: 14. with [Access token]
+  Application 2->>OpenID Provider: 14. with [access token]
   Note over OpenID Provider: /userinfo
 ```
 
 ### 涉及角色
 
-- `User`
-- `Browser`
-- `OpenID Provider`
-- `Application 1`
-- `Application 2`
+- `User`：用户。
+- `Browser`：浏览器。
+- `OpenID Provider`：认证服务，所有接入的应用程序都将其作为用户登录入口。
+- `Application 1`：应用程序 1，是 `OpenID Provider` 的客户端 (Client)。在 OIDC 中 `OpenID Provider` 的客户端统称为 **Relying Party**[^rely_party]。
+- `Application 2`：应用程序 2。
 
-### 详细说明
+[^rely_party]: [OpenID Connect Core 1.0 - 1.2. Terminology](https://openid.net/specs/openid-connect-core-1_0-final.html#Terminology)
 
-1. 用户 `User` 访问 `Application 1`（在 OIDC 中，依赖 叫 "Relying Party"）。
-2. The user’s browser redirected to the `OpenID Provider` with an
-   `authentication request`.
-3. The `OpenID Provider` interacts with the user for authentication and to
-   obtain consent for the scope of user info request.
-4. The user authenticates and gives consent, and the `OpenID Provider` creates
-   or updates an authentication session for the user.
-5. The user’s browser redirected back to the `application` with
-   `authorization code`.
-6. The `application` sends a token request to the `OpenID Provider`, with the
-   `authorization code`.
-7. The `OpenID Provider` responds with an `ID Token`, `access token`, and
-   optionally a `refresh token`.
-8. The `application` can use the `access token` at the `OpenID Provider`’s
-   UserInfo endpoint.
+### 过程说明
 
-The second call to the token endpoint to obtain the security tokens assumes the
-application has the ability to authenticate itself to the `OpenID Provider`.
-`Public client` applications that cannot securely maintain a `secret` for such
-authentication can use `Proof Key for Code Exchange (PKCE)`. The use of PKCE is
-designed to mitigate the risk of an `authorization code` being intercepted by
-an unauthorized party. The following sample requests assume the use of PKCE.
+1. `User` 访问 `Application 1`（此时用户未在 `Application 1` 登录）；
+2. `Application 1` 发出认证请求：将 `Browser` 重定向到 `OpenID Provider` 的 `/authorize` 接口（此时用户未在 `OpenID Provider` 登录）；
+    - `code challenge` 与 `code challenge method` 用于 PKCE (Proof Key for Code Exchange) 校验[^pkce]；
+    - **PKCE** 是对 **OAuth 2.0 Authorization Code Grant**[^auth_code_flow] 的扩展，用于防止 CSRF 和 Authorization Code 注入攻击 [^why_pkce]。
+3. `OpenID Provider` 与 `User` 交互，认证 `User` 并询问 `User` 是否允许将其用户信息授权给 `Application 1`；
+4. `User` 输入登录信息，`OpenID Provider` 更新 `User` 的 session 信息；
+    - 此处假设 `Application 1` 受 `OpenID Provider` 信任，省略了获取 `User` 同意授权的步骤；
+5. `Browser` 带着 `OpenID Provider` 生成的 `authorization code` 重定向回 `Application 1` 的 `/callback` 接口；
+6. `Application 1` 发出 `token` 请求到 `OpenID Provider` 的 `/token` 接口；
+    - `code verifier` 也是用于 PKCE 校验[^pkce]；
+    - 这个步骤 `Application 1` 本身也需要认证 [^client_auth]。
+7. `OpenID Provider` 返回 `id token`、`access token` 和 `refresh token`（可选）；
+8. `Application 1` 使用 `access token` 从 `OpenID Provider` 的 `/userinfo` 获取用户信息。
 
-### SP-Initiated SSO
+`9.`~`14.` 的过程类似，由于 `User` 已经在 `OpenID Provider` 登录，所以用户不再需要输入登录信息就可以自动登录 `Application 2`。
 
-In the example below, the user starts at the `service provider (SP)`
-(application) so it is known as the `SP-initiated flow`. This is called
-“SP-initiated” because the user initiates the interaction at the
-`service provider (SP)`. It is the simplest form of cross-domain single
-sign-on:
+[^pkce]: [RFC 7636, Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/rfc/rfc7636)
+[^auth_code_flow]: [OAuth 2.0 Authorization Code Grant](https://oauth.net/2/grant-types/authorization-code/)
+[^why_pkce]: [RFC 7636: Proof Key for Code Exchange](https://oauth.net/2/pkce/)
+[^client_auth]: [RFC 6749, The OAuth 2.0 Authorization Framework - 3.2. Token Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2)
+
+### SAML SP-Initiated SSO
+
+SAML 的 SSO 流程也十分相似，核心是将认证步骤集中在认证服务（在 SAML 中称为 Identity Provider）：
 
 ```mermaid
 sequenceDiagram
@@ -167,37 +164,26 @@ participant Browser
 participant Application
 participant Identity Provider
 
-User->>Application: 1. to
+User->>Application: 1. accesses
 
-Application->Browser: 2. with [SAML Request]
+Application->Browser: 2. with [SAML request]
 Activate Browser
 Browser->>Identity Provider: redirects to
+Deactivate Browser
 Note over Identity Provider: /SSO URL
 
-Identity Provider->>User: 3. to
+Identity Provider->>User: 3. interacts
 
-User->>Identity Provider: 4. with [Login Credentials]
+User->>Identity Provider: 4. with [login credentials]
 
-Identity Provider->Browser: 5. with [SAML Response]
+Identity Provider->Browser: 5. with [SAML response]
 Activate Browser
 Browser->>Application: redirects to
+Deactivate Browser
 Note over Application: /ACS URL
 
-Application->>User: 6. to
+Application->>User: 6. responds to
 ```
-
-1. The user visits a `service provider` (application).
-2. The `service provider` redirects the user’s browser to the
-   `identity provider` with a SAML authentication request.
-3. The `identity provider` interacts with the user for authentication.
-4. The user authenticates. The `identity provider` validates credentials.
-5. The `identity provider` redirects the user’s browser back to the
-   `service provider` with a SAML response containing a SAML authentication
-   assertion. The response is sent to the `service provider`’s Assertion
-   Consumer Service (ACS) URL.
-6. The `service provider` consumes and validates the SAML response and
-   responds to the user’s original request (assuming the user was successfully
-   authenticated and has sufficient privileges for the request).
 
 ## 单点登出（Single Logout）
 

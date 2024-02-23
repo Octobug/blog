@@ -50,7 +50,7 @@ const postList = ref<ContentData[]>([]);
 postList.value = allPosts.slice(0, page.size);
 
 function turnTo(n: number) {
-  window.location.hash = `#${toDashedHash(n.toString())}`;
+  history.pushState(null, "", `#${toDashedHash(n.toString())}`);
   n = Math.min(n, page.total);
   page.cursor.value = n;
   const start = (n - 1) * page.size;

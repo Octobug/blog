@@ -188,7 +188,7 @@ Note over Application: /ACS URL
 Application->>User: 6. responds to
 ```
 
-## 单点登出（Single Logout）
+## 单点登出 (Single Logout)
 
 用户登出应用时，应该单独退出具体某个应用？还是同时退出认证服务？还是同时退出所有接入认证服务的应用？
 

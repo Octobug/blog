@@ -46,7 +46,7 @@ draft: true
 
 ## 典型流程
 
-不管是 OIDC 还是 SAML，它们的运作流程都有一个相似的模式：多个应用使用同一个中心化的认证服务进行账户认证，正是这个中心化的认证服务提供了单点登录需要的用户认证状态。一个典型的流程（以 OIDC Authorization Code Flow[^oidc_code_flow] 为例）如下：
+不管是 OIDC 还是 SAML，它们的运作流程都有一个相似的模式：多个应用使用同一个“中心化”的认证服务进行账户认证，正是这个中心化的认证服务提供了单点登录需要的用户认证状态。一个典型的流程（以 OIDC Authorization Code Flow[^oidc_code_flow] 为例）如下：
 
 [^oidc_code_flow]: [OpenID Connect Core 1.0 - 3.1. Authentication using the Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0-final.html#CodeFlowAuth)
 
@@ -61,7 +61,7 @@ sequenceDiagram
 
   User->>Application 1: 1. accesses
 
-  Application 1->Browser: 2. with [code challenge][code challenge method]
+  Application 1->Browser: 2. with [Code Challenge][Code Challenge Method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
   Deactivate Browser
@@ -71,18 +71,18 @@ sequenceDiagram
 
   User->>OpenID Provider: 4. with [login credentials]
 
-  OpenID Provider->Browser: 5. with [authorization code]
+  OpenID Provider->Browser: 5. with [Authorization Code]
   Activate Browser
   Browser->>Application 1: redirects to
   Deactivate Browser
   Note over Application 1: /callback
 
-  Application 1->>OpenID Provider: 6. with [authorization code][code verifier]
+  Application 1->>OpenID Provider: 6. with [Authorization Code][Code Verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application 1: 7. with [id token][access token][refresh token]
+  OpenID Provider->>Application 1: 7. with [ID Token][Access Token][Refresh Token]
 
-  Application 1->>OpenID Provider: 8. with [access token]
+  Application 1->>OpenID Provider: 8. with [Access Token]
   Note over OpenID Provider: /userinfo
 ```
 
@@ -97,25 +97,25 @@ sequenceDiagram
 
   User->>Application 2: 9. accesses
 
-  Application 2->Browser: 10. with [code challenge][code challenge method]
+  Application 2->Browser: 10. with [Code Challenge][Code Challenge Method]
   Activate Browser
   Browser->>OpenID Provider: redirects to
   Deactivate Browser
   Note over OpenID Provider: /authorize
   Note over OpenID Provider: User already logged in
 
-  OpenID Provider->Browser: 11. with [authorization code]
+  OpenID Provider->Browser: 11. with [Authorization Code]
   Activate Browser
   Browser->>Application 2: redirects to
   Deactivate Browser
   Note over Application 2: /callback
 
-  Application 2->>OpenID Provider: 12. with [authorization code][code verifier]
+  Application 2->>OpenID Provider: 12. with [Authorization Code][Code Verifier]
   Note over OpenID Provider: /token
 
-  OpenID Provider->>Application 2: 13. with [id token][access token][refresh token]
+  OpenID Provider->>Application 2: 13. with [ID Token][Access Token][Refresh Token]
 
-  Application 2->>OpenID Provider: 14. with [access token]
+  Application 2->>OpenID Provider: 14. with [Access Token]
   Note over OpenID Provider: /userinfo
 ```
 
@@ -133,17 +133,18 @@ sequenceDiagram
 
 1. `User` 访问 `Application 1`（此时用户未在 `Application 1` 登录）；
 2. `Application 1` 发出认证请求：将 `Browser` 重定向到 `OpenID Provider` 的 `/authorize` 接口（此时用户未在 `OpenID Provider` 登录）；
-    - `code challenge` 与 `code challenge method` 用于 PKCE (Proof Key for Code Exchange) 校验[^pkce]；
+    - `Code Challenge` 与 `Code Challenge Method` 用于 PKCE (Proof Key for Code Exchange) 校验[^pkce]；
     - **PKCE** 是对 **OAuth 2.0 Authorization Code Grant**[^auth_code_flow] 的扩展，用于防止 CSRF 和 Authorization Code 注入攻击 [^why_pkce]。
 3. `OpenID Provider` 与 `User` 交互，认证 `User` 并询问 `User` 是否允许将其用户信息授权给 `Application 1`；
 4. `User` 输入登录信息，`OpenID Provider` 更新 `User` 的 session 信息；
     - 此处假设 `Application 1` 受 `OpenID Provider` 信任，省略了获取 `User` 同意授权的步骤；
-5. `Browser` 带着 `OpenID Provider` 生成的 `authorization code` 重定向回 `Application 1` 的 `/callback` 接口；
+5. `Browser` 带着 `OpenID Provider` 生成的 `Authorization Code` 重定向回 `Application 1` 的 `/callback` 接口；
 6. `Application 1` 发出 `token` 请求到 `OpenID Provider` 的 `/token` 接口；
-    - `code verifier` 也是用于 PKCE 校验[^pkce]；
+    - `Code Verifier` 也是用于 PKCE 校验[^pkce]；
     - 这个步骤 `Application 1` 本身也需要认证 [^client_auth]。
-7. `OpenID Provider` 返回 `id token`、`access token` 和 `refresh token`（可选）；
-8. `Application 1` 使用 `access token` 从 `OpenID Provider` 的 `/userinfo` 获取用户信息。
+7. `OpenID Provider` 返回 `ID Token`、`Access Token` 和 `Refresh Token`（可选）；
+    - `ID Token`: OIDC 对 OAuth 2.0 的主要扩展就是 `ID Token`，使用 JWT 表示[^id_token][^jwt]。
+8. `Application 1` 使用 `Access Token` 从 `OpenID Provider` 的 `/userinfo` 获取用户信息。
 
 `9.`~`14.` 的过程类似，由于 `User` 已经在 `OpenID Provider` 登录，所以用户不再需要输入登录信息就可以自动登录 `Application 2`。
 
@@ -151,10 +152,12 @@ sequenceDiagram
 [^auth_code_flow]: [OAuth 2.0 Authorization Code Grant](https://oauth.net/2/grant-types/authorization-code/)
 [^why_pkce]: [RFC 7636: Proof Key for Code Exchange](https://oauth.net/2/pkce/)
 [^client_auth]: [RFC 6749, The OAuth 2.0 Authorization Framework - 3.2. Token Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2)
+[^id_token]: [OpenID Connect Core 1.0 - 2. ID Token](https://openid.net/specs/openid-connect-core-1_0-final.html#IDToken)
+[^jwt]: [RFC 7519, JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)
 
 ### SAML SP-Initiated SSO
 
-SAML 的 SSO 流程也十分相似，核心是将认证步骤集中在认证服务（在 SAML 中称为 Identity Provider）：
+SAML 的 SSO 流程也十分相似，核心也是将认证步骤集中在认证服务（在 SAML 中称为 Identity Provider）：
 
 ```mermaid
 sequenceDiagram
@@ -166,7 +169,7 @@ participant Identity Provider
 
 User->>Application: 1. accesses
 
-Application->Browser: 2. with [SAML request]
+Application->Browser: 2. with [SAML Request]
 Activate Browser
 Browser->>Identity Provider: redirects to
 Deactivate Browser
@@ -176,7 +179,7 @@ Identity Provider->>User: 3. interacts
 
 User->>Identity Provider: 4. with [login credentials]
 
-Identity Provider->Browser: 5. with [SAML response]
+Identity Provider->Browser: 5. with [SAML Response]
 Activate Browser
 Browser->>Application: redirects to
 Deactivate Browser
@@ -187,16 +190,35 @@ Application->>User: 6. responds to
 
 ## 单点登出（Single Logout）
 
+用户登出应用时，应该单独退出具体某个应用？还是同时退出认证服务？还是同时退出所有接入认证服务的应用？
+
+这其实取决于具体应用的业务及其数据敏感等级。例如：
+
+- 对于一家企业来说，假设企业内部的应用都接入了同一个认证服务，那么可以在用户登出时，注销该用户的所有 session，包括认证服务。
+- 对于一个接入了社交平台认证服务（Social Provider，如 Facebook）的应用，显然就做不到登出该用户在其社交账户关联的所有应用，因为这些应用之间可能没有任何关系。
+- 如果仅注销当前应用 session，则需要提供一个用户未登录时不自动跳转到认证服务的页面。否则用户在登出后自动跳转到认证服务，而认证服务此时还有用户有效的 session，因此又会自动将用户登录到刚登出的应用上。这个效果看起来就像是登出功能不起作用。
+
+## 其他
+
+其他的诸如 `Authorization Code`、`PKCE` 等设计都是从信息安全的角度考量，而正确实现这些设计并不是简单的事情。如果有得选，最好优先使用经过 OpenID Foundation 认证的服务或工具库 [^oidc_certified]。
+
+[^oidc_certified]: [Certified OpenID Connect Implementations](https://openid.net/developers/certified-openid-connect-implementations/)
+
+---
+
 :::details Salish Sea Orcas
 
-封面图是一头萨利希海 (Salish Sea)[^salish_sea] 虎鲸 (Orca)[^orca] 在呼吸时喷出水雾。
+封面图是一头萨利希海 (Salish Sea)[^salish_sea]虎鲸 (Orca)[^orca]在呼吸时喷出水雾。
 
 [^salish_sea]: [Salish Sea](https://en.wikipedia.org/wiki/Salish_Sea)
 [^orca]: [Orca](https://en.wikipedia.org/wiki/Orca)
 
+萨利希海是美国与加拿大西海岸交界处的一个陆缘海，在这个海湾里定居的虎鲸族群也被称为**南方居留型虎鲸 (Southern Resident orcas)**。居留型虎鲸往往比较温顺，以小型鱼类为主食。这个族群在 2021 年有 75 头 [^ss_orcas]。
+
+[^ss_orcas]: [Orcas of the Salish Sea](https://www.orcanetwork.org/orca-resource-center/orcas-of-the-salish-sea)
+
+下图也是萨利希海的虎鲸：
+
 ![Salish Sea Orcas](./salish-sea-orcas.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image resized). © [**Antonio Flores**](https://www.inaturalist.org/people/antonioflores). [*inaturalist.org*](https://www.inaturalist.org/photos/70768468).")
 
 :::
-
-- <https://www.orcanetwork.org/orca-resource-center/orcas-of-the-salish-sea>
-- <https://davidsuzuki.org/what-you-can-do/get-to-know-the-salish-sea-orcas/>

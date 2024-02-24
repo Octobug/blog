@@ -212,7 +212,7 @@ Application->>User: 6. responds to
 [^salish_sea]: [Salish Sea](https://en.wikipedia.org/wiki/Salish_Sea)
 [^orca]: [Orca](https://en.wikipedia.org/wiki/Orca)
 
-萨利希海是美国与加拿大西海岸交界处的一个陆缘海，在这个海湾里定居的虎鲸族群也被称为**南方居留型虎鲸 (Southern Resident orcas)**。居留型虎鲸往往比较温顺，以小型鱼类为主食。这个族群在 2021 年有 75 头 [^ss_orcas]。
+萨利希海是美国与加拿大西海岸交界处的一个陆缘海，在这个海湾里定居的虎鲸族群也被称为**南方居留型虎鲸 (Southern Resident orcas)**。居留鲸相对于过客鲸 (Transient) 来说比较“温顺”，它们以鱼类为主食，而过客鲸会猎杀其他大型海洋哺乳动物。萨利希海虎鲸这个族群在 2021 年有 75 头 [^ss_orcas]。
 
 [^ss_orcas]: [Orcas of the Salish Sea](https://www.orcanetwork.org/orca-resource-center/orcas-of-the-salish-sea)
 

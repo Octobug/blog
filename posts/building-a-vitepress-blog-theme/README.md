@@ -191,7 +191,7 @@ sips -Z 1080 origin.jpg -o resized.jpg
 
 giscus 是基于 GitHub Discussions 实现的评论系统，它也提供了 Vue 组件，集成到 VitePress 中还算方便。
 
-giscus 用 `<iframe>` 实现整个组件，CSS 需要通过 HTTP 加载，所以在 VitePress 切换日/夜间模式时加载新的 CSS 会有明显的延时，导致整个评论区域的颜色有切换“闪烁”。我的解决方案是干脆重新加载整个评论组件：
+giscus 是用 `<iframe>` 实现整个组件的加载，切换主题时通过额外的 HTTP 请求加载 CSS 文件，所以在 VitePress 切换日/夜间模式时触发 giscus 切换主题会有明显的延时，导致整个评论区域的颜色出现切换“闪烁”。我的解决方案是干脆重新加载整个评论组件：
 
 - [Octobug/blog/.vitepress/theme/components/Comments.vue](https://github.com/Octobug/blog/blob/main/.vitepress/theme/components/Comments.vue)
 - [giscus/giscus](https://github.com/giscus/giscus)
@@ -237,7 +237,7 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 :::details Vaquita Porpoise
 
-封面图是一只小头鼠海豚 (Vaquita Porpoise)[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。
+封面图是一只**小头鼠海豚 (Vaquita Porpoise)**[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。
 
 :::
 

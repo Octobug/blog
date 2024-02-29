@@ -237,7 +237,7 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 :::details Vaquita Porpoise
 
-封面图是一只**小头鼠海豚 (Vaquita Porpoise)**[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。
+封面图是一只**小头鼠海豚 (Vaquita)**[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。
 
 :::
 

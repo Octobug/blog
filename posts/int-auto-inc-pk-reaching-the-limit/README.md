@@ -106,7 +106,7 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 [^mysql_ol_ddl]: [14.13.1 Online DDL Operations - Column Operations](https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html#online-ddl-column-operations)
 [^rebuild]: [13 | 为什么表数据删掉一半，表文件大小不变？ - 重建表](https://time.geekbang.org/column/article/72388)
 
-**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。MySQL 从 5.6 开始支持 Online DDL，这种新的 (`ALGORITHM=INPLACE`) 重建方式过程大致如下 [^rebuild]：
+**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。MySQL 从 5.6 开始支持 Online DDL，这种新的 (`ALTER` 语句的 `ALGORITHM=INPLACE`) 重建方式过程大致如下 [^rebuild]：
 
 > 1. 建立一个临时文件，扫描表 A 主键的所有数据页；
 > 2. 用数据页中表 A 的记录生成 B+ 树，存储到临时文件中；
@@ -116,13 +116,29 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 
 显然，其中最耗时的部分是“拷贝”数据到临时的新表文件中。在这个过程中，允许对表 A 做增删改操作，从而不中断正常的业务运行。
 
-然而，列数据类型变更并不支持 `ALGORITHM=INPLACE`，而只支持原有的 `ALGORITHM=COPY` [^mysql_ol_ddl]：
+然而，列数据类型变更并不支持 `ALGORITHM=INPLACE`，期间也不允许 DML 操作 (❌ Permits Concurrent DML)，而只支持原有的 `ALGORITHM=COPY` [^mysql_ol_ddl]：
 
 > Changing the column data type is only supported with ALGORITHM=COPY.
 
-即使支持 `ALGORITHM=INPLACE`，由于上面提到的 `TASK_LOG` 表数据量太大，直接在生产环境做 Online DDL 也会因为消耗额外的 I/O 跟 CPU 而影响正常业务运行。
+其实即使期间允许 DML 操作，由于上面提到的 `TASK_LOG` 表数据量太大，直接在生产环境做 Online DDL 也会因为消耗额外的 I/O 跟 CPU 而影响正常业务运行。
 
 #### 其他工具
+
+[ALTERing a Huge MySQL Table](https://mysql.rjweb.org/doc.php/alterhuge) 这篇文章中提到了两个 Oneline DDL 工具：
+
+- [pt-online-schema-change](https://docs.percona.com/percona-toolkit/pt-online-schema-change.html) 实现的变更过程大致如下：
+  1. 创建一个结构符合变更期望的新表；
+  2. 对原表创建触发器，使拷贝数据过程中所有的数据变更都应用到新的表上；
+  3. 从原表拷贝数据到新表；
+  4. 改变原表的名称、将新表重命名为原表名，最后丢弃原表。
+- [github/gh-ost](https://github.com/github/gh-ost)
+
+[^dl_ddl_vs_pt_ol]: [ONLINE DDL VS PT-ONLINE-SCHEMA-CHANGE](https://fromdual.com/online-ddl_vs_pt-online-schema-change)
+[^pt_ol_ct]: [pt-online-schema-change - OPTIONS](https://docs.percona.com/percona-toolkit/pt-online-schema-change.html#cmdoption-pt-online-schema-change-chunk-time)
+
+这类工具相较与 MySQL Online DDL 的优势在于，它们对 Online DDL 类型的支持更全面，同时可以根据生产环境系统资源使用情况去调整数据拷贝粒度，以尽可能减小对生产环境的影响 [^dl_ddl_vs_pt_ol][^pt_ol_ct]。
+
+- <https://planetscale.com/docs/learn/online-schema-change-tools-comparison>
 
 >>>>>
 
@@ -140,7 +156,7 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 
 ---
 
-::: details MySQL Logo
+::: details Sakila
 
 MySQL 的 Logo[^logo] 是一只名为 "Sakila" 的海豚 [^sakila]。不过 Sakila 单纯只是一个海豚图形，并不具体对应某一只真实的海豚，甚至连是哪个海豚物种也不确定。
 

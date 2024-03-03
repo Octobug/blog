@@ -1,12 +1,13 @@
 ---
-date: 2020-10-16
+date: 2020-10-17
 spot: 紫寓公寓
 sort: Computer Science
 tags:
   - MySQL
   - Online DDL
-  - Refactoring
+  - InnoDB
   - Database
+  - Refactoring
 draft: true
 ---
 
@@ -29,44 +30,9 @@ draft: true
 
 ## 背景
 
-在前一段时间，我发现负责的项目有一个 MySQL 表的自增 `INT` 主键 `id` 也即将到达上限 (`2,147,483,647`) 。那时主键值是 16 亿多，已经超过了容量的 76%，按照现有的增长速度预估 6-8 个月之后会到达上限。这个表是挺多年前设计的，我估计当时的开发人员也没料到数据规模会变成这个等级、项目会存续这么久。
+在前一段时间，我发现负责的项目有一个 MySQL 表的自增 `INT` 主键 `id` 也即将到达上限 (`2,147,483,647`) 。那时主键值是 16 亿多，已经超过了容量的 76%，按照既有的增长速度预估 6-8 个月之后会到达上限。这个表是挺多年前设计的，我估计当时的开发人员也没料到数据规模会变成这个等级、项目会存续这么久。
 
 我没处理过这种问题，但好在它不算紧急，还有几个月的时间可以做计划。所以我在搬砖之余，逐步梳理调研解决方案。
-
-### 表结构
-
-以下是相关表的 ER 图（为了脱敏，和本文主题无关的表、字段都省略了），那个即将到达上限的表正是 `TASK_LOG` 表：
-
-```mermaid
-erDiagram
-  TASK {
-    int id PK
-    string type
-  }
-
-  DEVICE {
-    int id PK
-    string name UK
-  }
-
-  TASK_DEVICE {
-    int task_id PK, FK
-    string device_name PK, FK
-  }
-
-  TASK_LOG {
-    int id PK
-    int task_id FK
-    string device_name FK
-    tinyint status
-    string result
-  }
-
-  TASK ||--o{ TASK_DEVICE : "relates to"
-  TASK ||--o{ TASK_LOG : "results in"
-  DEVICE ||--o{ TASK_DEVICE : "relates to"
-  DEVICE ||--o{ TASK_LOG : "results in"
-```
 
 ### 自增主键到达上限时会发生什么？
 
@@ -99,6 +65,41 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 可以看到，第一句 `insert` 执行后这个表的 `AUTO_INCREMENT` 值依然还是上限 `2147483647`。
 因此，第二句 `insert` 拿到的自增 `id` 值依然是上限，所以执行结果是返回主键冲突错误。
 
+### 表结构
+
+以下是相关表的 ER 图（为了脱敏，和本文主题无关的表、字段都省略了），那个即将到达上限的表正是 `TASK_LOG` 表：
+
+```mermaid
+erDiagram
+  TASK {
+    int id PK
+    string type
+  }
+
+  DEVICE {
+    int id PK
+    string name UK
+  }
+
+  TASK_DEVICE {
+    int task_id PK, FK
+    int device_id PK, FK
+  }
+
+  TASK_LOG {
+    int id PK
+    int task_id FK
+    int device_id FK
+    tinyint status
+    string result
+  }
+
+  TASK ||--o{ TASK_DEVICE : "relates to"
+  TASK ||--o{ TASK_LOG : "results in"
+  DEVICE ||--o{ TASK_DEVICE : "relates to"
+  DEVICE ||--o{ TASK_LOG : "results in"
+```
+
 ### 列数据类型变更
 
 既然问题是因为 `INT` 类型的空间不够，那么把 `INT` 改为 `UNSIGNED BIGINT` 就可以了？
@@ -106,7 +107,7 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 [^mysql_ol_ddl]: [14.13.1 Online DDL Operations - Column Operations](https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html#online-ddl-column-operations)
 [^rebuild]: [13 | 为什么表数据删掉一半，表文件大小不变？ - 重建表](https://time.geekbang.org/column/article/72388)
 
-**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。MySQL 从 5.6 开始支持 Online DDL，这种新的 (`ALTER` 语句的 `ALGORITHM=INPLACE`) 重建方式过程大致如下 [^rebuild]：
+**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。MySQL 从 5.6 开始支持 Online DDL，并引入了 `ALTER` 语句新的算法 `ALGORITHM=INPLACE`。这种新的“重建”发生在 InnoDB 内部，其过程大致如下 [^rebuild]：
 
 > 1. 建立一个临时文件，扫描表 A 主键的所有数据页；
 > 2. 用数据页中表 A 的记录生成 B+ 树，存储到临时文件中；
@@ -114,39 +115,42 @@ ERROR 1062 (23000): Duplicate entry '2147483647' for key 'PRIMARY'
 > 4. 临时文件生成后，将日志文件中的操作应用到临时文件，得到一个逻辑数据上与表 A 相同的数据文件；
 > 5. 用临时文件替换表 A 的数据文件。
 
-显然，其中最耗时的部分是“拷贝”数据到临时的新表文件中。在这个过程中，允许对表 A 做增删改操作，从而不中断正常的业务运行。
+显然，其中最耗时的部分是“拷贝”数据到临时的新表文件中。在这个过程中（当然，同时还要看具体 DDL 变更允许的 `LOCK` 类型），允许对表 A 做增删改操作，从而不中断正常的业务运行。
 
-然而，列数据类型变更并不支持 `ALGORITHM=INPLACE`，期间也不允许 DML 操作 (❌ Permits Concurrent DML)，而只支持原有的 `ALGORITHM=COPY` [^mysql_ol_ddl]：
+然而，列数据类型变更并不支持 `ALGORITHM=INPLACE`，且期间不允许 DML 操作 (❌ Permits Concurrent DML)，而只支持原有的 `ALGORITHM=COPY` [^mysql_ol_ddl]：
 
 > Changing the column data type is only supported with ALGORITHM=COPY.
 
-其实即使期间允许 DML 操作，由于上面提到的 `TASK_LOG` 表数据量太大，直接在生产环境做 Online DDL 也会因为消耗额外的 I/O 跟 CPU 而影响正常业务运行。
+其实即使期间允许 DML 操作，由于上面提到的 `TASK_LOG` 表数据量太大，直接在生产环境做 Online DDL 也可能会因为消耗额外的 I/O 跟 CPU 而影响正常业务运行。
 
 #### 其他工具
 
-[ALTERing a Huge MySQL Table](https://mysql.rjweb.org/doc.php/alterhuge) 这篇文章中提到了两个 Oneline DDL 工具：
-
-- [pt-online-schema-change](https://docs.percona.com/percona-toolkit/pt-online-schema-change.html) 实现的变更过程大致如下：
-  1. 创建一个结构符合变更期望的新表；
-  2. 对原表创建触发器，使拷贝数据过程中所有的数据变更都应用到新的表上；
-  3. 从原表拷贝数据到新表；
-  4. 改变原表的名称、将新表重命名为原表名，最后丢弃原表。
-- [github/gh-ost](https://github.com/github/gh-ost)
+[ALTERing a Huge MySQL Table](https://mysql.rjweb.org/doc.php/alterhuge) 这篇文章中提到了两个 Online DDL 工具：
 
 [^dl_ddl_vs_pt_ol]: [ONLINE DDL VS PT-ONLINE-SCHEMA-CHANGE](https://fromdual.com/online-ddl_vs_pt-online-schema-change)
+[^cmp_ol_tools]: [Comparison of Online Schema Change tools](https://planetscale.com/docs/learn/online-schema-change-tools-comparison)
+
+- [pt-online-schema-change](https://docs.percona.com/percona-toolkit/pt-online-schema-change.html) 实现的变更过程大致如下 [^dl_ddl_vs_pt_ol]：
+  1. 创建一个结构和原表一样的新表；
+  2. 对新表做期望的变更；
+  3. 对原表创建触发器，使拷贝数据过程中所有的数据变更都应用到新的表上；
+  4. 从原表拷贝数据到新表；
+  5. 改变原表的名称、将新表重命名为原表名，最后丢弃原表。
+- [github/gh-ost](https://github.com/github/gh-ost) 对原表数据变更的追踪不是使用触发器，而是 MySQL 的 binlog。它不是直接从磁盘读取 binlog，而是使自己以从库的身份去接收 binlog [^cmp_ol_tools]。
+
 [^pt_ol_ct]: [pt-online-schema-change - OPTIONS](https://docs.percona.com/percona-toolkit/pt-online-schema-change.html#cmdoption-pt-online-schema-change-chunk-time)
 
-这类工具相较与 MySQL Online DDL 的优势在于，它们对 Online DDL 类型的支持更全面，同时可以根据生产环境系统资源使用情况去调整数据拷贝粒度，以尽可能减小对生产环境的影响 [^dl_ddl_vs_pt_ol][^pt_ol_ct]。
+这类工具相较于 MySQL Online DDL 的优势在于，它们对 Online DDL 操作类型的支持更全面，同时可以根据生产环境系统资源的使用情况去调整数据拷贝粒度，以尽可能减小对生产环境的影响 [^dl_ddl_vs_pt_ol][^pt_ol_ct]。
 
-- <https://planetscale.com/docs/learn/online-schema-change-tools-comparison>
+补充：在 [Comparison of Online Schema Change tools](https://planetscale.com/docs/learn/online-schema-change-tools-comparison) 这篇文章中除了上面提到的两个工具，还额外对比了 [facebookincubator/OnlineSchemaChange](https://github.com/facebookincubator/OnlineSchemaChange) 和 [Vitess](https://vitess.io/docs/19.0/user-guides/schema-changes/) 这几个工具的设计与实现思路。
 
->>>>>
+#### 好消息
 
-### 好消息
+`TASK_LOG` 这个表是一个“日志类”的数据表，记录每次任务执行的结果。当任务执行失败时，它记录的错误信息可用于诊断出错原因。而那些执行成功的任务记录，以及已经过去很久的失败记录，其实可以直接丢弃。
 
-这个表是一个“日志类”的数据表。
+如此一来，最耗时的拷贝数据环节其实是可以省略的，只需要保留当前真正需要的数据。
 
-### 坏消息
+#### 坏消息
 
 ## 方案
 

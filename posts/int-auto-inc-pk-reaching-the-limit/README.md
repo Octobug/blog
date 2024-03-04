@@ -81,11 +81,6 @@ erDiagram
     string name UK
   }
 
-  TASK_DEVICE {
-    int task_id PK, FK
-    int device_id PK, FK
-  }
-
   TASK_LOG {
     int id PK
     int task_id FK
@@ -94,10 +89,8 @@ erDiagram
     string result
   }
 
-  TASK ||--o{ TASK_DEVICE : "relates to"
-  TASK ||--o{ TASK_LOG : "results in"
-  DEVICE ||--o{ TASK_DEVICE : "relates to"
-  DEVICE ||--o{ TASK_LOG : "results in"
+  TASK ||--o{ TASK_LOG : "generates"
+  DEVICE ||--o{ TASK_LOG : "generates"
 ```
 
 ### 列数据类型变更
@@ -144,19 +137,72 @@ erDiagram
 
 补充：在 [Comparison of Online Schema Change tools](https://planetscale.com/docs/learn/online-schema-change-tools-comparison) 这篇文章中除了上面提到的两个工具，还额外对比了 [facebookincubator/OnlineSchemaChange](https://github.com/facebookincubator/OnlineSchemaChange) 和 [Vitess](https://vitess.io/docs/19.0/user-guides/schema-changes/) 这几个工具的设计与实现思路。
 
-#### 好消息
+### 好消息
 
-`TASK_LOG` 这个表是一个“日志类”的数据表，记录每次任务执行的结果。当任务执行失败时，它记录的错误信息可用于诊断出错原因。而那些执行成功的任务记录，以及已经过去很久的失败记录，其实可以直接丢弃。
+`TASK_LOG` 这个表是一个“日志类”的数据表，记录每台设备执行某个任务的结果。当任务执行失败时，它记录的错误信息可用于诊断出错原因。而那些执行成功的任务记录，以及已经过去很久的失败记录，从业务角度来说其实已经失去其原有的用途，可以直接丢弃。项目其他相关人员也确认这些老日志可以丢弃。
 
-如此一来，最耗时的拷贝数据环节其实是可以省略的，只需要保留当前真正需要的数据。
+如此一来，最耗时的拷贝数据环节其实是可以节省大量时间的，只需要保留当前真正需要的数据。
 
-#### 坏消息
+### 坏消息
+
+从上面的 ER 图可以看出，任务的执行状态是由 `TASK_LOG` 的 `status` 字段记录的，用来防止已成功执行任务的设备重复执行相应的任务。也就是说，现阶段不能简单地把历史日志丢弃了事……
 
 ## 方案
 
-> 任务执行结果标记字段不设在 `TASK_DEVICE` 表中是有其他业务原因，不在本文讨论范围。
+事到如今，不重构已经不行了：`TASK_LOG` 中的 `status` 应该额外记录到独立的表中，使 `TASK_LOG` 成为一个真正意义上的日志表，随时可丢弃。
 
-## 后续措施
+### 新的表结构
+
+`TASK_RESULT` 中的 `count` 表示任务成功执行的次数。
+
+```mermaid
+erDiagram
+  TASK {
+    int id PK
+    string type
+  }
+
+  DEVICE {
+    int id PK
+    string name UK
+  }
+
+  TASK_LOG {
+    bigint id PK
+    int task_id FK
+    int device_id FK
+    tinyint status
+    string result
+  }
+
+  TASK_RESULT {
+    int task_id PK, FK
+    int device_id PK, FK
+    int count
+  }
+
+  TASK ||--o{ TASK_RESULT : "results in"
+  TASK ||--o{ TASK_LOG : "generates"
+  DEVICE ||--o{ TASK_RESULT : "results in"
+  DEVICE ||--o{ TASK_LOG : "generates"
+```
+
+### 实施步骤
+
+#### 1. 单纯新增 `TASK_RESULT` 表
+
+#### 2. 从 `TASK_LOG` 表收集历史执行结果
+
+#### 3. 移除兼容代码
+
+#### 4. 切换到新的 `TASK_LOG` 表
+
+#### 5. 清理原 `TASK_LOG` 表
+
+- [Why you simply don't drop a huge InnoDB table in production...](https://dev.to/jung/why-you-simply-don-t-drop-a-huge-innodb-table-in-production-18j2)
+- <http://mysql.rjweb.org/doc.php/partitionmaint>
+
+### 后续措施
 
 ---
 

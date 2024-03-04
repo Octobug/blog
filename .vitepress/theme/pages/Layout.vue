@@ -3,6 +3,7 @@
     <template #doc-footer-before>
       <Annotations />
     </template>
+
     <template #doc-after>
       <PrevNext />
       <Comments />
@@ -10,7 +11,10 @@
   </Layout>
 </template>
 
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import DefaultTheme from "vitepress/theme";
 import Annotations from "../components/Annotations.vue";
 import PrevNext from "../components/PrevNext.vue";
@@ -53,7 +57,7 @@ const { Layout } = DefaultTheme;
   width: 100%;
 }
 
-.main img {
+.main figure>img {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
   margin-bottom: 0.8rem;
@@ -61,7 +65,7 @@ const { Layout } = DefaultTheme;
   margin-right: auto;
 }
 
-.dark .main img {
+.dark .main figure>img {
   border: 0.1rem solid var(--vp-c-neutral);
   box-shadow: none;
 }
@@ -70,6 +74,12 @@ const { Layout } = DefaultTheme;
   margin-left: auto;
   margin-right: auto;
   width: 70%;
+}
+
+img.inline-img {
+  float: left;
+  margin: 0.3rem 0.8rem 0.4rem 0;
+  border: 3px solid var(--vp-c-default-1);
 }
 
 /* image subtitle */

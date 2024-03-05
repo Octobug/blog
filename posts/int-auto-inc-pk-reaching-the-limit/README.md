@@ -8,16 +8,15 @@ tags:
   - InnoDB
   - Database
   - Refactoring
-draft: true
 ---
 
 # 现实遭遇：生产环境的 INT 自增 ID 真的不够用了
 
 ![A Common Dolphin jumping](./common_dolphin.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image filpped). © [**willbrooks**](https://www.inaturalist.org/people/willbrooks). [*inaturalist.org*](https://www.inaturalist.org/photos/252142686).")
 
-在 INT 类型不够用的案例中，我印象最深的是这个：[Gangnam Style broke YouTube's view counter](https://www.theverge.com/2014/12/3/7325819/gangnam-style-broke-youtube-view-counter)。不过 YouTube 团队在 [江南 Style (PSY - GANGNAM STYLE(강남스타일) M/V)](https://www.youtube.com/watch?v=9bZkp7q19f0) 的浏览量计数器真的溢出之前，及时将 32-bit INT 换成 64-bit INT 了。
+在 `INT` 类型不够用的案例中，我印象最深的是这个：[Gangnam Style broke YouTube's view counter](https://www.theverge.com/2014/12/3/7325819/gangnam-style-broke-youtube-view-counter)。不过 YouTube 团队在 [江南 Style (PSY - GANGNAM STYLE(강남스타일) M/V)](https://www.youtube.com/watch?v=9bZkp7q19f0) 的浏览量计数器真的溢出之前，及时将 32-bit `INT` 换成 64-bit `INT` 了。
 
-题外话：上面提到的文章中说 "now not even a figure of `2,147,483,647` views is enough to contain..."，这个数字是 32-bit SIGNED INT 的上限。 据说 YouTube 不使用 UNSIGNED INT 是因为 Google 的 C++ Style Guide 中规定 [^reddit][^gg_cpp_guide]：
+题外话：上面提到的文章中说 "now not even a figure of `2,147,483,647` views is enough to contain..."，这个数字是 32-bit `SIGNED INT` 的上限。据说 YouTube 不使用 `UNSIGNED INT` 是因为 Google 的 C++ Style Guide 中规定 [^reddit][^gg_cpp_guide]：
 
 [^reddit]: [Gangnam Style overflows INT_MAX, forces YouTube to go 64-bit](https://www.reddit.com/r/ProgrammerHumor/comments/2o9hrq/comment/cmlakqv/?utm_source=share&utm_medium=web2x&context=3)
 [^gg_cpp_guide]: [Google C++ Style Guide - Integer Types](https://google.github.io/styleguide/cppguide.html#Integer_Types)
@@ -98,9 +97,11 @@ erDiagram
 既然问题是因为 `INT` 类型的空间不够，那么把 `INT` 改为 `UNSIGNED BIGINT` 就可以了？
 
 [^mysql_ol_ddl]: [14.13.1 Online DDL Operations - Column Operations](https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html#online-ddl-column-operations)
-[^rebuild]: [13 | 为什么表数据删掉一半，表文件大小不变？ - 重建表](https://time.geekbang.org/column/article/72388)
+[^gt_delete_innodb]: [13 | 为什么表数据删掉一半，表文件大小不变？- 重建表](https://time.geekbang.org/column/article/72388)
 
-**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。MySQL 从 5.6 开始支持 Online DDL，并引入了 `ALTER` 语句新的算法 `ALGORITHM=INPLACE`。这种新的“重建”发生在 InnoDB 内部，其过程大致如下 [^rebuild]：
+**列数据类型变更 (Changing the column data type)** 的过程需要重建表 (Rebuilds Table) [^mysql_ol_ddl]。
+
+MySQL 从 5.6 开始支持 Online DDL，并为 `ALTER` 语句引入了新的算法 `ALGORITHM=INPLACE`。这种新的“重建”发生在 InnoDB 内部，其过程大致如下 [^gt_delete_innodb]：
 
 > 1. 建立一个临时文件，扫描表 A 主键的所有数据页；
 > 2. 用数据页中表 A 的记录生成 B+ 树，存储到临时文件中；
@@ -139,17 +140,17 @@ erDiagram
 
 ### 好消息
 
-`TASK_LOG` 这个表是一个“日志类”的数据表，记录每台设备执行某个任务的结果。当任务执行失败时，它记录的错误信息可用于诊断出错原因。而那些执行成功的任务记录，以及已经过去很久的失败记录，从业务角度来说其实已经失去其原有的用途，可以直接丢弃。项目其他相关人员也确认这些老日志可以丢弃。
+`TASK_LOG` 这个表是一个“日志类”的数据表，记录每台设备执行某个任务的结果。当任务执行失败时，它记录的错误信息可用于诊断出错原因。而那些执行成功的任务记录，以及已经过去很久的失败记录，从业务角度来说其实已经失去其原有的用途，可以直接丢弃。项目其他相关人员也确认那些老日志可以丢弃。
 
 如此一来，最耗时的拷贝数据环节其实是可以节省大量时间的，只需要保留当前真正需要的数据。
 
 ### 坏消息
 
-从上面的 ER 图可以看出，任务的执行状态是由 `TASK_LOG` 的 `status` 字段记录的，用来防止已成功执行任务的设备重复执行相应的任务。也就是说，现阶段不能简单地把历史日志丢弃了事……
+从上面的 ER 图可以看出，任务的执行状态是由 `TASK_LOG` 的 `status` 字段记录的，用来防止已成功执行任务的设备重复执行相同的任务。也就是说，现阶段不能简单地把历史日志丢弃了事……
 
 ## 方案
 
-事到如今，不重构已经不行了：`TASK_LOG` 中的 `status` 应该额外记录到独立的表中，使 `TASK_LOG` 成为一个真正意义上的日志表，随时可丢弃。
+事到如今，不重构已经不行了：`TASK_LOG` 中的 `status` 应该额外记录到独立的表中，使 `TASK_LOG` 成为一个真正意义上的日志表——随时可丢弃。
 
 ### 新的表结构
 
@@ -189,31 +190,71 @@ erDiagram
 
 ### 实施步骤
 
-#### 1. 单纯新增 `TASK_RESULT` 表
+#### 1. 新增 `TASK_RESULT` 表
+
+- 新增 `TASK_RESULT` 表
+- 将每台设备的任务执行结果保存到这个表的 `count` 字段
+
+从以上变更上线的 `时刻 A` 起，`TASK_RESULT` 就保存了所有后续的执行结果。
 
 #### 2. 从 `TASK_LOG` 表收集历史执行结果
 
-#### 3. 移除兼容代码
+- 先删除清理任务列表中过时的任务，以减少需要搬运的数据量
+- 以任务为单位，将 `TASK_LOG` 中设备的执行结果收集保存到 `TASK_RESULT` 中
 
-#### 4. 切换到新的 `TASK_LOG` 表
+这一步写了单独的工具脚本，为了尽量不影响生产环境，所以收集的速度也设置得比较慢。这个脚本在后台跑了两三天。
 
-#### 5. 清理原 `TASK_LOG` 表
+#### 3. 应用代码不再使用 `TASK_LOG` 表作为判断依据
 
-- [Why you simply don't drop a huge InnoDB table in production...](https://dev.to/jung/why-you-simply-don-t-drop-a-huge-innodb-table-in-production-18j2)
-- <http://mysql.rjweb.org/doc.php/partitionmaint>
+当脚本跑到 `时刻 A` 的数据记录时，`TASK_RESULT` 表的数据就已经是完备的了。此时 `TASK_LOG` 功成身退，成为一个纯粹的日志表。
+
+所以，应用代码中判定某台设备是否需要执行某个任务可以完全只依赖于 `TASK_RESULT` 表。
+
+#### 4. 数据库切换新的 `TASK_LOG` 表
+
+- 新建 `TASK_LOG_NEW` 表（`id` 字段更新为 `unsigned bigint`）
+- 重命名 `TASK_LOG` 表为 `TASK_LOG_OLD`，并将 `TASK_LOG_NEW` 重命名为 `TASK_LOG`
+
+#### 5. 清理原 `TASK_LOG_OLD` 表
+
+`TASK_LOG_OLD` 已经变成可以随时 `DROP` 的表，不过里面的日志内容可能还需要随时查阅。在等了数个月之后，我才准备将其从生产数据库中移除。
+
+对于一个大表来说直接 `DROP` 是很危险的，具体请看：[Why you simply don't drop a huge InnoDB table in production...](https://dev.to/jung/why-you-simply-don-t-drop-a-huge-innodb-table-in-production-18j2)
+
+[^dont_simply_drop]: [Why you simply don't drop a huge InnoDB table in production...](https://dev.to/jung/why-you-simply-don-t-drop-a-huge-innodb-table-in-production-18j2)
+
+> A `DROP` statement in MySQL locks the `LOCK_open` mutex causing almost all other threads to hang until the statement is completed, most of all because the table needs to be removed from the shared **Table Definition Cache (TDC)** and this is the mutex used to serialize the TDC updates. [^dont_simply_drop]
+
+目前并没有找到 100% 安全高效的移除大表的方案，但上文中提到的 "was stuck for another 50 secs" 问题我并没有遇到（数据量级差不多），有可能是因为这个项目的 MySQL 实例并发数没有人家那样高而没触发问题。执行流程大致如下：
+
+- 逐个索引执行 `DROP INDEX index_name ON TASK_LOG_OLD;`
+- 使用工具脚本循环执行（也是为了控制速率）：`DELETE FROM TASK_LOG_OLD LIMIT 1000;`
+- `OPTIMIZE TABLE TASK_LOG_OLD;`
+- `DROP TABLE TASK_LOG_OLD;`
+
+补充一个 hack 方案（未尝试）：[Speed Up Your Large Table Drops in MySQL](https://www.percona.com/blog/speed-up-your-large-table-drops-in-mysql/)
 
 ### 后续措施
+
+以上措施有点救火的性质，属于不得不做。长远来看，`TASK_LOG` 的数据有明显的时效性，过去太久的数据没意义，没必要留着占用空间。这部分完全可以做成自动归档自动丢弃，或者干脆将这些日志存在其他类型的存储而不是在同一个 MySQL 实例里，这样还可以分走一些数据库负载压力。
+
+不过由于日常其他搬砖活太多了，目前只是简单调研了一些方案，还没制定好具体计划。
+
+- [PARTITION Maintenance in MySQL - PARTITION Maintenance for the Time-Series Case](https://mysql.rjweb.org/doc.php/partitionmaint#partition_maintenance_for_the_time_series_case)
+- [MongoDB Time Series Data](https://www.mongodb.com/features/mongodb-time-series-data)
 
 ---
 
 ::: details Sakila
+
+[![MySQL Logo](./mysql-logo.png){.inline-img}](https://www.mysql.com/)
 
 MySQL 的 Logo[^logo] 是一只名为 "Sakila" 的海豚 [^sakila]。不过 Sakila 单纯只是一个海豚图形，并不具体对应某一只真实的海豚，甚至连是哪个海豚物种也不确定。
 
 [^logo]: [MySQL Logo Downloads](https://www.mysql.com/about/legal/logos.html)
 [^sakila]: [1.2.3 History of MySQL](https://dev.mysql.com/doc/refman/8.0/en/history.html)
 
-封面图是我见过的最像 MySQL Logo 的一只海豚，它是一只**真海豚 (Common Dolphin)**[^common_dolphin]，也译为**普通海豚**。
+封面图是我见过的最像 Sakila 的一只海豚，它是一只**真海豚 (Common Dolphin)**[^common_dolphin]，也译为**普通海豚**。
 
 [^common_dolphin]: [Common dolphin](https://en.wikipedia.org/wiki/Common_dolphin)
 

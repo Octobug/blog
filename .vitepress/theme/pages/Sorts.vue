@@ -1,16 +1,18 @@
 <template>
   <Container :class="$style.container">
     <div :class="$style.main">
-      <div :class="$style.sortList">
-        <Badge
-          v-for="sort of sorts"
-          :key="sort"
-          :text="sort"
-          :number="postsBySort[sort].length"
-          :link="true"
-          :selected="sort === selectedSort"
-          @click="selectSort(sort)"
-        />
+      <div :class="$style.sortContainer">
+        <div :class="$style.sortList">
+          <Badge
+            v-for="sort of sorts"
+            :key="sort"
+            :text="sort"
+            :number="postsBySort[sort].length"
+            :link="true"
+            :selected="sort === selectedSort"
+            @click="selectSort(sort)"
+          />
+        </div>
       </div>
       <PostList
         date-format="ll"
@@ -20,7 +22,10 @@
   </Container>
 </template>
 
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { ref, onMounted } from "vue";
 import { data as allPosts } from "../posts.data";
 import { toDashedHash } from "../utils";
@@ -72,7 +77,10 @@ onMounted(() => {
 });
 </script>
 
-<style module scoped>
+<style
+  module
+  scoped
+>
 .container {
   display: block;
 }
@@ -83,12 +91,18 @@ onMounted(() => {
   padding: 0 0 2rem;
 }
 
+.sortContainer {
+  border-bottom: 1px solid var(--vp-c-divider);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
 .sortList {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
   padding-top: 1px;
   padding-left: 1px;
   padding-right: 1px;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--vp-c-divider);
-  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
 }
 </style>

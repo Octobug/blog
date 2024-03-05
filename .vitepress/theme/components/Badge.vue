@@ -40,7 +40,7 @@ defineProps({
 
 <style scoped>
 .link {
-  margin-right: 1rem;
+  margin: 0 0.5rem;
 }
 
 .link:hover,

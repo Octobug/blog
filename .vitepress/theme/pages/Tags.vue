@@ -102,6 +102,8 @@ onMounted(() => {
 }
 
 .tagList {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
   padding-top: 1px;
   padding-left: 1px;
   padding-right: 1px;

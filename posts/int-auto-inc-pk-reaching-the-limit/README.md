@@ -227,7 +227,7 @@ erDiagram
 
 目前并没有找到 100% 安全高效的移除大表的方案，但上文中提到的 "was stuck for another 50 secs" 问题我并没有遇到（数据量级差不多），有可能是因为这个项目的 MySQL 实例并发数没有人家那样高而没触发问题。执行流程大致如下：
 
-- 逐个索引执行 `DROP INDEX index_name ON TASK_LOG_OLD;`
+- 按索引逐个执行 `DROP INDEX index_name ON TASK_LOG_OLD;`
 - 使用工具脚本循环执行（也是为了控制速率）：`DELETE FROM TASK_LOG_OLD LIMIT 1000;`
 - `OPTIMIZE TABLE TASK_LOG_OLD;`
 - `DROP TABLE TASK_LOG_OLD;`

@@ -93,7 +93,7 @@ onContentUpdated(() => {
 }
 
 .pageNumber {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-3);
   font-size: 0.9em;
 }
 

@@ -59,7 +59,8 @@ const config = defineConfigWithTheme<ThemeConfig>({
     image: {
       // image lazy loading is disabled by default
       lazyLoading: true
-    }
+    },
+    math: true
   },
 });
 

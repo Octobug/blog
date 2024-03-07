@@ -6,6 +6,7 @@ tags:
   - GitLab
   - Security
   - RCE
+  - PoLP
 draft: true
 ---
 

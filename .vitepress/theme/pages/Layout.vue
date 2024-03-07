@@ -57,7 +57,7 @@ const { Layout } = DefaultTheme;
   width: 100%;
 }
 
-.main figure>img {
+.main figure>img:has(+figcaption) {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
   margin-bottom: 0.8rem;
@@ -68,6 +68,7 @@ const { Layout } = DefaultTheme;
 .dark .main figure>img {
   border: 0.1rem solid var(--vp-c-neutral);
   box-shadow: none;
+  background: var(--vp-c-default-1);
 }
 
 .zoom07 {

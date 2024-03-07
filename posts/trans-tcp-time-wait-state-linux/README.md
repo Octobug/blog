@@ -5,9 +5,9 @@ sort: Computer Science
 tags:
   - TCP
   - Linux
-  - sysctl
   - NAT
   - Network
+  - sysctl
 draft: true
 ---
 
@@ -17,9 +17,9 @@ draft: true
 
 ## 前情提要
 
-说“偶然”是因为我一开始搜索时用的关键字 `tcp_tw_reuse` 并不能解决问题，只是恰好这个关键字和这篇文章有关联。
+说“偶然”是因为我一开始搜索时用的关键字 `tcp_tw_reuse` 并不能解决问题，只是恰好它和这篇文章有关联。
 
-上面提到的故障是指：**使用浏览器访问我们的某个 Web 平台时，会小概率出现浏览器一直转的情况，在等待数十秒之后才能正常加载页面。**
+前面提到的故障是指：**使用浏览器访问我们的某个 Web 平台时，会小概率出现浏览器一直转的情况，在等待数十秒之后才能正常加载页面。**
 
 这个故障从有人向我提出到被解决，历时应该超过一年，因为它：
 
@@ -58,11 +58,9 @@ nc -uv IP.IP.IP.IP 6666
 
 ### 修改内核参数
 
-[^sysctl]: [sysctl(8) — Linux manual page](https://man7.org/linux/man-pages/man8/sysctl.8.html)
+`net.ipv4.tcp_tw_recycle` 这个内核参数是哪位同事启用的应该已经不可考，不过我猜他大概是为了优化 TCP 连接数而做的修改。
 
-`net.ipv4.tcp_tw_recycle` 这个内核参数是谁启用的应该已经不可考，不过我猜他大概是为了优化 TCP 连接数而做的修改。
-
-好消息是这个内核参数可以在 Linux 运行时修改而不必重启，`sysctl` 命令就是专门用来做这件事的 [^sysctl]：
+好消息是这个内核参数可以在 Linux 运行时修改而不必重启，[sysctl(8)](https://man7.org/linux/man-pages/man8/sysctl.8.html) 命令就是专门用来做这件事的：
 
 ```sh
 sudo vim /etc/sysctl.conf
@@ -84,14 +82,60 @@ sudo sysctl -p
 - [Dropping of connections with tcp_tw_recycle](https://stackoverflow.com/questions/8893888/dropping-of-connections-with-tcp-tw-recycle). *stackoverflow.com*.
 - [Linux Advanced Routing & Traffic Control HOWTO - Chapter 13. Kernel network parameters - 13.2.1. Generic ipv4](https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.kernel.obscure.html#AEN1252). *tldp.org*.
 
----
+## 译文
 
 ::: info 关于原文
 
+为了确保自己完全看明白（毕竟是改生产环境的内核网络参数），我决定将它翻译成中文。
+
 - 原文：[Coping with the TCP TIME-WAIT state on busy Linux servers](https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux)
 - 作者：[Vincent Bernat](https://github.com/vincentbernat)
+- 日期：2014.02.24
 - 许可：根据作者网站的 [Licenses](https://vincent.bernat.ch/en/licenses) 信息，原文采用的许可证为 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)。
 
 本译文沿用 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)。
 
 :::
+
+::: warning 📌 简述
+
+不要启用 `net.ipv4.tcp_tw_recycle`——从 Linux 4.12 开始这个参数就不存在了。大多数时候，`TIME-WAIT` 状态的套接字 (sockets) 是无害的。否则，请查看推荐解决方案的[总结](#总结)。
+
+Linux 内核文档对于理解 `net.ipv4.tcp_tw_recycle` 和 `net.ipv4.tcp_tw_reuse` 有何作用的帮助不大。由于缺乏文档，许多调优指南建议将这两个参数都设置为 1，以减少 `TIME-WAIT` 状态的 sockets 数量。然而，正如 [tcp(7)](https://manpages.debian.org/buster/manpages/tcp.7.en.html) 手册所述，`net.ipv4.tcp_tw_recycle` 选项对于面向公众的服务器来说是相当有问题的，因为它无法处理这样的多个连接：来自同一个 NAT 设备背后的两台不同计算机。这是一个很难检测出来并且可能会随时坑你的问题：
+
+> Enable fast recycling of TIME-WAIT sockets. Enabling this option is not recommended since this causes problems when working with NAT (Network Address Translation).
+>
+> 启用 `TIME-WAIT` 套接字的快速回收。不建议启用此选项，因为在使用 NAT（网络地址转换）时它会导致一些问题。
+
+:::
+
+下文将会更详细地解释如何正确处理 `TIME-WAIT` 状态。另外，本文讲述的是 Linux 的 TCP 协议栈。这与 *Netfilter* 连接追踪完全无关，它可以通过其他方式进行调整 [^netfilter]。
+
+[^netfilter]: 值得注意的是，调整 `net.netfilter.nf_conntrack_tcp_timeout_time_wait` 不会改变 TCP 协议栈处理 `TIME-WAIT` 状态的方式。
+
+## 关于 `TIME-WAIT` 状态
+
+让我们先回顾一下什么是 `TIME-WAIT` 状态，参见下面的 TCP 状态图[^tcp_diagram]：
+
+![TCP State Diagram](./tcp-state-diagram.svg)
+
+[^tcp_diagram]: 该图的许可证为 [LaTeX Project Public License 1.3](https://www.latex-project.org/lppl.txt)。原始文件可在此[页面](http://www.texample.net/tikz/examples/tcp-state-machine/)上找到。
+
+只有*先关闭连接的一端*才会进入 `TIME-WAIT` 状态。另一端则会遵循使它快速丢弃连接的路径。
+
+你可以使用 `ss -tan` 查看当前的连接状态：
+
+```sh
+$ ss -tan | head -5
+LISTEN     0  511             *:80              *:*
+SYN-RECV   0  0     192.0.2.145:80    203.0.113.5:35449
+SYN-RECV   0  0     192.0.2.145:80   203.0.113.27:53599
+ESTAB      0  0     192.0.2.145:80   203.0.113.27:33605
+TIME-WAIT  0  0     192.0.2.145:80   203.0.113.47:50685
+```
+
+### 用途
+
+>>>>> progress
+
+## 总结

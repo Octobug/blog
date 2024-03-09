@@ -13,7 +13,7 @@ draft: true
 
 # 译：在忙碌的 Linux 服务器上如何处理 TCP TIME-WAIT
 
-这篇文章是我在处理一个困扰我们很久的故障时通过 Google “偶然”找到的，然后它真的把问题解决了。
+这篇文章是我在处理一个困扰我们很久的故障时通过 Google “偶然”找到的，而它真的把问题解决了。
 
 ## 前情提要
 
@@ -33,25 +33,34 @@ draft: true
 2. 故障出现时，浏览器所在设备 `ping` 此 Web 平台是正常的（网络层应该没问题）；
 3. 故障出现时，浏览器所在设备使用 `nc` 探测此 Web 平台所在 Linux 服务器的任意有监听开放端口都出现和浏览器类似的故障（传输层出现问题）；
 
-从 `2.` 和 `3.` 可以推测，问题大概率在于传输层。HTTP 协议基于 TCP，所以大概率就是 TCP 连接建立过程出现意外。那么，如果是 UDP 协议会有问题吗？
+从 `2.` 和 `3.` 可以推测，问题大概率在于传输层。HTTP 协议基于 TCP，很可能就是 TCP 连接建立过程出现意外。那么，如果是 UDP 协议会有问题吗？
 
 ```sh
 $ nc -uv IP.IP.IP.IP 6666
 Connection to IP.IP.IP.IP port 6666 [udp/*] succeeded!
 ```
 
-`nc` 命令的 UDP 和 TCP 模式有个重要区别：不管 `nc` 什么端口，UDP 模式的结果总会是 `succeeded!`。但是，如果在服务器端使用 `nc` 以 UDP 模式监听端口（防火墙开放的端口），当它收到 UDP 包时会打印出 `XXX` 字符。
+`nc` 命令的 UDP 和 TCP 模式有个重要区别：不管 `nc` 什么端口，UDP 模式的结果总会是 `succeeded!`。但是，如果在服务器端使用 `nc` 以 UDP 模式监听端口（防火墙开放的端口），当它收到 UDP 包时会打印出 `XXXX` 字符，并且可以传送消息，据此可以判断服务器到底有没有接收到 UDP 包。
 
-于是，在某次故障复现时，我以最快速度做了如下操作：
+于是，在某次故障复现时，我以最快速度做了如下操作，结果是故障出现时，UDP 包可以正常接收到：
 
 ```sh
-# server side
+# 1. server side
 $ sudo nc -luk 0.0.0.0 6666
-# waiting for the client to "connect"...
+
+# 2. client side
+$ nc -uv IP.IP.IP.IP 6666
+Connection to IP.IP.IP.IP port 6666 [udp/ssh] succeeded!
+
+# 3. server side: output
 XXXX
 
-# client side
-nc -uv IP.IP.IP.IP 6666
+# 4. client side: type & send 'hello'
+Connection to IP.IP.IP.IP port 6666 [udp/ssh] succeeded!
+hello
+
+# 5. server side: output
+XXXXhello
 ```
 
 在总结出上面这些现象后，我找了某云售后工程师咨询。对面询问我是否修改过服务器的 `net.ipv4.tcp_tw_reuse` 参数。我表示没有，同时也不知道这个参数的作用是什么。因此搜索了一番而找到上文提到的这篇文章，并且根据文章可以判断出问题在于启用了另外一个 ipv4 内核参数：`net.ipv4.tcp_tw_recycle`。
@@ -117,11 +126,11 @@ Linux 内核文档对于理解 `net.ipv4.tcp_tw_recycle` 和 `net.ipv4.tcp_tw_re
 
 让我们先回顾一下什么是 `TIME-WAIT` 状态，参见下面的 TCP 状态图[^tcp_diagram]：
 
-![TCP State Diagram](./tcp-state-diagram.svg)
+![TCP State Diagram](./tcp-state-diagram.svg "*TCP 状态图*"){.transparent-img}
 
 [^tcp_diagram]: 该图的许可证为 [LaTeX Project Public License 1.3](https://www.latex-project.org/lppl.txt)。原始文件可在此[页面](http://www.texample.net/tikz/examples/tcp-state-machine/)上找到。
 
-只有*先关闭连接的一端*才会进入 `TIME-WAIT` 状态。另一端则会遵循使它快速丢弃连接的路径。
+只有***先关闭连接的一端***才会进入 `TIME-WAIT` 状态。另一端则会遵循使它快速丢弃连接的路径。
 
 你可以使用 `ss -tan` 查看当前的连接状态：
 
@@ -136,6 +145,29 @@ TIME-WAIT  0  0     192.0.2.145:80   203.0.113.47:50685
 
 ### 用途
 
->>>>> progress
+`TIME-WAIT` 状态有两个用途：
+
+[^no_timewait]: [RFC1337](https://www.rfc-editor.org/rfc/rfc1337) 中提出的第一个解决方法是忽略 `TIME-WAIT` 状态下的 *RST* 包 (RST segments)。这个行为由 `net.ipv4.rfc1337` 控制，Linux 默认不启用该功能，因为它不是解决 RFC 中所述问题的完整方案。
+
+- 最为人所知的用途是***防止前一个连接延迟的包 (segments)*** 被后续依赖于相同四元组（源地址、源端口、目标地址、目标端口）的连接所接收。序列号 (sequence number) 也需要在一定范围内才能被接收。这稍微缓解了问题，但并不能完全解决，特别是在具有大接收窗口的高速连接上。[RFC1337](https://www.rfc-editor.org/rfc/rfc1337) 详细解释了 `TIME-WAIT` 状态时长不足时会发生什么。[^no_timewait] 例如，不缩短 `TIME-WAIT` 状态可以避免如下情况：
+
+![Duplicate Segment](./duplicate-segment.svg "*由于 `TIME-WAIT` 状态缩短了，一个延迟的 TCP 包在不相关的连接中被接收。*"){.transparent-img}
+
+[^last_ack]: 当一个连接处于 `LAST-ACK` 状态时，它会重新传输最后一个 *FIN* 包直到收到期望的 *ACK* 包。因此，它不太可能长时间处于这种状态。
+
+- 另一个用途是***确保远程端已关闭连接***。假如最后一个 *ACK​​* 包丢失了，远程端将停留在 `LAST-ACK` 状态。[^last_ack] 如果没有 `TIME-WAIT` 状态，当远程端仍然认为先前的连接有效时，一个连接可能会被重新打开。当它收到一个 *SYN* 包（并且序列号匹配），它将回复一个 *RST* 包，因为此时收到一个 *SYN* 包不符合预期。此时，新的连接将因错误而被终止：
+
+![Last ACK](./last-ack.svg "如果远程端因为最后一个 *ACK* 丢失而保持在 `LAST-ACK` 状态，将无法使用相同的四元组打开一个新连接。"){.transparent-img}
+
+[RFC 793](https://www.rfc-editor.org/rfc/rfc793) 要求 `TIME-WAIT` 状态的持续时间是 MSL (Maximum Segment Lifetime) 的两倍。在 Linux 上，这个持续时间是***不可***调节的，它在 `include/net/tcp.h` 中被定义为一分钟：
+
+```c
+#define TCP_TIMEWAIT_LEN (60*HZ) /* how long to wait to destroy TIME-WAIT
+                                  * state, about 60 seconds     */
+```
+
+有人曾[提出将其转变为一个可调节的值](https://web.archive.org/web/20141227212940/http://comments.gmane.org/gmane.linux.network/244411)，但基于 `TIME-WAIT` 状态的好处，这一提议被否决了。
+
+## 存在哪些问题
 
 ## 总结

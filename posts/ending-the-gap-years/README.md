@@ -13,27 +13,36 @@ draft: true
 
 # Gap Years 尾声
 
-## 计算机
+## 专业相关
 
-- 编程语言
-  - 复习
-    - [x] C: The C Programming Language
-    - [x] JavaScript: [JavaScript Roadmap](https://roadmap.sh/javascript)
-    - [x] Node.js: [Node.js Developer](https://roadmap.sh/nodejs)
-    - [ ] Python: [Python Developer](https://roadmap.sh/python)
-  - 新学
-    - [ ] Go
-      - [x] A Tour of Go
-      - [ ] [Go Developer](https://roadmap.sh/golang)
-    - [ ] TypeScript: [TypeScript Roadmap](https://roadmap.sh/typescript)
-  - [ ] CS61A (UC Berkeley 版 SICP)
-    - [ ] [Composing Programs](https://www.composingprograms.com/)
-  - [ ] 程序静态分析 (NJU)
+### 系统设计 (System Design)
+
+#### DDIA (Designing Data-Intensive Applications)
+
+从第七章开始脸上的笑容逐渐消失。
+
+### 编程语言 (Programming Languages)
+
+- 复习
+  - [x] C: The C Programming Language
+  - [x] JavaScript: [JavaScript Roadmap](https://roadmap.sh/javascript)
+  - [x] Node.js: [Node.js Developer](https://roadmap.sh/nodejs)
+  - [ ] Python: [Python Developer](https://roadmap.sh/python)
+- 新学
+  - [ ] Go
+    - [x] A Tour of Go
+    - [ ] [Go Developer](https://roadmap.sh/golang)
+  - [ ] TypeScript: [TypeScript Roadmap](https://roadmap.sh/typescript)
+- [ ] CS61A (UC Berkeley 版 SICP)
+  - [ ] [Composing Programs](https://www.composingprograms.com/)
+- [ ] 程序静态分析 (NJU)
+
+### 算法与数据结构 (Algorithms and Data Structures)
+
 - LeetCode
   - [x] [代码随想录](https://programmercarl.com/)
   - [x] 400 题
 - 服务端开发
-  - [ ] Designing Data-Intensive Applications
   - Identity and Access Management (IAM)
     - [x] The Definitive Guide to Single Sign On (SSO)
     - [x] Solving Identity Management in Modern Applications
@@ -74,26 +83,24 @@ draft: true
 - [x] 粤语
 - [ ] 西语 弹舌
 
-## 心态
-
-### 焦虑
+## 最大的问题
 
 ### 孤独
 
 - 陪伴父母
 
-### 遗憾
+### 焦虑耐受
+
+### 失策与遗憾
 
 没有回老家生活。
 
 ## 其他
 
-- 闲书
-  - [x] [把时间当作朋友](https://github.com/xiaolai/time-as-a-friend)
-  - [ ] [Wild World: Photographing Iconic Wildlife](https://www.goodreads.com/book/show/62823910-wild-world)
-- [x] 打字训练 81
-- [x] 流氓哨
-- 焦虑
+### 闲书
+
+- [x] [把时间当作朋友](https://github.com/xiaolai/time-as-a-friend)
+- [ ] [Wild World: Photographing Iconic Wildlife](https://www.goodreads.com/book/show/62823910-wild-world)
 
 ### 健康
 
@@ -103,4 +110,11 @@ draft: true
 
 #### 音乐剧
 
-### 理财
+#### 音乐
+
+### 杂活儿
+
+- [x] 打字训练 81
+- [x] 流氓哨
+
+### “理财”

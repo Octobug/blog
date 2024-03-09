@@ -57,12 +57,17 @@ const { Layout } = DefaultTheme;
   width: 100%;
 }
 
-.main figure>img:has(+figcaption) {
+.main figure>img {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 0.8rem var(--ct-c-shadow);
   margin-bottom: 0.8rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.main figure>img.transparent-img {
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .dark .main figure>img {

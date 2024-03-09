@@ -13,7 +13,8 @@ function appendReferenceHostname(md: MarkdownIt) {
 
       const fnChildren = tokens[i + 2].children || [];
       const linkOpen = fnChildren[0];
-      if (linkOpen.type !== "link_open") {
+      const linkClose = fnChildren[fnChildren.length - 1];
+      if (linkOpen?.type !== "link_open" || linkClose?.type !== "link_close") {
         continue;
       }
 

@@ -1,8 +1,8 @@
-import type MarkdownIt from "markdown-it/lib";
+import { MarkdownRenderer } from "vitepress";
 import mdImageFigures from "markdown-it-image-figures";
 import mdFootnote from "markdown-it-footnote";
 
-function appendReferenceHostname(md: MarkdownIt) {
+function appendReferenceHostname(md: MarkdownRenderer) {
   md.core.ruler.push("ref_hostname", function genHostname(state) {
     const { tokens } = state;
     for (let i = 0; i < tokens.length; i++) {
@@ -42,28 +42,31 @@ function appendReferenceHostname(md: MarkdownIt) {
   });
 }
 
-function renderReferenceSection(md: MarkdownIt) {
-  md.renderer.rules.footnote_block_open = () => (`
-    <h2 id="references">
-      References
-      <a class="header-anchor" href="#references"
-        aria-label="Permalink to &quot;References&quot;">
-        &ZeroWidthSpace;
-      </a>
-    </h2>
-    <section>
-      <ol class="footnotes-list">
-  `);
+function renderReferenceSection(md: MarkdownRenderer) {
+  md.renderer.rules.footnote_block_open = (_tks, _idx, _opts, env) => {
+    const { frontmatter } = env;
+    return `
+      <h2 id="footnote">
+        ${frontmatter.footnote || "References"}
+        <a class="header-anchor" href="#references"
+          aria-label="Permalink to &quot;References&quot;">
+          &ZeroWidthSpace;
+        </a>
+      </h2>
+      <section>
+        <ol class="footnotes-list">
+    `;
+  };
 }
 
-function appendReferenceSection(md: MarkdownIt) {
+function appendReferenceSection(md: MarkdownRenderer) {
   // usage: https://markdown-it.github.io/#fnref1
   md.use(mdFootnote);
   renderReferenceSection(md);
   appendReferenceHostname(md);
 }
 
-function appendImageFigures(md: MarkdownIt) {
+function appendImageFigures(md: MarkdownRenderer) {
   // usage: ![alt](https://link-to-image 'title'){.class}
   md.use(mdImageFigures, {
     figcaption: "title",
@@ -71,8 +74,8 @@ function appendImageFigures(md: MarkdownIt) {
   });
 }
 
-function insertPostElements(md: MarkdownIt) {
-  md.renderer.rules.heading_close = (tokens, idx, options, _env, self) => {
+function insertPostElements(md: MarkdownRenderer) {
+  md.renderer.rules.heading_close = (tokens, idx, options, env, self) => {
     let result = self.renderToken(tokens, idx, options);
     if (tokens[idx].markup === "#") {
       result += "\n\n<PostElements />\n\n";
@@ -81,7 +84,7 @@ function insertPostElements(md: MarkdownIt) {
   };
 }
 
-export default function useMDItPlugins(md: MarkdownIt) {
+export default function useMDItPlugins(md: MarkdownRenderer) {
   insertPostElements(md);
   appendImageFigures(md);
   appendReferenceSection(md);

@@ -45,11 +45,12 @@ function appendReferenceHostname(md: MarkdownRenderer) {
 function renderReferenceSection(md: MarkdownRenderer) {
   md.renderer.rules.footnote_block_open = (_tks, _idx, _opts, env) => {
     const { frontmatter } = env;
+    const title = frontmatter.footnote || "References";
     return `
       <h2 id="footnote">
-        ${frontmatter.footnote || "References"}
-        <a class="header-anchor" href="#references"
-          aria-label="Permalink to &quot;References&quot;">
+        ${title}
+        <a class="header-anchor" href="#footnote"
+          aria-label="Permalink to &quot;${title}&quot;">
           &ZeroWidthSpace;
         </a>
       </h2>

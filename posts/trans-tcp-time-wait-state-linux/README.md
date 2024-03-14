@@ -12,7 +12,7 @@ footnote: 脚注
 draft: true
 ---
 
-# 译：在忙碌的 Linux 服务器上处理 TCP TIME-WAIT
+# 译：处理繁忙 Linux 服务器的 TCP TIME-WAIT
 
 这篇文章是我在处理一个困扰我们很久的故障时通过 Google “偶然”找到的，而它真的把问题解决了。
 
@@ -173,11 +173,11 @@ TIME-WAIT  0  0     192.0.2.145:80   203.0.113.47:50685
 
 接下来我们看一下在处理大量连接的服务器上，为什么这个状态会是个麻烦。有三个方面：
 
-- 连接表中使用的“插槽” (slot) 会阻止相同类型的***新连接***；
+- 连接表中使用的“插槽” (slot) 会阻止相同四元祖的***新连接***；
 - 内核中套接字结构体占用的***内存***；
-- 额外的 ***CPU 占用***。
+- 额外的 ***CPU 开销***。
 
-`ss -tan state time-wait | wc -l` 的结果本身并不是一个问题！
+`ss -tan state time-wait | wc -l` 的结果本身并不能说明问题！
 
 ### 连接表槽 (Connection table slot)
 
@@ -215,5 +215,101 @@ $ ss -tan 'sport = :80' | awk '{print $(NF)" "$(NF-1)}' | \
 最后的解决方案是调整 `net.ipv4.tcp_tw_reuse` 和 `net.ipv4.tcp_tw_recycle`。但是先别这样做，稍后会详细介绍这两个配置。
 
 ### 内存 (Memory)
+
+服务器有众多连接需要处理，每一个套接字维持开放多一分钟都会消耗服务器的内存。例如，如果想要每秒处理大约 10,000 个新连接，则相应会有大约 600,000 个处于 `TIME-WAIT` 状态的套接字。这意味着多少内存呢？其实并不多！
+
+首先从应用程序的角度来看，`TIME-WAIT` 状态的套接字不会占用任何内存：对应用程序来说它们已经关闭了。在内核中，`TIME-WAIT` 套接字存在于三个结构体中（有三种不同用途）：
+
+1. 一个***连接的哈希表 (hash table of connections)***，名为 "TCP established hash table"（尽管其中包含其他状态的连接），用于定位现有的连接，比如在接收新的包时。
+
+    该哈希表的每个桶 (bucket) 都包含处于 `TIME-WAIT` 状态的连接列表和常规活跃连接列表。哈希表的大小取决于系统内存，它在启动时会被打印出来：
+
+    ```sh
+    $ dmesg | grep "TCP established hash table"
+    [    0.169348] TCP established hash table entries: 65536 (order: 8, 1048576 bytes)
+    ```
+
+    通过调整 `thash_entries` 内核参数可以覆盖默认的哈希表条目数 (hash table entries)。
+
+    [^struct_tw]: 自 Linux 2.6.14 起，`TIME-WAIT` 状态的套接字使用了专用的内存结构体。[`struct sock_common` 结构体](https://elixir.bootlin.com/linux/v3.12/source/include/net/sock.h#L157)有点冗长，此处就不赘述了。
+
+    在 `TIME-WAIT` 状态的连接列表中，每个元素都是一个 `struct tcp_timewait_sock` 结构体，而其他状态的连接类型是 `struct tcp_sock`：[^struct_tw]
+
+    ```c
+    struct tcp_timewait_sock {
+        struct inet_timewait_sock tw_sk;
+        u32    tw_rcv_nxt;
+        u32    tw_snd_nxt;
+        u32    tw_rcv_wnd;
+        u32    tw_ts_offset;
+        u32    tw_ts_recent;
+        long   tw_ts_recent_stamp;
+    };
+
+    struct inet_timewait_sock {
+        struct sock_common  __tw_common;
+
+        int                     tw_timeout;
+        volatile unsigned char  tw_substate;
+        unsigned char           tw_rcv_wscale;
+        __be16 tw_sport;
+        unsigned int tw_ipv6only     : 1,
+                     tw_transparent  : 1,
+                     tw_pad          : 6,
+                     tw_tos          : 8,
+                     tw_ipv6_offset  : 16;
+        unsigned long            tw_ttd;
+        struct inet_bind_bucket *tw_tb;
+        struct hlist_node        tw_death_node;
+    };
+    ```
+
+2. 一***系列的连接列表***，被称为 "death row"（死囚区），用于使 `TIME-WAIT` 状态的连接过期。它们按照到期前剩余的时间进行排序。
+
+    [^death_row]: 自 [Linux 4.1](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=789f558cfb3680aeb52de137418637f6b04b7d22) 版本起，追踪 `TIME-WAIT` 套接字的方式已经被修改以提高性能和并行度。"death row" 如今只是一个哈希表。
+
+    它使用与连接哈希表条目相同的内存大小。它是 `struct inet_timewait_sock` 结构体中的`struct hlist_node tw_death_node` 成员。[^death_row]
+
+3. 一个***绑定端口的哈希表***，用于保存本地绑定的端口和相关参数，以确定是否可以安全监听给定的端口，或在动态绑定的情况下找到一个空闲端口。这个哈希表的大小与连接哈希表大小相同：
+
+    ```sh
+    $ dmesg | grep "TCP bind hash table"
+    [    0.169962] TCP bind hash table entries: 65536 (order: 8, 1048576 bytes)
+    ```
+
+    这个表的每个元素都是一个 `struct inet_bind_socket` 结构体。对于每个本地绑定的端口都有一个对应的元素。一个连接到 Web 服务器的 `TIME-WAIT` 连接会绑定到服务器本地的 80 端口，并与其同级的其他 `TIME-WAIT` 连接共享同一个条目。另一方面，与远程服务相连的连接会随机绑定到本地某个端口，并且不与其他连接共享同一个条目。
+
+    我们只关心 `struct tcp_timewait_sock` 和 `struct inet_bind_socket` 所占用的空间。处于 `TIME-WAIT` 状态的每个连接（入站或出站），都有一个 `struct tcp_timewait_sock` 结构体。对于每个出站连接，都有一个专用的 `struct inet_bind_socket` 结构体，入站连接则没有。
+
+    一个 `struct tcp_timewait_sock` 结构体是 168 字节，一个 `struct inet_bind_socket` 结构体是 48 字节。
+
+    ```sh
+    $ sudo apt-get install linux-image-$(uname -r)-dbg
+    […]
+    $ gdb /usr/lib/debug/boot/vmlinux-$(uname -r)
+    (gdb) print sizeof(struct tcp_timewait_sock)
+    $1 = 168
+    (gdb) print sizeof(struct tcp_sock)
+    $2 = 1776
+    (gdb) print sizeof(struct inet_bind_bucket)
+    $3 = 48
+    ```
+
+    如果有大约 40,000 个处于 `TIME-WAIT` 状态的入站连接，那么它们应该占用不到 10 MiB 内存。如果有大约 40,000 个处于 `TIME-WAIT` 状态的出站连接，则需要额外考虑 2.5 MiB 内存。可以通过查看 `slabtop` 的输出来验证这一点。以下结果取自一个服务器，它大约有 50,000 个 `TIME-WAIT` 状态的连接，其中有 45,000 个是出站连接：
+
+    ```sh
+    $ sudo slabtop -o | grep -E '(^  OBJS|tw_sock_TCP|tcp_bind_bucket)'
+     OBJS ACTIVE  USE OBJ SIZE  SLABS OBJ/SLAB CACHE SIZE NAME
+    50955  49725  97%    0.25K   3397       15     13588K tw_sock_TCP
+    44840  36556  81%    0.06K    760       59      3040K tcp_bind_bucket
+    ```
+
+    结论不变：`TIME-WAIT` 连接使用的内存***真的非常少***。如果一个服务器每秒需要处理数千个新连接，你确实需要更多的内存才能高效地向客户端推送数据。而 `TIME-WAIT` 连接的开销可以忽略不计。
+
+### CPU
+
+在 CPU 方面，查找空闲的本地端口可能会不小的开销。这项工作由 [`inet_csk_get_port()` 函数](https://elixir.bootlin.com/linux/v3.12/source/net/ipv4/inet_connection_sock.c#L104)完成，它会使用锁，并遍历本地端口，直到找到一个空闲端口。当有大量处于 `TIME-WAIT` 状态的出站连接（例如到 *Memcached* 服务器的临时连接）时，对应的哈希表中也会有大量条目，不过这通常不会成为问题：这些连接通常共享相同的 profile（注：应该是指相同的目标地址和目标端口），上述函数会按顺序遍历它们并很快找到一个空闲端口（注：应该与 `inet_csk_get_port()` 函数的具体实现有关）。
+
+## 其他解决方案
 
 ## 总结

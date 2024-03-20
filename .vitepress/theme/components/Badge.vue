@@ -45,34 +45,21 @@ defineProps({
 
 .link:hover,
 a.active {
-  color: var(--vp-c-text-2);
-  box-shadow: 0 0 0 1px var(--vp-c-text-2);
-  background-color: var(--vp-c-default-2);
+  color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 1px var(--vp-c-brand-2);
+  background-color: var(--vp-c-default-soft);
 }
 
 .link:hover .digit,
 a.active .digit {
   color: var(--vp-c-default-3);
-  background-color: var(--vp-c-text-2);
-}
-
-.dark .link:hover,
-.dark a.active {
-  color: var(--vp-c-brand-1);
-  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
-  background-color: var(--vp-c-brand-soft);
-}
-
-.dark .link:hover .digit,
-.dark a.active .digit {
-  color: var(--vp-c-default-3);
-  background-color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand-2);
 }
 </style>
 
 <style module scoped>
 .badge {
-  color: var(--ct-c-default-0);
+  color: var(--vp-c-brand-soft);
   display: inline-block;
   border-radius: 4px;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
@@ -95,7 +82,7 @@ a.active .digit {
 
 .number {
   display: inline-block;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-brand-3);
   background-color: var(--vp-c-default-soft);
   padding-top: 1px;
   padding-bottom: 1px;

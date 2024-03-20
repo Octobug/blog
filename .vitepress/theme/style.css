@@ -44,15 +44,17 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --vp-code-color: var(--vp-c-indigo-1);
+
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
   --vp-c-default-soft: var(--vp-c-gray-soft);
 
-  --vp-c-brand-1: var(--vp-c-indigo-1);
-  --vp-c-brand-2: var(--vp-c-indigo-2);
-  --vp-c-brand-3: var(--vp-c-indigo-3);
-  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+  --vp-c-brand-1: var(--vp-c-neutral);
+  --vp-c-brand-2: var(--vp-c-text-1);
+  --vp-c-brand-3: var(--vp-c-text-2);
+  --vp-c-brand-soft: var(--vp-c-text-3);
 
   --vp-c-tip-1: var(--vp-c-brand-1);
   --vp-c-tip-2: var(--vp-c-brand-2);
@@ -140,17 +142,12 @@
 :root {
   /* Custom vars */
   --ct-c-shadow: #d7d7d7;
-  --ct-c-default-0: #aaaaaa;
 
   /* Profile */
   --ct-avatar-border: white;
   --ct-avatar-large: 10rem;
   --ct-avatar-medium: 8rem;
   --ct-avatar-small: 6rem;
-}
-
-.dark {
-  --ct-c-default-0: #777777;
 }
 
 .VPContent>.VPHome {

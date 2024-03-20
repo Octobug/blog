@@ -49,20 +49,12 @@ const { frontmatter } = useData();
 
 .sort {
   color: var(--vp-c-neutral-inverse);
-  background-color: var(--vp-c-brand-3);
+  background-color: var(--vp-c-brand-2);
   padding: 1px 8px;
 }
 
 .sort:hover {
-  background-color: var(--vp-c-brand-1);
-}
-
-.dark .sort {
-  background-color: var(--vp-c-brand-1);
-}
-
-.dark .sort:hover {
-  background-color: var(--vp-c-brand-2);
+  background-color: var(--vp-c-neutral);
 }
 
 .dot {
@@ -71,27 +63,16 @@ const { frontmatter } = useData();
 }
 
 .tag {
-  color: var(--vp-c-brand-3);
+  color: var(--vp-c-brand-2);
   line-height: 20px;
-  border: 2px solid var(--vp-c-brand-3);
+  border: 2px solid var(--vp-c-brand-2);
   padding: 1px 5px;
   margin-top: 1rem;
   margin-right: 0.7rem;
 }
 
 .tag:hover {
-  border: 2px solid var(--vp-c-brand-3);
-  background-color: var(--vp-c-brand-3);
+  background-color: var(--vp-c-brand-2);
   color: var(--vp-c-neutral-inverse);
-}
-
-.dark .tag {
-  color: var(--vp-c-brand-1);
-  border: 2px solid var(--vp-c-brand-1);
-}
-
-.dark .tag:hover {
-  color: var(--vp-c-neutral-inverse);
-  background-color: var(--vp-c-brand-1);
 }
 </style>

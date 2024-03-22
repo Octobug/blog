@@ -9,6 +9,7 @@ const DISTRICT = {
   高新区社区: "南山区粤海街道高新区社区",
   海滨社区: "宝安区新安街道海滨社区",
   海富社区: "宝安区新安街道海富社区",
+  新安湖社区: "宝安区新安街道新安湖社区",
   渔业社区: "宝安区西乡街道渔业社区",
 };
 
@@ -36,6 +37,10 @@ const LOCATIONS = {
   郎景园: {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
+  },
+  覔书店·壹方城店: {
+    city: CITY.深圳,
+    district: DISTRICT.新安湖社区,
   },
   紫寓公寓: {
     city: CITY.深圳,

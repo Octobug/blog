@@ -95,7 +95,7 @@ sudo sysctl -p
 
 ::: info 关于原文
 
-为了确保自己理解原文（毕竟是改生产环境的内核网络参数），我决定将它翻译成中文。
+为了让自己尽可能理解原文（毕竟是改生产环境的内核网络参数），我决定将它翻译成中文。
 
 - 原文：[Coping with the TCP TIME-WAIT state on busy Linux servers](https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux)
 - 作者：[Vincent Bernat](https://github.com/vincentbernat)

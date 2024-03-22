@@ -9,7 +9,6 @@ tags:
   - Network
   - sysctl
 footnote: 脚注
-draft: true
 ---
 
 # 译：处理繁忙 Linux 服务器的 TCP TIME-WAIT
@@ -109,29 +108,29 @@ sudo sysctl -p
 
 ::: warning 📌 简述
 
-不要启用 `net.ipv4.tcp_tw_recycle`——从 Linux 4.12 开始这个参数就不存在了。大多数时候，`TIME-WAIT` 状态的套接字 (sockets) 是无害的。否则，请查看推荐解决方案的[总结](#总结)。
+不要启用 `net.ipv4.tcp_tw_recycle`——从 Linux 4.12 开始这个参数就不存在了。大多数时候，`TIME-WAIT` 状态的 socket 是无害的。否则，请查看推荐解决方案的[总结](#总结)。
 
-Linux 内核文档对于理解 `net.ipv4.tcp_tw_recycle` 和 `net.ipv4.tcp_tw_reuse` 有何作用的帮助不大。由于缺乏文档，许多调优指南建议将这两个参数都设置为 1，以减少 `TIME-WAIT` 状态的 sockets 数量。然而，正如 [tcp(7)](https://manpages.debian.org/buster/manpages/tcp.7.en.html) 手册所述，`net.ipv4.tcp_tw_recycle` 选项对于面向公众的服务器来说是相当有问题的，因为它无法处理这样的多个连接：来自同一个 NAT 设备背后的两台不同计算机。这是一个很难检测出来并且可能会随时坑你的问题：
+Linux 内核文档对于理解 `net.ipv4.tcp_tw_recycle` 和 `net.ipv4.tcp_tw_reuse` 有何作用的帮助不大。由于缺乏文档，许多调优指南建议将这两个参数都设置为 1，以减少 `TIME-WAIT` 状态的 socket 数量。然而，正如 [tcp(7)](https://manpages.debian.org/buster/manpages/tcp.7.en.html) 手册所述，`net.ipv4.tcp_tw_recycle` 选项对于面向公众的服务器来说是相当有问题的，因为它无法处理这样的多个连接：来自同一个 NAT 设备背后的两台不同计算机。这是一个很难检测出来并且可能会随时坑你的问题：
 
 > Enable fast recycling of TIME-WAIT sockets. Enabling this option is not recommended since this causes problems when working with NAT (Network Address Translation).
 >
-> 启用 `TIME-WAIT` 套接字的快速回收。不建议启用此选项，因为在使用 NAT（网络地址转换）时它会导致一些问题。
+> 启用 `TIME-WAIT` socket 的快速回收。不建议启用此选项，因为在使用 NAT（网络地址转换）时它会导致一些问题。
 
 :::
 
-下文将会更详细地解释如何正确处理 `TIME-WAIT` 状态。另外，本文讲述的是 Linux 的 TCP 协议栈。这与 *Netfilter* 连接追踪完全无关，它可以通过其他方式进行调整 [^netfilter]。
+下文将会更详细地解释如何正确处理 `TIME-WAIT` 状态。另外，本文讲述的是 Linux 的 TCP 协议栈。这与 *Netfilter* 连接追踪完全无关，它可以通过其他方式进行调整。[^netfilter]
 
 [^netfilter]: 值得注意的是，调整 `net.netfilter.nf_conntrack_tcp_timeout_time_wait` 不会改变 TCP 协议栈处理 `TIME-WAIT` 状态的方式。
 
 ## 关于 `TIME-WAIT` 状态
 
-让我们先回顾一下什么是 `TIME-WAIT` 状态，参见下面的 TCP 状态图[^tcp_diagram]：
+让我们先回顾一下什么是 `TIME-WAIT` 状态，参见下面的 TCP 状态图：[^tcp_diagram]
 
 ![TCP State Diagram](./tcp-state-diagram.svg "*TCP 状态图*"){.transparent-img}
 
 [^tcp_diagram]: 该图的许可证为 [LaTeX Project Public License 1.3](https://www.latex-project.org/lppl.txt)。原始文件可在此[页面](http://www.texample.net/tikz/examples/tcp-state-machine/)上找到。
 
-只有***先关闭连接的一端***才会进入 `TIME-WAIT` 状态。另一端则会遵循使它快速丢弃连接的路径。
+只有***先关闭连接的一端***才会进入 `TIME-WAIT` 状态。另一端则会遵循使它快速结束连接的路径。
 
 你可以使用 `ss -tan` 查看当前的连接状态：
 
@@ -158,7 +157,7 @@ TIME-WAIT  0  0     192.0.2.145:80   203.0.113.47:50685
 
 - 另一个用途是***确保远程端已关闭连接***。假如最后一个 *ACK​​* 包丢失了，远程端将停留在 `LAST-ACK` 状态。[^last_ack] 如果没有 `TIME-WAIT` 状态，当远程端仍然认为先前的连接有效时，一个连接可能会被重新打开。当它收到一个 *SYN* 包（并且序列号匹配），它将回复一个 *RST* 包，因为此时收到一个 *SYN* 包不符合预期。此时，新的连接将因错误而被终止：
 
-![Last ACK](./last-ack.svg "如果远程端因为最后一个 *ACK* 丢失而保持在 `LAST-ACK` 状态，将无法使用相同的四元组打开一个新连接。"){.transparent-img}
+![Last ACK](./last-ack.svg "*如果远程端因为最后一个 ACK 丢失而保持在 `LAST-ACK` 状态，将无法使用相同的四元组打开一个新连接。*"){.transparent-img}
 
 [RFC 793](https://www.rfc-editor.org/rfc/rfc793) 要求 `TIME-WAIT` 状态的持续时间是 MSL (Maximum Segment Lifetime) 的两倍。在 Linux 上，这个持续时间是***不可***调节的，它在 `include/net/tcp.h` 中被定义为一分钟：
 
@@ -174,7 +173,7 @@ TIME-WAIT  0  0     192.0.2.145:80   203.0.113.47:50685
 接下来我们看一下在处理大量连接的服务器上，为什么这个状态会是个麻烦。有三个方面：
 
 - 连接表中使用的“插槽” (slot) 会阻止相同四元祖的***新连接***；
-- 内核中套接字结构体占用的***内存***；
+- 内核中 socket 结构体占用的***内存***；
 - 额外的 ***CPU 开销***。
 
 `ss -tan state time-wait | wc -l` 的结果本身并不能说明问题！
@@ -216,9 +215,9 @@ $ ss -tan 'sport = :80' | awk '{print $(NF)" "$(NF-1)}' | \
 
 ### 内存 (Memory)
 
-服务器有众多连接需要处理，每一个套接字维持开放多一分钟都会消耗服务器的内存。例如，如果想要每秒处理大约 10,000 个新连接，则相应会有大约 600,000 个处于 `TIME-WAIT` 状态的套接字。这意味着多少内存呢？其实并不多！
+服务器有众多连接需要处理，每一个 socket 维持开放多一分钟都会消耗服务器的内存。例如，如果想要每秒处理大约 10,000 个新连接，则相应会有大约 600,000 个处于 `TIME-WAIT` 状态的 socket。这意味着多少内存呢？其实并不多！
 
-首先从应用程序的角度来看，`TIME-WAIT` 状态的套接字不会占用任何内存：对应用程序来说它们已经关闭了。在内核中，`TIME-WAIT` 套接字存在于三个结构体中（有三种不同用途）：
+首先从应用程序的角度来看，`TIME-WAIT` 状态的 socket 不会占用任何内存：对应用程序来说它们已经关闭了。在内核中，`TIME-WAIT` socket 存在于三个结构体中（有三种不同用途）：
 
 1. 一个***连接的哈希表 (hash table of connections)***，名为 "TCP established hash table"（尽管其中包含其他状态的连接），用于定位现有的连接，比如在接收新的包时。
 
@@ -231,7 +230,7 @@ $ ss -tan 'sport = :80' | awk '{print $(NF)" "$(NF-1)}' | \
 
     通过调整 `thash_entries` 内核参数可以覆盖默认的哈希表条目数 (hash table entries)。
 
-    [^struct_tw]: 自 Linux 2.6.14 起，`TIME-WAIT` 状态的套接字使用了专用的内存结构体。[`struct sock_common` 结构体](https://elixir.bootlin.com/linux/v3.12/source/include/net/sock.h#L157)有点冗长，此处就不赘述了。
+    [^struct_tw]: 自 Linux 2.6.14 起，`TIME-WAIT` 状态的 socket 使用了专用的内存结构体。[`struct sock_common` 结构体](https://elixir.bootlin.com/linux/v3.12/source/include/net/sock.h#L157)有点冗长，此处就不赘述了。
 
     在 `TIME-WAIT` 状态的连接列表中，每个元素都是一个 `struct tcp_timewait_sock` 结构体，而其他状态的连接类型是 `struct tcp_sock`：[^struct_tw]
 
@@ -266,7 +265,7 @@ $ ss -tan 'sport = :80' | awk '{print $(NF)" "$(NF-1)}' | \
 
 2. 一***系列的连接列表***，被称为 "death row"（死囚区），用于使 `TIME-WAIT` 状态的连接过期。它们按照到期前剩余的时间进行排序。
 
-    [^death_row]: 自 [Linux 4.1](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=789f558cfb3680aeb52de137418637f6b04b7d22) 版本起，追踪 `TIME-WAIT` 套接字的方式已经被修改以提高性能和并行度。"death row" 如今只是一个哈希表。
+    [^death_row]: 自 [Linux 4.1](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=789f558cfb3680aeb52de137418637f6b04b7d22) 版本起，追踪 `TIME-WAIT` socket 的方式已经被修改以提高性能和并行度。"death row" 如今只是一个哈希表。
 
     它使用与连接哈希表条目相同的内存大小。它是 `struct inet_timewait_sock` 结构体中的`struct hlist_node tw_death_node` 成员。[^death_row]
 
@@ -312,4 +311,97 @@ $ ss -tan 'sport = :80' | awk '{print $(NF)" "$(NF-1)}' | \
 
 ## 其他解决方案
 
+如果在阅读了前面的部分后，你还是认为那些 `TIME-WAIT` 连接存在问题，这里有三个额外的解决方案可以减少它们：
+
+- 禁用 socket 延迟关闭 (disable socket lingering)；
+- 调整 `net.ipv4.tcp_tw_reuse` 参数；
+- 调整 `net.ipv4.tcp_tw_recycle` 参数。
+
+### Socket 延迟关闭 (Socket lingering)
+
+当应用程序调用 `close()` 函数时，内核缓冲区中剩余的任何数据都会在被内核发送出去，socket 最终会转为 `TIME-WAIT` 状态。如此一来，应用程序可以立即继续工作，并假设所有数据最终都会被安全地传送。
+
+然而，应用程序可以选择禁用这种行为，即 *socket 延迟关闭 (socket lingering)*。有两种方式：
+
+1. 在第一种方式中，***任何剩余的数据将被丢弃***，并且不是使用正常的四次挥手来关闭连接，而是使用一个 *RST* 包（因此，对方将检测到错误）来关闭连接并立即销毁。在这种情况下，不存在 `TIME-WAIT` 状态。
+2. 在第二种方式中，如果 socket 发送缓冲区中还有数据，那么当应用程序调用 `close()` 函数时，进程将会休眠，直到所有数据被发送并被对等方确认，或者直到配置的延迟计时器到期。通过将 socket 设置为非阻塞，可以使进程不休眠。在这种情况下，同样的过程将在后台进行。它允许剩余的数据在配置的超时时间内被发送出去，但如果数据成功发送，将执行正常的关闭程序，并进入 `TIME-WAIT` 状态。而在前一种方式中，是以 *RST* 方式关闭连接，并丢弃剩余的数据。
+
+在这两种情况下，***禁用 socket 延迟关闭并不是一种适用于所有情况的解决方案***。在从上层协议角度来看安全的情况下，它可能会被一些应用程序（如 [HAProxy](https://www.haproxy.org/) 或 [Nginx](https://nginx.org/)）使用。而无条件地禁用它并不是合理的做法。
+
+### `net.ipv4.tcp_tw_reuse`
+
+`TIME-WAIT` 状态可以防止延迟的数据包被无关的连接所接收。然而在某些情况下，可以假设新连接的数据包不会与旧连接的数据包混淆。
+
+[RFC1323](https://www.rfc-editor.org/rfc/rfc1323) 提出了一组 TCP 扩展，以改善在高带宽路径上的性能。其中一项是定义了一个新的 TCP 选项，它包含两个四字节的***时间戳字段***。第一个字段是发送该选项的 TCP 的时间戳时钟的当前值，而第二个字段是从远程主机接收到的最新时间戳。
+
+通过启用 `net.ipv4.tcp_tw_reuse` 参数，Linux 会在新的***出站连接***的时间戳严格大于前一连接记录的最新时间戳时，重用处于 `TIME-WAIT` 状态的现有连接：这意味着在 `TIME-WAIT` 状态的出站连接只需等待一秒后就可以被重用。
+
+这样做如何保证安全？`TIME-WAIT` 状态的首要目的是避免重复的数据包被不相关的连接接收。由于使用了时间戳，此类重复的数据包将带有过时的时间戳，因此会被丢弃。
+
+第二个目的是确保远端不会因为丢失最后一个 *ACK* 包而处于 `LAST-ACK` 状态。远端将重传 *FIN* 数据包，直到
+
+1. 等待超时，并中断连接；
+2. 或者收到等待中的 *ACK*，并中断连接；
+3. 或者收到 *RST*，并中断连接。
+
+如果 *FIN* 包被按时接收到，本地端此时 socket 仍处于 `TIME-WAIT` 状态，并将发送预期的 *ACK* 包。
+
+一旦新连接取代了某个 `TIME-WAIT` 连接，新连接的 *SYN* 包就会被忽略（归功于时间戳），并且不会有 *RST* 应答，而只会收到 *FIN* 包的重传。远程端收到 *FIN* 包后将以 *RST* 作为回应（因为本地连接处于 `SYN-SENT` 状态），这样就可以跳出 `LAST-ACK` 状态。由于没有应答，最初的 *SYN* 包将会被重新发送（一秒钟后），在这之后连接就可以建立起来，除了稍有延迟外并不会出现显式的错误：
+
+![Last ACK Reuse](./last-ack-reuse.svg "*如果远程端由于最后一个 ACK 丢失而停留在 `LAST-ACK` 状态，则当本地端转入到 `SYN-SENT` 状态时，远程端连接将被重置。*"){.transparent-img}
+
+值得注意的是，当连接被重复使用时，*TWRecycled* 计数器会增加（尽管名称似乎对不上）。
+
+### `net.ipv4.tcp_tw_recycle`
+
+[^tw_recycle]: 当服务器首先关闭连接时，它会进入 `TIME-WAIT` 状态，而客户端将认为相应的四元组变成可用状态，因此将其重新用于新的连接。
+
+这个机制也依赖于前文提到的时间戳选项，但***同时影响入站和出站连接***。当服务器通常会先关闭连接时，这个机制会非常方便。[^tw_recycle]
+
+此时 `TIME-WAIT` 状态会被设置更早的过期时间：它将在重传超时 *(RTO, Retransmission Timeout)* 间隔（根据 RTT 及其方差计算得出）之后被移除。可以使用 `ss` 命令观察当前连接使用的值：
+
+```sh
+$ ss --info  sport = :2112 dport = :4057
+State      Recv-Q Send-Q    Local Address:Port        Peer Address:Port
+ESTAB      0      1831936   10.47.0.113:2112          10.65.1.42:4057
+         cubic wscale:7,7 rto:564 rtt:352.5/4 ato:40 cwnd:386 ssthresh:200 send 4.5Mbps rcv_space:5792
+```
+
+为了保持 `TIME-WAIT` 状态所提供的保证，同时减小过期计时器的值，当一个连接进入 `TIME-WAIT` 状态时，最新的时间戳会被记录在一个专用结构体中，该结构体包含此前目标地址的各种参数。然后，除非 `TIME-WAIT` 状态已过期，如果来自远程主机的数据包不严格大于最新记录的时间戳， Linux 就会丢弃这些数据包：
+
+```c
+if (tmp_opt.saw_tstamp &&
+    tcp_death_row.sysctl_tw_recycle &&
+    (dst = inet_csk_route_req(sk, &fl4, req, want_cookie)) != NULL &&
+    fl4.daddr == saddr &&
+    (peer = rt_get_peer((struct rtable *)dst, fl4.daddr)) != NULL) {
+        inet_peer_refcheck(peer);
+        if ((u32)get_seconds() - peer->tcp_ts_stamp < TCP_PAWS_MSL &&
+            (s32)(peer->tcp_ts - req->ts_recent) > TCP_PAWS_WINDOW) {
+                NET_INC_STATS_BH(sock_net(sk), LINUX_MIB_PAWSPASSIVEREJECTED);
+                goto drop_and_release;
+        }
+}
+```
+
+当远程主机是 ***NAT 设备***时，这个时间戳条件就会禁止 NAT 设备后面的某一台主机之外的所有其他主机在一分钟内进行连接，因为它们不共享相同的时间戳时钟。如有拿不准，最好禁用此选项，因为它会导致***难以检测***和***难以诊断***的问题。
+
+📌 *更新 (2017-09)*
+
+从 Linux 4.10 (commit [95a22caee396](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=95a22caee396cef0bb2ca8fafdd82966a49367bb)) 开始，Linux 会为每个连接随机化时间戳偏移量，使得这个选项完全失效（无论有没有 NAT）。在 Linux 4.12 中它已经被完全[删除](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4396e46187ca5070219b81773c4e65088dac50cc)。
+
+`LAST-ACK` 状态的处理方式则与 `net.ipv4.tcp_tw_reuse` 相同.
+
 ## 总结
+
+通用解决方案是通过使用更多服务器端口等来***增加可能的四元祖数量***。这可以使允许的 `TIME-WAIT` 连接不被用尽。
+
+在***服务器端***，千万不要启用 `net.ipv4.tcp_tw_recycle`，因为它会产生副作用。启用 `net.ipv4.tcp_tw_reuse` 对优化入站连接无效。
+
+在***客户端***，启用 `net.ipv4.tcp_tw_reuse` 是另一种基本安全的解决方案。在启用 `net.ipv4.tcp_tw_reuse` 的基础上，启用 `net.ipv4.tcp_tw_recycle` 基本上没有什么用处。
+
+此外，在设计协议时，***不要让客户端先关闭***。客户端不必处理 `TIME-WAIT` 状态，将责任推给更适合处理此问题的服务器。
+
+最后引用 [W. Richard Stevens](http://www.kohala.com/start/) 在[《Unix 网络编程》](https://www.amazon.com/Unix-Network-Programming-Volume-Networking/dp/0131411551)中的一段话：
+
+> *`TIME_WAIT` 状态是我们的朋友，它可以帮助我们（即是，使旧的重复数据包在网络中过期）。与其试图避免该状态，不如真正地理解它。*

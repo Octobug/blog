@@ -120,8 +120,8 @@ li.footnote-item p em {
   color: var(--vp-c-text-2);
 }
 
-sup.footnote-ref a {
-  color: var(--vp-c-text-3);
+sup.footnote-ref a[id^=fnref] {
+  color: var(--vp-c-text-2);
   font-size: 0.8rem;
 }
 </style>

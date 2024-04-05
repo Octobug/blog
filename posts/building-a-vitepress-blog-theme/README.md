@@ -236,6 +236,8 @@ VitePress 自带全文搜索：[Search - Local Search](https://vitepress.dev/ref
 
 这个博客还有少数计划中的页面没上线，不过它们不属于典型的博客功能，所以对别人来说可能没有参考价值。
 
+## Cover
+
 :::details Vaquita Porpoise
 
 封面图是一只**小头鼠海豚 (Vaquita)**[^vaquita] 妈妈领着她的幼崽[^mom_and_calf]。小头鼠海豚目前在 IUCN 红色名录中处于极度濒危级别，2022 年仅剩 18 个有记录的成年个体[^ce_vaquita]。

@@ -243,7 +243,7 @@ erDiagram
 - [PARTITION Maintenance in MySQL - PARTITION Maintenance for the Time-Series Case](https://mysql.rjweb.org/doc.php/partitionmaint#partition_maintenance_for_the_time_series_case)
 - [MongoDB Time Series Data](https://www.mongodb.com/features/mongodb-time-series-data)
 
----
+## Cover
 
 ::: details Sakila
 

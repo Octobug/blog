@@ -205,7 +205,7 @@ Application->>User: 6. responds to
 
 [^oidc_certified]: [Certified OpenID Connect Implementations](https://openid.net/developers/certified-openid-connect-implementations/)
 
----
+## Cover
 
 :::details Salish Sea Orcas
 

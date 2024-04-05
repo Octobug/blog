@@ -20,27 +20,9 @@ tags:
 
 ![52-hertz Whale](./52-hertz-whale.jpg "A public domain image (cropped & resized). [**NOAA**](https://www.pmel.noaa.gov/acoustics/whales/sounds/sounds_52blue.html). [*commons.wikimedia.org*](https://commons.wikimedia.org/wiki/File:Akblue52a_256_064c.jpg).")
 
-> 这里说的语言当然不是编程语言。值得学的编程语言请看 [TIOBE Index](https://www.tiobe.com/tiobe-index/)，这个指数值得关注的地方除了编程语言的当前排行占比，还有其变化趋势。
+> 这里说的语言不是指编程语言。值得学的编程语言请看 [TIOBE Index](https://www.tiobe.com/tiobe-index/)，这个指数值得关注的地方除了编程语言的当前排行占比，还有其变化趋势。
 
 🧨 今天刚好是过年，容我先拜个早年 🧧
-
-```txt
-           |                                                          
-     _____ | _____        \     /   /______    |  |     / /_  /    | |
-    ()____)+()____)     -----  /       |       | -+-.  /_.|_|/_.   | |
-    ()____)+()____)      \ /  /___   __|__   | |  | |   / | | /    | |
-    ()____)+()____)     ----- | |    | |     |_| _|_|_ /_\`-'/_\   | |
-    ()____)+()____)     __|__ | |  __|_|____   |  |     ___|___    | |
-    ()____)+()____)      /|\  | |      |       | / \     _/|\_     * *
-         / | \                                                        
-```
-
-<figure>
-<figcaption>
-来自 <a href="https://www.bootschool.net/ascii-art/chinese?pageNO=4">ASCII 艺术字（图）集</a>.
-<em>bootschool.net.</em>
-</figcaption>
-</figure>
 
 2022 年底试用多邻国的英语课程之后便一发不可收拾——它让我的第二外语学习计划至少提早了十年。本来在我的长期计划中，起码得在生活工作状态相对稳定之后，能安排出固定的时间来才会开始学习第二门外语。然而多邻国的课程编排过于合理，单元被分割成足够细的粒度，只需要用手机就可以随时随地利用碎片时间学习。从那时起我就决定，今后能利用起来的碎片时间全都交给外语学习，入门阶段尽量不让它们占用其他时间。
 

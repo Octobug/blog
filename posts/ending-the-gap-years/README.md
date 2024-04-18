@@ -41,7 +41,7 @@ tags:
 
 ### 系统设计 (System Design)
 
-系统设计是我觉得收获最大的部分，因为我一直希望能参与中大型系统的设计和实现。上一份工作缺少这种场景也是我辞职的主要原因。
+系统设计是我觉得收获最大的部分，因为我一直希望能参与中大型系统的设计和实现。上一份工作缺少这种场景也是我辞职的原因之一。
 
 - [The Twelve-Factor App](https://12factor.net/): 由 [Heroku](http://www.heroku.com/) 发布的一组最佳实践，这些最佳实践从 12 个方面讲述构建可扩展、易维护的 SaaS 应用程序的方法（可以理解为应用程序级别的解耦），它们对构建现代云原生应用程序至关重要。读完这份文档只需要花几十分钟，但是它解决了我在上一份工作中产生的不少疑问（前司缺少部分它们依赖的现代化基础设施……）。
 - [System Design Interview: An insider's guide](https://www.goodreads.com/book/show/54109255-system-design-interview-an-insider-s-guide) `还没读完`: 这本书的视角比 *The Twelve-Factor App* 高一些，目前我看到的内容都涉及架构级别的设计。书名包含“面试 (Interview)”这样的字眼很容易让人觉得这是一本水书。里面确实也有讲述一些面试技巧，但目前看的几章基本都是技术干货，尤其适合没做过架构设计的同学。

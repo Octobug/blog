@@ -53,7 +53,7 @@ tags:
 
 - [Redis 开发与运维](https://book.douban.com/subject/26971561/) `还没读完`：以前工作中虽然用到 Redis，但一直没时间系统地学一遍。这本书目前看了前几章，内容质量还不错，作者会在适当时机介绍 Redis 的内部机制和实现细节；根据目录内容也能看出它足够系统全面。它好像是我这段时间看的唯一一本以中文出版的技术书？等完全看完了再更新这部分。
 - [Solving Identity Management in Modern Applications: Demystifying OAuth 2.0, OpenID Connect, and SAML 2.0](https://www.goodreads.com/book/show/49950389-solving-identity-management-in-modern-applications): 非常全面地介绍了现代应用是如何做身份管理的。这本书的不足之处是提供的示例项目维护质量不太行。看这方面的书也是因为上一份工作中涉及到账户系统而留下一些疑问。
-- [The Docker Book: Containerization is the new virtualization](https://www.goodreads.com/book/show/34399420-the-docker-book) `即将读完`: 非常适合入门 Docker 的一本书，这本书最后一版是 2017 年，Docker 从那时起到现在已经有不少改动，书里的很多示例需要修改才能跑起来（基本上都是软件、库依赖问题），但核心内容仍然不过时。读这本书和读《Redis 开发与运维》的原因一样，都是工作中用过，但是没系统地学过，因而对最佳实践是什么样心里没底。
+- [The Docker Book: Containerization is the new virtualization](https://www.goodreads.com/book/show/34399420-the-docker-book): 非常适合入门 Docker 的一本书，这本书最后一版是 2017 年，Docker 从那时起到现在已经有不少改动，书里的很多示例需要修改才能跑起来（基本上都是软件、库依赖问题），但核心内容仍然不过时。读这本书和读《Redis 开发与运维》的原因一样，都是工作中用过，但是没系统地学过，因而对最佳实践是什么样心里没底。
 - [The Definitive Guide to Single Sign-On](https://auth0.com/resources/whitepapers/definitive-guide-to-single-sign-on) `不推荐`: [auth0](https://auth0.com/) 出的免费电子书，主要讲单点登录。
 
 ### 开源相关
@@ -174,7 +174,7 @@ Gap 这么久，最大的问题会是经济压力或是就业压力吗？都不�
 
 当我觉得孤独不可忍受的时候，我开始改成去图书馆。虽然还是不能和人群建立联系，但是图书馆有其他奇妙的氛围加成，可以缓解这种孤独感。后来，暑假的图书馆充满了中学生，占座变得困难，我又恢复待在家里。为了维持氛围，我甚至还去小红书找那种“线上自习室”。
 
-后来很神奇地，我逐渐适应了孤独。但我并不享受孤独，也就是在这段时间里，我知道自己并不适合做独立开发者，或者是长时间远程办公。
+后来很神奇地，我逐渐适应了孤独。但我并不享受孤独，也就是在这段时间里，我知道自己并不适合做独立开发者，或者是长时间远程办公。到后期由于出门次数减少，和别人说话的频率降到很低（从没想过既不喜欢打电话也不喜欢发语音还有这个缺点），我的**中文**口语能力似乎也退化了一点点点，体现为说话容易嘴瓢。
 
 #### 焦虑耐受
 

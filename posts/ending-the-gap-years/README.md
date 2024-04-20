@@ -120,7 +120,7 @@ tags:
 ### 想读还没来得及读的书
 
 - [Concurrency in Go: Tools and Techniques for Developers](https://www.goodreads.com/book/show/30413199-concurrency-in-go)
-- [High Performance MySQL: Optimization, Backups, and Replication](https://www.goodreads.com/book/show/18759121-high-performance-mysql)
+- [High Performance MySQL: Proven Strategies for Operating at Scale](https://www.goodreads.com/book/show/60469941-high-performance-mysql)
 - [TCP/IP Illustrated, Volume 1: The Protocols](https://www.goodreads.com/book/show/9176515-tcp-ip-illustrated-volume-1)
 - [UNIX Network Programming, Volume 1: The Sockets Networking API](https://www.goodreads.com/book/show/239240.UNIX_Network_Programming_Volume_1)
 

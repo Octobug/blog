@@ -23,7 +23,7 @@ tags:
 
 :::
 
-[rfc7519]: https://datatracker.ietf.org/doc/rfc7519/
+[rfc7519]: https://datatracker.ietf.org/doc/html/rfc7519/
 
 读 *How to Read an RFC* 这篇文章缘起于阅读 [RFC7519: JSON Web Token (JWT)][rfc7519]——对新手来说，尤其是对非英语母语者来说，阅读 RFC 文档是挺痛苦的一件事。
 

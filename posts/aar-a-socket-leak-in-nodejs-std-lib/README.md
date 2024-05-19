@@ -1,6 +1,6 @@
 ---
 date: 2021-11-20
-location: 深圳，创维半导体设计大厦西座
+spot: 宝安图书馆
 sort: Computer Science
 tags:
   - Network

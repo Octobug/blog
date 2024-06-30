@@ -2,6 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/23e0b8dc-df98-491d-9885-d4229baa1ccb/deploy-status)](https://app.netlify.com/sites/octobug-blog/deploys)
 [![Badge: GitHub](https://github.com/Octobug/blog/actions/workflows/deploy.yml/badge.svg)](https://octobug.github.io/blog/)
+![Badge: visitors](https://visitor-badge.laobi.icu/badge?page_id=Octobug.blog)
 
 - <https://blog.octobug.site> (hosted on [Netlify](https://netlify.com/))
 

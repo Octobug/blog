@@ -9,8 +9,8 @@ The version number is stored in this file: [`.nvmrc`](../.nvmrc).
 After the corresponding [Node.js](https://nodejs.org/) is installed, run:
 
 ```sh
-# setup .env
-mv .env.tmpl .env
+# set up .env
+cp .env.example .env
 # then fill out the .env
 
 # install dependencies
@@ -40,5 +40,4 @@ If you're using [Visual Studio Code](https://code.visualstudio.com/), the extens
 
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
-- [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar)

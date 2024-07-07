@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.postList">
     <span :class="[$style.date, $style.hack]">
-      {{ moment(new Date("1970-04-22")).format(dateFormat) }}
+      {{ dayjs(new Date("1970-04-22")).format(dateFormat) }}
     </span>
     <div
       v-for="post in postList"
@@ -12,14 +12,14 @@
         <span :class="$style.title">{{ post.frontmatter.title }}</span>
       </a>
       <span :class="$style.date">
-        {{ moment(post.frontmatter.datetime).format(dateFormat) }}
+        {{ dayjs(post.frontmatter.datetime).format(dateFormat) }}
       </span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import moment from "moment-timezone";
+import dayjs from "../dayjs";
 import Post from "../types/post";
 
 defineProps({

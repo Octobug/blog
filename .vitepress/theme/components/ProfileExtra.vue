@@ -22,11 +22,12 @@
 </template>
 
 <script lang="ts" setup>
-import moment from "moment-timezone";
+import dayjs from "../dayjs";
 import { useData } from "vitepress";
+
 const { theme } = useData();
 const { location, timezone } = theme.value;
-const nowWithTZ = moment().tz(timezone);
+const nowWithTZ = dayjs().tz(timezone);
 const now = {
   HHmm: nowWithTZ.format("HH:mm"),
   UTCZ: nowWithTZ.format("UTC Z")

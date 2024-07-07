@@ -32,7 +32,7 @@ npm run build
 npm run preview
 ```
 
-There are several other npm script commands in the `scripts` part of [`package.json`](../package.json) that you might want to use.
+There are several other npm script commands that you might want to use in the `scripts` part of [`package.json`](../package.json).
 
 ### Visual Studio Code
 

@@ -1,10 +1,10 @@
 {
   "README": {
-    "cli": "https://github.com/igorshubovych/markdownlint-cli",
     "rules": "https://github.com/DavidAnson/markdownlint",
+    "cli": "https://github.com/DavidAnson/markdownlint-cli2",
     "vscode": "https://github.com/DavidAnson/vscode-markdownlint"
   },
-  "MD013": false,
-  "MD026": false,
-  "MD033": false
+  "line-length": false,
+  "no-inline-html": false,
+  "no-trailing-punctuation": false
 }

@@ -8,9 +8,9 @@
     <span
       v-if="post.datetime"
       :class="$style.elementItem"
-      :tooltip="moment(post.datetime).format('dddd')"
+      :tooltip="dayjs(post.datetime).format('dddd')"
     >
-      {{ moment(post.datetime).format("LL") }}
+      {{ dayjs(post.datetime).format("LL") }}
     </span>
     <Dot
       v-if="post.spot"
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import moment from "moment-timezone";
+import dayjs from "../dayjs";
 import { useData, onContentUpdated } from "vitepress";
 import { ref } from "vue";
 import { data as allPosts } from "../posts.data";

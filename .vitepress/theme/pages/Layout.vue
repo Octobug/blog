@@ -11,10 +11,7 @@
   </Layout>
 </template>
 
-<script
-  lang="ts"
-  setup
->
+<script lang="ts" setup>
 import DefaultTheme from "vitepress/theme";
 import Annotations from "../components/Annotations.vue";
 import PrevNext from "../components/PrevNext.vue";
@@ -86,6 +83,11 @@ img.inline-img {
   float: left;
   margin: 0.3rem 0.8rem 0.4rem 0;
   border: 3px solid var(--vp-c-default-1);
+}
+
+.mermaid {
+  display: flex;
+  justify-content: center;
 }
 
 /* image subtitle */

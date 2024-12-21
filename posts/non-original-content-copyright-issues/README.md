@@ -101,7 +101,7 @@ Powered by creators everywhere.
 
 ## AI 生成图
 
-鉴于最近 AIGC[^aigc] 很火，我也尝试用了一下 AI 文生图。结果生成的图片很无厘头，可以说是降本增笑了。鉴于没有我满意的生成结果，我就不推荐网站了。这里放两张生成图（在不同的网站使用一样的 `prompt`[^prompt]：
+鉴于最近 AIGC[^aigc] 很火，我也尝试用了一下 AI 文生图。结果生成的图片很无厘头，可以说是降本增笑了。既然没有我满意的生成结果，我也就不推荐网站了。这里放两张生成图（在不同的网站使用一样的 `prompt`[^prompt]：
 
 [^aigc]: [AI-Generated Content (AIGC): A Survey](https://arxiv.org/pdf/2304.06632.pdf)
 [^prompt]: [Prompt engineering](https://en.wikipedia.org/wiki/Prompt_engineering)

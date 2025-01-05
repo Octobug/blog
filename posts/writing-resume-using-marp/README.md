@@ -11,3 +11,5 @@ draft: true
 ---
 
 # 使用 Marp 制作简历
+
+- <https://github.com/rsms/inter/issues/398>

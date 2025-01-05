@@ -1,6 +1,6 @@
 ---
-date: 2025-03-23
-spot: ？
+date: 2021-03-23
+spot: 覔书店·壹方城店
 sort: Computer Science
 tags:
   - C10K

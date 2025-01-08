@@ -12,7 +12,7 @@ tags:
   - LeetCode
   - 2ndLA
   - English
-  - Spanish
+  - Español
 ---
 
 # Gap Years 尾声

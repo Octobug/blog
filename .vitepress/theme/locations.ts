@@ -31,7 +31,7 @@ const LOCATIONS = {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
   },
-  汉京金融中心: {
+  汉京中心: {
     city: CITY.深圳,
     district: DISTRICT.麻岭社区,
   },
@@ -42,6 +42,10 @@ const LOCATIONS = {
   郎景园: {
     city: CITY.深圳,
     district: DISTRICT.大冲社区,
+  },
+  猫头鹰自习室·坪洲店: {
+    city: CITY.深圳,
+    district: DISTRICT.渔业社区,
   },
   覔书店·壹方城店: {
     city: CITY.深圳,

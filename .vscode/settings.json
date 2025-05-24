@@ -5,5 +5,11 @@
     "[vue]": {
         "editor.defaultFormatter": "Vue.volar",
     },
-    "html.format.wrapAttributes": "force-expand-multiline",
+    "cSpell.words": [
+        "mdlint",
+        "octobug",
+        "octobug's",
+        "whalevocal"
+    ],
+    "html.format.wrapAttributes": "force-expand-multiline"
 }

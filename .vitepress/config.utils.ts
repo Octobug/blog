@@ -23,10 +23,12 @@ export function joinURL(baseURL: string, ...paths: string[]) {
   return new URL(urlPath, baseURL).href;
 }
 
+const envName = env.ENV_NAME || "PRODUCTION";
+
 export const appEnv = {
-  envName: env.ENV_NAME || "PRODUCTION",
-  isDevelopment: env.ENV_NAME === "DEVELOPMENT",
-  isTesting: env.ENV_NAME === "TESTING",
-  isStaging: env.ENV_NAME === "STAGING",
-  isProduction: env.ENV_NAME === "PRODUCTION",
+  envName,
+  isDevelopment: envName === "DEVELOPMENT",
+  isTesting: envName === "TESTING",
+  isStaging: envName === "STAGING",
+  isProduction: envName === "PRODUCTION",
 };

@@ -2,7 +2,7 @@
 import { createContentLoader } from "vitepress";
 import readingTime from "reading-time";
 import extendedConfig from "../config.theme";
-import { withBaseURL, isProduction } from "../config.utils";
+import { appEnv, withBaseURL } from "../config.utils";
 import getLocation from "./locations";
 
 // Title Workaround
@@ -26,7 +26,7 @@ function transformRawData(rawData) {
       p.frontmatter.mdpath = mdpath;
       return p;
     })
-    .filter(p => !isProduction() || !p.frontmatter.draft)
+    .filter(p => !appEnv.isProduction || !p.frontmatter.draft)
     .sort((a, b) => {
       return b.frontmatter.datetime - a.frontmatter.datetime;
     });

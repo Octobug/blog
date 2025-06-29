@@ -12,6 +12,26 @@ function extractTitle(text: string) {
   return match?.groups?.title || "Untitled";
 }
 
+function transformRawData(rawData) {
+  return rawData
+    .map(p => {
+      const rt = readingTime(p.src || "");
+      const mdpath = p.url.replace("/README", "");
+      p.url = withBaseURL(mdpath);
+      p.frontmatter.title = extractTitle(p.src || "");
+      p.frontmatter.datetime = new Date(p.frontmatter.date);
+      p.frontmatter.location = getLocation(p.frontmatter.spot);
+      p.frontmatter.readingTime = rt.text;
+      p.frontmatter.words = rt.words;
+      p.frontmatter.mdpath = mdpath;
+      return p;
+    })
+    .filter(p => !isProduction() || !p.frontmatter.draft)
+    .sort((a, b) => {
+      return b.frontmatter.datetime - a.frontmatter.datetime;
+    });
+}
+
 export default async (options) => {
   const {
     includeSrc = true,
@@ -23,24 +43,6 @@ export default async (options) => {
     includeSrc,
     render,
     excerpt,
-    transform(rawData) {
-      return rawData
-        .map(p => {
-          const rt = readingTime(p.src || "");
-          const mdpath = p.url.replace("/README", "");
-          p.url = withBaseURL(mdpath);
-          p.frontmatter.title = extractTitle(p.src || "");
-          p.frontmatter.datetime = new Date(p.frontmatter.date);
-          p.frontmatter.location = getLocation(p.frontmatter.spot);
-          p.frontmatter.readingTime = rt.text;
-          p.frontmatter.words = rt.words;
-          p.frontmatter.mdpath = mdpath;
-          return p;
-        })
-        .filter(p => !isProduction() || !p.frontmatter.draft)
-        .sort((a, b) => {
-          return b.frontmatter.datetime - a.frontmatter.datetime;
-        });
-    }
+    transform: transformRawData
   });
 };

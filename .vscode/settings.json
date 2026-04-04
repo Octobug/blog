@@ -6,10 +6,12 @@
         "editor.defaultFormatter": "Vue.volar",
     },
     "cSpell.words": [
+        "Español",
         "mdlint",
         "octobug",
         "octobug's",
-        "whalevocal"
+        "whalevocal",
+        "xhigh"
     ],
     "html.format.wrapAttributes": "force-expand-multiline"
 }

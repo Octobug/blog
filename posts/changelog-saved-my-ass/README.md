@@ -6,7 +6,6 @@ tags:
   - Node.js
   - OpenSSL
   - CVE
-draft: true
 ---
 
 # Changelog 救我狗命
@@ -17,7 +16,7 @@ draft: true
 
 某天，我负责的一个后端服务突然出现“随机”崩溃。
 
-- 由于容器编排工具有自动重启机制，服务会在很短的时间内自动恢复；
+- 由于容器编排工具 ([AWS ECS](https://aws.amazon.com/ecs/)) 有自动重启机制，服务会在很短的时间内自动恢复；
 - 但因为服务崩溃，即使故障的时间很短也导致了大量请求无法正常处理。
 
 我通过容器 ID 找到了进程崩溃前最后的日志，并定位到相关的代码。进程在抛出 `ERR_SSL_WRONG_PUBLIC_KEY_TYPE` 错误之后退出，并且：
@@ -34,7 +33,7 @@ draft: true
 
 ### 是新引用的第三方库有问题吗？
 
-既然已经定位到出问题的代码，我开始怀疑是新引入的第三方库有问题。但是，这个库在其他服务中已经使用了很长时间，我询问了其他服务的负责人 `@Tony`，确认没有出现过类似的问题。
+既然已经定位到出问题的代码，我开始怀疑是新引入的第三方库有问题。但是，这个库在其他服务中已经使用了很长时间，我询问了其他项目的负责人 `@Tony`，确认没有出现过类似的问题。
 
 不过确实也存在差异：Node.js 大版本和第三方库的版本和另外一个服务都不同。在没有更多时间调研的前提下，此时还有这几个选项：
 
@@ -61,6 +60,16 @@ draft: true
 > Some exceptions are *unrecoverable* at the JavaScript layer. Such exceptions will *always* cause the Node.js process to crash. Examples include `assert()` checks or `abort()` calls in the C++ layer.
 
 [^exceptions_vs_errors]: [Exceptions vs. errors](https://nodejs.org/docs/latest-v22.x/api/errors.html#exceptions-vs-errors)
+
+::: info 使用 AI 工具诊断？
+
+彼时的 AI 诊断能力还不够强大，根本无法提供有用的线索。
+
+即便是现在 `2026.04.04`，Claude Opus 4.6 (high) 和 GPT 5.4 (xhigh) 都无法给出确切的错误原因，而只能提供“升级解释器”这种模糊的建议。
+
+GPT 5.4 知道要去找 Node.js 的 Changelog，但它始终定位不到确切的 bugfix。
+
+:::
 
 ## 在 Changelog 中寻找线索
 
@@ -92,7 +101,9 @@ draft: true
 - [Node.js OpenSSL error handling issues in nodejs crypto library (Medium) (CVE-2023-23919)](https://nodejs.org/en/blog/vulnerability/february-2023-security-releases/#nodejs-openssl-error-handling-issues-in-nodejs-crypto-library-medium-cve-2023-23919)
 - [crypto: clear OpenSSL error on invalid ca cert](https://github.com/nodejs/node/commit/004e34d046)
 
-这个 bug 早已被修复，所以有对应的修复版本解释器，不需要跨大版本升级。在我们将解释器升级到对应的修复版之后，故障消失了。
+这个 bug 早已被修复，所以有对应的修复版本解释器，不需要跨大版本升级。
+
+在我将解释器升级到对应的修复版之后，随机故障彻底消失了。
 
 ## Cover
 

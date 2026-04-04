@@ -12,3 +12,5 @@ draft: true
 ---
 
 # 如何在多台 Unix-like 设备上管理配置
+
+- [Nix](https://github.com/NixOS/nix)

@@ -17,7 +17,7 @@ tags:
 
 # Gap Years 尾声
 
-![Two Humpbacks](./two-humpbacks.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image rotated). © [**fdetaille**](https://www.inaturalist.org/people/fdetaille). [*inaturalist.org*](https://www.inaturalist.org/photos/239817627).")
+![Two Humpbacks](./two-humpbacks.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (rotated). © [**fdetaille**](https://www.inaturalist.org/people/fdetaille). [*inaturalist.org*](https://www.inaturalist.org/photos/239817627).")
 
 ::: info 其实我一开始只想 gap 两个月
 
@@ -92,7 +92,7 @@ tags:
 
 | 难度   | 数量  | 自主完成率 |
 | ------ | ----- | ---------- |
-| Easy   | `217` | `99%`     |
+| Easy   | `217` | `99%`      |
 | Medium | `159` | `80%`      |
 | Hard   | `31`  | `60%`      |
 
@@ -258,6 +258,6 @@ Gap 这么久，最大的问题会是经济压力或是就业压力吗？都不�
 
 封面图是两头大翅鲸在澳大利亚的珊瑚海游弋。据说，大翅鲸在迁徙过程中可以长达 6 个月不进食[^fasting]。
 
-![Humpback Leaping](./humpback-leaping.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image resized). © [**Robin Gwen Agarwal**](https://www.inaturalist.org/people/anudibranchmom). [*inaturalist.org*](https://www.inaturalist.org/photos/158479000).")
+![Humpback Leaping](./humpback-leaping.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (resized). © [**Robin Gwen Agarwal**](https://www.inaturalist.org/people/anudibranchmom). [*inaturalist.org*](https://www.inaturalist.org/photos/158479000).")
 
 :::

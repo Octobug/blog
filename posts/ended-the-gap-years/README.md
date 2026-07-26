@@ -9,7 +9,7 @@ tags:
 
 # Gap Years 结束
 
-![Humpbacks Feeding](./humpbacks-feeding.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (image resized). © [**James Maughn**](https://www.inaturalist.org/people/jmaughn). [*inaturalist.org*](https://www.inaturalist.org/photos/330290531).")
+![Humpbacks Feeding](./humpbacks-feeding.jpg "Permitted under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (resized). © [**James Maughn**](https://www.inaturalist.org/people/jmaughn). [*inaturalist.org*](https://www.inaturalist.org/photos/330290531).")
 
 今天是入职第一天。好久没有融入上下班的人潮人海中，感觉陌生又熟悉。
 
@@ -29,7 +29,7 @@ tags:
 
 | 沟通数 | 投递数 | 进面数 | 终面数 | 暂无反馈 |
 | ------ | ------ | ------ | ------ | -------- |
-| `200+`  | `50`   | `9`    | `3`    | `3`      |
+| `200+` | `50`   | `9`    | `3`    | `3`      |
 
 在 `200+` 个沟通中，大约有 `70` 个是我主动拒绝，基本上是看了岗位描述之后觉得就算过了也不会去，所以也不想浪费双方的时间。
 

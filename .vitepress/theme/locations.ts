@@ -10,6 +10,7 @@ const DISTRICT = {
   海滨社区: "宝安区新安街道海滨社区",
   海富社区: "宝安区新安街道海富社区",
   麻岭社区: "南山区粤海街道麻岭社区",
+  上沙社区: "福田区‌沙头街道上沙社区",
   新安湖社区: "宝安区新安街道新安湖社区",
   渔业社区: "宝安区西乡街道渔业社区",
 };
@@ -51,6 +52,10 @@ const LOCATIONS = {
     city: CITY.深圳,
     district: DISTRICT.新安湖社区,
   },
+  "中洲湾 C Future City 西座": {
+    city: CITY.深圳,
+    district: DISTRICT.上沙社区,
+  },
   紫寓公寓: {
     city: CITY.深圳,
     district: DISTRICT.海富社区,
@@ -58,5 +63,5 @@ const LOCATIONS = {
 };
 
 export default function getLocation(spot: string) {
-  return LOCATIONS[spot] || { spot };
+  return LOCATIONS[spot as keyof typeof LOCATIONS] || { spot };
 }

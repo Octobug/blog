@@ -28,7 +28,7 @@ tags:
   - [lint-staged/lint-staged](https://github.com/lint-staged/lint-staged)
 - Linters
   - [eslint/eslint](https://github.com/eslint/eslint)
-  - [igorshubovych/markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
+  - [DavidAnson/markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)
 
 ## 自定义 VitePress 主题
 

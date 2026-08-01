@@ -12,11 +12,11 @@
     "build": "vitepress build",
     "preview": "vitepress preview",
     "eslint": "eslint .",
-    "mdlint": "markdownlint .",
+    "mdlint": "markdownlint-cli2 .",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.md": "markdownlint",
+    "*.md": "markdownlint-cli2",
     "*.{ts,vue}": "eslint"
   },
   "repository": {
@@ -39,6 +39,7 @@
     "@typescript-eslint/parser": "^6.7.2",
     "dayjs": "^1.11.11",
     "dotenv": "^16.3.1",
+    "esbuild": "^0.28.1",
     "eslint": "^8.50.0",
     "eslint-plugin-vue": "^9.17.0",
     "feed": "^4.2.2",
@@ -47,11 +48,12 @@
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-image-figures": "^2.1.1",
     "markdown-it-mathjax3": "^4.3.2",
-    "markdownlint-cli": "^0.37.0",
+    "markdownlint-cli2": "^0.23.2",
     "mermaid": "^11.10.1",
     "reading-time": "^1.5.0",
     "typescript": "^5.2.2",
+    "vite": "^6.4.3",
     "vitepress": "^1.6.4",
-    "vitepress-plugin-mermaid": "^2.0.16"
+    "vitepress-plugin-mermaid": "^2.0.17"
   }
 }

@@ -32,6 +32,12 @@
     "url": "https://github.com/Octobug/blog/issues"
   },
   "homepage": "https://github.com/Octobug/blog#readme",
+  "overrides": {
+    "vitepress": {
+      "esbuild": "^0.28.1",
+      "vite": "^6.4.3"
+    }
+  },
   "devDependencies": {
     "@giscus/vue": "^2.4.0",
     "@types/node": "^20.8.10",

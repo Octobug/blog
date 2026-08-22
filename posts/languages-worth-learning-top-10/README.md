@@ -69,12 +69,12 @@ tags:
     ```
 
 2. **List of countries by GDP (nominal)**[^countries_by_gdp] `权重 2`：每个国家有各自的官方语言，所以国家 GDP 也可以作为一个判断依据。当一个国家经济体量足够大，即使人均 GDP 很低，也有很大概率催生出优秀的文化产业。最典型的是印度宝莱坞。
-3. **2023 Duolingo Language Report**[^duolingo_2023] `权重 1`：多邻国年度语言报告，取其中的最受欢迎的语言 Top 10。
+3. **Duolingo Language Report**[^duolingo_report] `权重 2`：多邻国年度语言报告，取其中的最受欢迎的语言 Top 10。
 4. **Languages used on the Internet**[^internet_langs] `权重 1`：不同语言的互联网内容量统计。
 
 [^langs_by_gdp]: [World languages by GDP, 2023 edition](https://www.reddit.com/r/languagelearning/comments/11xt73g/world_languages_by_gdp_2023_edition/)
 [^countries_by_gdp]: [List of countries by GDP (nominal)](https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal))
-[^duolingo_2023]: [2023 Duolingo Language Report](https://blog.duolingo.com/2023-duolingo-language-report/)
+[^duolingo_report]: [2025 Duolingo Language Report](https://blog.duolingo.com/2025-duolingo-language-report/)
 [^internet_langs]: [Languages used on the Internet](https://en.wikipedia.org/wiki/Languages_used_on_the_Internet)
 
 > 权重纯粹是我个人的主观设置，并没有什么依据。
@@ -130,45 +130,45 @@ tags:
 
 ```txt
 1. English: 100.00
-2. Spanish: 65.50
-3. French: 58.81
-4. German: 58.36
-5. Chinese: 54.06
-6. Japanese: 51.05
-7. Italian: 44.64
-8. Portuguese: 39.25
-9. Korean: 36.73
-10. Russian: 36.50
-11. Arabic: 32.59
-12. Dutch: 31.06
-13. Turkish: 29.26
-14. Malay-Indonesian: 27.30
-15. Hindi: 26.28
-16. Polish: 23.97
-17. Swedish: 17.74
-18. Thai: 13.62
-19. Vietnamese: 13.26
-20. Bengali: 12.82
-21. Hebrew: 9.91
-22. Farsi: 9.40
-23. Norwegian: 9.29
-24. Danish: 7.45
-25. Punjabi: 6.84
-26. Greek: 6.36
-27. Persian: 5.30
-28. Javanese: 4.27
-29. Czech: 4.13
-30. Romanian: 3.77
-31. Ukrainian: 3.24
-32. Tagalog: 2.56
-33. Irish: 1.87
-34. Finnish: 1.74
-35. Romansh: 1.74
-36. Sami: 1.60
-37. Slovak: 1.18
-38. Bulgarian: 0.59
-39. Serbian: 0.29
-40. Tamil: 0.13
+2. Spanish: 64.53
+3. French: 59.07
+4. German: 55.83
+5. Chinese: 52.65
+6. Japanese: 52.47
+7. Italian: 43.38
+8. Portuguese: 37.51
+9. Korean: 36.13
+10. Russian: 33.12
+11. Arabic: 29.75
+12. Dutch: 28.17
+13. Turkish: 26.41
+14. Malay-Indonesian: 24.48
+15. Hindi: 22.67
+16. Polish: 21.95
+17. Swedish: 16.43
+18. Vietnamese: 12.07
+19. Bengali: 11.55
+20. Thai: 10.49
+21. Hebrew: 9.27
+22. Farsi: 8.47
+23. Norwegian: 7.41
+24. Danish: 7.19
+25. Punjabi: 6.16
+26. Greek: 5.13
+27. Persian: 4.62
+28. Czech: 4.11
+29. Romanian: 3.85
+30. Javanese: 3.85
+31. Ukrainian: 3.34
+32. Hungarian: 2.82
+33. Irish: 2.41
+34. Finnish: 2.31
+35. Tagalog: 2.31
+36. Romansh: 1.56
+37. Slovak: 1.03
+38. Tamil: 0.60
+39. Bulgarian: 0.51
+40. Sami: 0.48
 ```
 
 ## Cover

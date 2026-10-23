@@ -18,25 +18,26 @@
     },
     "plugins": [
         "vue",
+        "@stylistic",
         "@typescript-eslint"
     ],
     "rules": {
-        "@typescript-eslint/indent": [
+        "@stylistic/indent": [
             "error",
             2
         ],
-        "@typescript-eslint/object-curly-spacing": [
+        "@stylistic/object-curly-spacing": [
             "error",
             "always"
         ],
-        "@typescript-eslint/quotes": [
+        "@stylistic/quotes": [
             "error",
             "double",
             {
                 "avoidEscape": true
             }
         ],
-        "@typescript-eslint/semi": [
+        "@stylistic/semi": [
             "error",
             "always"
         ],

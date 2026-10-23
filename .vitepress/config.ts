@@ -62,6 +62,12 @@ const config = defineConfigWithTheme<ThemeConfig>({
     },
     math: true
   },
+  // mermaid imports fastdom, which is CJS-only and must be prebundled in dev.
+  vite: {
+    optimizeDeps: {
+      include: ["mermaid", "fastdom"],
+    },
+  },
 });
 
 export default withMermaid({
